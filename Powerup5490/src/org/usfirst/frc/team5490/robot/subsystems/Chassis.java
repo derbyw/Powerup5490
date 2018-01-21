@@ -2,6 +2,7 @@ package org.usfirst.frc.team5490.robot.subsystems;
 
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -31,25 +32,50 @@ public class Chassis extends Subsystem {
     // Winch objects
     SpeedController motorWinch = new Talon(RobotMap.mtrWinch);
     
-    Encoder 		m_WinchEncoder;
+    // Define the winch encoder 
+    Encoder 		m_WinchEncoder = new Encoder(RobotMap.WinchEncoderA,RobotMap.WinchEncoderB);
     
-    //Limit switches
+    // Limit switches
     private DigitalInput m_lvertical = new DigitalInput(RobotMap.LS_WinchUp);
 	private DigitalInput m_lstored = new DigitalInput(RobotMap.LS_WinchDown);
     
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+	// see DriveTrain example
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
 		
 		motorFrontLeft.setInverted(true);
 		motorRearLeft.setInverted(true);
+		
+		// Let's name the sensors on the LiveWindow
+		
+		addChild("Drive", m_robotDrive);
+		addChild("Winch Encoder", m_WinchEncoder);
+		
+		
+		// ToDo calculate based on Drum size
+		m_WinchEncoder.setDistancePerPulse((4.0 / 12.0 * Math.PI) / 360.0);
+		
+		
+		//addChild("Gyro", m_gyro);
+		
     }
     
     public void log() {
+    	
+    	SmartDashboard.putNumber("Winch Speed", m_WinchEncoder.getRate());
+    	SmartDashboard.putNumber("Winch Distance", m_WinchEncoder.getDistance());
+    	
+		/* example
+		SmartDashboard.putNumber("Left Distance", m_leftEncoder.getDistance());		 
+		SmartDashboard.putNumber("Right Distance", m_rightEncoder.getDistance());
+		SmartDashboard.putNumber("Left Speed", m_leftEncoder.getRate());
+		SmartDashboard.putNumber("Right Speed", m_rightEncoder.getRate());
+		SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+		*/
 	}
 
 	public void Drive(Joystick driveStick)

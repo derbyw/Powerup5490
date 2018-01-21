@@ -40,8 +40,6 @@ public class Robot extends TimedRobot {
 	public static Gripper m_Gripper;
 	public static OI m_oi;
 	
-	Joystick m_driveStick;
-
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -129,9 +127,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		
-		m_driveStick = new Joystick(1);
-		
 	}
 
 	/**

@@ -26,13 +26,20 @@ public class RobotMap {
 	
 	// Encoder map
 	// mapping is TBD
-	// ToDo -- none of this is confirmed
+	// ToDo -- none of this is confirmed till things are wired
+	public static int WinchEncoderA = 1;
+	public static int WinchEncoderB = 2;
+	public static int LiftEncoderA = 3;
+	public static int LiftEncoderB = 4;	
+	public static int GripperEncoderA = 5;
+	public static int GripperEncoderB = 6;
+	
+	
 	public static int FrontLeftEncoder = 0;
-	public static int FrontRightEncoder = 1;
-	public static int RearRightEncoder = 2;
-	public static int RearLeftEncoder = 3;	
-	public static int WinchEncoder = 4;
-	public static int GripperEncoder = 5;
+	public static int FrontRightEncoder = 2;
+	public static int RearRightEncoder = 4;
+	public static int RearLeftEncoder = 5;	
+
 	
 	// Limit switches
 	// mapping is TBD

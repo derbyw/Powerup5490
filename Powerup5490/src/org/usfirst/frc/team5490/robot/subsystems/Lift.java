@@ -3,9 +3,11 @@ package org.usfirst.frc.team5490.robot.subsystems;
 import org.usfirst.frc.team5490.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -14,10 +16,9 @@ public class Lift extends Subsystem {
 
 	
     // Winch objects
-    private Talon motorLift = new Talon(RobotMap.mtrLift);    
-    
-    //private Encoder 		m_LiftEncoder;
-    
+    private Talon   motorLift = new Talon(RobotMap.mtrLift);   
+    private Encoder m_LiftEncoder = new Encoder(RobotMap.LiftEncoderA,RobotMap.LiftEncoderB);
+     
     //Limit switches
     private DigitalInput m_lsTop = new DigitalInput(RobotMap.LS_LiftUp);
 	private DigitalInput m_lsBottom = new DigitalInput(RobotMap.LS_LiftDown);
@@ -29,7 +30,8 @@ public class Lift extends Subsystem {
 		super();
 
 		// Let's name everything on the LiveWindow
-		addChild("Motor", motorLift);
+		addChild("Lift Motor", motorLift);
+		addChild("Lift Encoder", m_LiftEncoder);
 		addChild("Up Limit Switch", m_lsTop);
 		addChild("Down Limit Switch", m_lsBottom);
 	}
@@ -43,6 +45,8 @@ public class Lift extends Subsystem {
     }
     
     public void log() {
+    	SmartDashboard.putNumber("Lift Speed", m_LiftEncoder.getRate());
+    	SmartDashboard.putNumber("Lift Distance", m_LiftEncoder.getDistance());
 	}
     
     /**

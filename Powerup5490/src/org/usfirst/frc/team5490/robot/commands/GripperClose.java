@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5490.robot.commands;
 
+import org.usfirst.frc.team5490.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -8,20 +10,25 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GripperClose extends Command {
 
     public GripperClose() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	
+    	requires(Robot.m_Gripper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.m_Gripper.close();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	
+    	Robot.m_Gripper.isGrabbing();
         return false;
     }
 
