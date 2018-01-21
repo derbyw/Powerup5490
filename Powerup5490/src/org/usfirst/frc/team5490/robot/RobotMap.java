@@ -52,4 +52,7 @@ public class RobotMap {
 
 	public static int LS_GripperOpen = 5;
 	public static int LS_GripperClosed = 6;
+	
+	
+	public static int out_Lightmast = 7;
 }

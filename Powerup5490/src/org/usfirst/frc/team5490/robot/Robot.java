@@ -18,8 +18,10 @@ import org.usfirst.frc.team5490.robot.subsystems.Lift;
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
 
 import org.usfirst.frc.team5490.robot.commands.WinchToStore;
+import org.usfirst.frc.team5490.robot.commands.Autonomous;
 import org.usfirst.frc.team5490.robot.commands.GripperOpen;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
+import org.usfirst.frc.team5490.robot.commands.WinchToOperate;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -55,12 +57,14 @@ public class Robot extends TimedRobot {
 		m_Gripper = new Gripper();		
 		m_oi = new OI();
 		
-		
-		m_chooser.addDefault("Default Auto", new WinchToStore());
+		// instantiate the command used for the autonomous period
+		// add version of auto operation here..
+		m_chooser.addDefault("Basic Start", new WinchToOperate());
 		m_chooser.addObject("Gripper Open", new GripperOpen());
 		m_chooser.addObject("Lift Down", new LiftDown());
 		
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		// 
+		// this lest the dashboard choose which on to run at start
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		
@@ -94,14 +98,24 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
+		
 		m_autonomousCommand = m_chooser.getSelected();
-
+		
 		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		 *  code to pull automode code from dashboard
+		String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
+		switch(autoSelected) { 
+			case "My Auto": 
+				//autonomousCommand = new MyAutoCommand(); 
+				break; 
+			case "Default Auto": 
+			default:
+				//autonomousCommand = new ExampleCommand(); 
+				break; 
+		}
+		*/
+		 
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

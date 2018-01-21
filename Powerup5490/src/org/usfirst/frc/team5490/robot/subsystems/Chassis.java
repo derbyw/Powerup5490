@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Talon;
 import org.usfirst.frc.team5490.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -38,6 +39,8 @@ public class Chassis extends Subsystem {
     // Limit switches
     private DigitalInput m_lvertical = new DigitalInput(RobotMap.LS_WinchUp);
 	private DigitalInput m_lstored = new DigitalInput(RobotMap.LS_WinchDown);
+	
+	private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
     
 
     // Put methods for controlling this subsystem
@@ -59,8 +62,8 @@ public class Chassis extends Subsystem {
 		// ToDo calculate based on Drum size
 		m_WinchEncoder.setDistancePerPulse((4.0 / 12.0 * Math.PI) / 360.0);
 		
-		
-		//addChild("Gyro", m_gyro);
+		addChild("Lightmast", m_lightmast);
+		//
 		
     }
     

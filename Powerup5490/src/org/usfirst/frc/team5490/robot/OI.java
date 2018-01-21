@@ -91,9 +91,11 @@ public class OI {
 		JoystickButton r2 = new JoystickButton(m_joystick, 10);
 		JoystickButton l1 = new JoystickButton(m_joystick, 11);
 		JoystickButton r1 = new JoystickButton(m_joystick, 12);
+		*/
+			
 
 		// Connect the buttons to commands
-		
+		/*
 		dpadUp.whenPressed(new SetElevatorSetpoint(0.2));
 		dpadDown.whenPressed(new SetElevatorSetpoint(-0.2));
 		dpadRight.whenPressed(new CloseClaw());
