@@ -12,8 +12,18 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5490.robot.commands.ExampleCommand;
-import org.usfirst.frc.team5490.robot.subsystems.ExampleSubsystem;
+
+import org.usfirst.frc.team5490.robot.subsystems.Chassis;
+import org.usfirst.frc.team5490.robot.subsystems.Lift;
+import org.usfirst.frc.team5490.robot.subsystems.Gripper;
+
+import org.usfirst.frc.team5490.robot.commands.WinchToStore;
+import org.usfirst.frc.team5490.robot.commands.GripperOpen;
+import org.usfirst.frc.team5490.robot.commands.LiftDown;
+
+import edu.wpi.first.wpilibj.Joystick;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,9 +33,14 @@ import org.usfirst.frc.team5490.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
+	
+	// create our assemblies..
+	public static Chassis m_Chassis;
+	public static Lift m_Lift;
+	public static Gripper m_Gripper;
 	public static OI m_oi;
+	
+	Joystick m_driveStick;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -36,10 +51,21 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		m_Chassis = new Chassis();
+		m_Lift = new Lift();
+		m_Gripper = new Gripper();		
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		
+		
+		m_chooser.addDefault("Default Auto", new WinchToStore());
+		m_chooser.addObject("Gripper Open", new GripperOpen());
+		m_chooser.addObject("Lift Down", new LiftDown());
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		
 	}
 
 	/**
@@ -91,6 +117,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		log();
 	}
 
 	@Override
@@ -102,6 +129,9 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		
+		m_driveStick = new Joystick(1);
+		
 	}
 
 	/**
@@ -109,7 +139,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		// this allows activated commands to run..
 		Scheduler.getInstance().run();
+		log();
 	}
 
 	/**
@@ -117,5 +149,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	
+	/**
+	 * The log method puts interesting information to the SmartDashboard.
+	 */
+	private void log() {
+		m_Chassis.log();
+		m_Lift.log();
+		m_Gripper.log();		
 	}
 }
