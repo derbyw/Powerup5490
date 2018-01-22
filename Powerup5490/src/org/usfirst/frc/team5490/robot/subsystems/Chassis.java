@@ -9,9 +9,8 @@ import edu.wpi.first.wpilibj.Talon;
 import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -32,18 +31,10 @@ public class Chassis extends Subsystem {
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
     
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
+    public Winch m_Winch = new Winch();
     
     ADIS16448_IMU imu = new ADIS16448_IMU();
     
-    // Winch objects
-    SpeedController motorWinch = new Talon(RobotMap.mtrWinch);
-    
-    // Define the winch encoder 
-    Encoder 		m_WinchEncoder = new Encoder(RobotMap.WinchEncoderA,RobotMap.WinchEncoderB);
-    
-    // Limit switches
-    private DigitalInput m_lvertical = new DigitalInput(RobotMap.LS_WinchUp);
-	private DigitalInput m_lstored = new DigitalInput(RobotMap.LS_WinchDown);
 	
 	private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
     
@@ -61,11 +52,7 @@ public class Chassis extends Subsystem {
 		// Let's name the sensors on the LiveWindow
 		
 		addChild("Drive", m_robotDrive);
-		addChild("Winch Encoder", m_WinchEncoder);
-		
-		
-		// ToDo calculate based on Drum size
-		m_WinchEncoder.setDistancePerPulse((4.0 / 12.0 * Math.PI) / 360.0);
+		addChild("Winch", m_Winch);
 		
 
 		// ToDo determine when the light should come on/off
@@ -94,10 +81,11 @@ public class Chassis extends Subsystem {
 		
     }
     
-    public void log() {
+   
+    public void log() 
+    {
     	
-    	SmartDashboard.putNumber("Winch Speed", m_WinchEncoder.getRate());
-    	SmartDashboard.putNumber("Winch Distance", m_WinchEncoder.getDistance());
+    	// put class variables we want to see on dashboard or capture here
     	
 		/* example
 		SmartDashboard.putNumber("Left Distance", m_leftEncoder.getDistance());		 
@@ -106,6 +94,8 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Right Speed", m_rightEncoder.getRate());
 		SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
 		*/
+    	
+    	m_Winch.log();
 	}
 
 	public void Drive(Joystick driveStick)
@@ -119,39 +109,5 @@ public class Chassis extends Subsystem {
 		m_robotDrive.driveCartesian(0,0,0,0);		
 	}
 	
-	/**
-	 * Set the winch motor to move in the unspooled direction.
-	 */
-	public void unwind() {
-		motorWinch.set(-1);
-	}
-
-	/**
-	 * Set the winch motor to move in the spooled direction.
-	 */
-	public void wind() {
-		motorWinch.set(1);
-	}
-
-	/**
-	 * Stops the winch motor from moving.
-	 */
-	public void stop() {
-		motorWinch.set(0);
-	}
-
-	/**
-	 * Return true when the which lift triggers the "vertical" limit switch.
-	 */
-	public boolean isLiftVertical() {
-		return m_lvertical.get();
-	}
-
-	/**
-	 * Return true when the which lift triggers the "stored" limit switch.
-	 */
-	public boolean isLiftStored() {
-		return m_lstored.get();
-	}
 }
 
