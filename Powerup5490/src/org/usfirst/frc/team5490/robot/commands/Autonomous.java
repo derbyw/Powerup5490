@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5490.robot.commands;
 
+import org.usfirst.frc.team5490.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -7,22 +9,52 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Autonomous extends Command {
 
+	private enum AutoState {
+		Start,
+		Winch,
+		Done,
+		Error,
+	}
+	
+	private AutoState state;
+	
+	
     public Autonomous() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.m_Chassis);
+    	requires(Robot.m_Lift);
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	state = AutoState.Start;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
+    	switch(state) {
+    		case Start:
+    			state =  AutoState.Winch;
+    			break;
+    		case Winch:
+    			state =  AutoState.Done;
+    			break;
+    		case Done:
+    			break;
+    		case Error:
+    			break;
+    		default:
+    			state =  AutoState.Error;
+    			break;
+    		
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return state == AutoState.Done;
     }
 
     // Called once after isFinished returns true
