@@ -31,7 +31,7 @@ public class Chassis extends Subsystem {
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
     
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
-    public Winch m_Winch = new Winch();
+    
     
     ADIS16448_IMU imu = new ADIS16448_IMU();
     
@@ -52,7 +52,7 @@ public class Chassis extends Subsystem {
 		// Let's name the sensors on the LiveWindow
 		
 		addChild("Drive", m_robotDrive);
-		addChild("Winch", m_Winch);
+		
 		
 
 		// ToDo determine when the light should come on/off
@@ -95,7 +95,7 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
 		*/
     	
-    	m_Winch.log();
+    	
 	}
 
 	public void Drive(Joystick driveStick)

@@ -1,18 +1,22 @@
 package org.usfirst.frc.team5490.robot.subsystems;
 
+import org.usfirst.frc.team5490.robot.Robot;
 import org.usfirst.frc.team5490.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Lift extends Subsystem {
+public class Lift extends PIDSubsystem {
+
+	private static final double kP_real = 4;
+	private static final double kI_real = 0.07;
 
 	
     // Winch objects
@@ -26,8 +30,10 @@ public class Lift extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public Lift() {
-		super();
+	public Lift() {		
+		super(kP_real, kI_real, 0);
+
+		setAbsoluteTolerance(0.005);
 
 		// Let's name everything on the LiveWindow
 		addChild("Lift Motor", motorLift);
@@ -36,12 +42,26 @@ public class Lift extends Subsystem {
 		addChild("Down Limit Switch", m_lsBottom);
 	}
 	
-	
+	/**
+	 * Use the encoder as the PID sensor. This method is automatically
+	 * called by the subsystem.
+	 */
+	@Override
+	protected double returnPIDInput() {
+		return m_LiftEncoder.get();
+	}
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	 
+	/**
+	 * Use the motor as the PID output. This method is automatically called by
+	 * the subsystem.
+	 */
+	@Override
+	protected void usePIDOutput(double power) {
+		motorLift.set(power);
+	}
+		
+	@Override
+    public void initDefaultCommand() {      
     }
     
     public void log() {

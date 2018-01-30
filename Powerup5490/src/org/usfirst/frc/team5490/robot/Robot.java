@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5490.robot.subsystems.Chassis;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
+import org.usfirst.frc.team5490.robot.subsystems.Winch;
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
 
 import org.usfirst.frc.team5490.robot.commands.WinchToStore;
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
 	public static Lift m_Lift;
 	public static Gripper m_Gripper;
 	public static OI m_oi;
+	public static Winch m_Winch;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -53,6 +55,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		
 		m_Chassis = new Chassis();
+		m_Winch = new Winch();
 		m_Lift = new Lift();
 		m_Gripper = new Gripper();		
 		m_oi = new OI();
@@ -165,6 +168,7 @@ public class Robot extends TimedRobot {
 	 */
 	private void log() {
 		m_Chassis.log();
+		m_Winch.log();
 		m_Lift.log();
 		m_Gripper.log();		
 	}
