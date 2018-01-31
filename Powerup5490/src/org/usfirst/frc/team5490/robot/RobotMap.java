@@ -24,30 +24,57 @@ public class RobotMap {
 	public static int mtrGripper = 6;
 	public static int mtrLift = 5;
 	
+	
+	// IMU Reservations
+	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels
+	// this means that the SPI
+	//
+	// m_interrupt - MXP DIO0 -> DIO10 - IMU interrupt
+	// m_reset = MXP DIO8 -> DIO18 - IMU reset
+	// MOSI = MXP DIO7 -> DIO17 - SPI MOSI
+	// MISO = MXP DIO7 -> DIO16 - SPI MISO
+	// CLK = MXP DIO7 -> DIO15 - SPI CLK
+	// CS = MXP DIO7 -> DIO14 - SPI CS
+	
+	// reserve these too..
+	// I2C SDA = MXP DIO 15 - DIO25
+	// I2C SCL = MXP DIO 14 - DIO24
+	
+	// MXP available (encoder)
+	// pin used
+	// MXP DIO1   -> DIO11/PWM11  (gripper ls)
+	// MXP DIO2   -> DIO12/PWM12  (gripper ls)
+	// MXP DIO3   -> DIO13/PWM13
+	// block used...
+	// MXP DIO9   -> DIO19/PWM15
+	// MXP DIO10  -> DIO20/PWM16
+	// MXP DIO11  -> DIO21/PWM17	
+	// MXP DIO12  -> DIO22/PWM18  
+	// MXP DIO13  -> DIO23/PWM19
+	
+	// Analog outputs AO0, AO1
+	// Analog inputs AI4, AI5, AI6, AI7
+	
+	
+	
+	
 	// Encoder map
-	// mapping is TBD
-	// ToDo -- none of this is confirmed till things are wired
-	public static int WinchEncoderA = 10;
-	public static int WinchEncoderB = 12;
-	public static int LiftEncoderA = 13;
-	public static int LiftEncoderB = 14;	
-	public static int GripperEncoderA = 15;
-	public static int GripperEncoderB = 16;
-	
-	
-	
+	public static int WinchEncoderA = 0;
+	public static int WinchEncoderB = 1;
+	public static int LiftEncoderA = 2;
+	public static int LiftEncoderB = 3;	
+	public static int GripperEncoderA = 4;
+	public static int GripperEncoderB = 5;
 	
 	// Limit switches
-	// mapping is TBD
-	// ToDo -- none of this is confirmed	
-	public static int LS_WinchUp = 8;
-	public static int LS_WinchDown = 9;
+	public static int LS_WinchUp = 6;
+	public static int LS_WinchDown = 7;
 
-	public static int LS_LiftUp = 3;
-	public static int LS_LiftDown = 4;
+	public static int LS_LiftUp = 8;
+	public static int LS_LiftDown = 9;
 
-	public static int LS_GripperOpen = 5;
-	public static int LS_GripperClosed = 6;
+	public static int LS_GripperOpen = 11;
+	public static int LS_GripperClosed = 12;
 	
 	
 	

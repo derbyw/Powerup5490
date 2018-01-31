@@ -15,17 +15,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5490.robot.subsystems.Chassis;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
+
+import com.analog.adis16448.frc.ADIS16448_IMU;
+
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
 
-import org.usfirst.frc.team5490.robot.commands.WinchToStore;
 import org.usfirst.frc.team5490.robot.commands.Autonomous;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
 import org.usfirst.frc.team5490.robot.commands.GripperOpen;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 import org.usfirst.frc.team5490.robot.commands.WinchToOperate;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 
 
 
@@ -46,6 +46,8 @@ public class Robot extends IterativeRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	
+	ADIS16448_IMU imu = new ADIS16448_IMU();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -91,6 +93,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		log();
 	}
 
 	/**
@@ -141,6 +144,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		log();
+		
 	}
 
 	@Override
@@ -176,7 +180,22 @@ public class Robot extends IterativeRobot {
 	 */
 	private void log() {
 		m_Chassis.log();
-		//m_Lift.log();
-		//m_Gripper.log();		
+		m_Lift.log();
+		m_Gripper.log();
+		
+		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
+		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
+		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
+		
+		SmartDashboard.putNumber("Accel-X", imu.getAccelX());
+		SmartDashboard.putNumber("Accel-Y", imu.getAccelY());
+		SmartDashboard.putNumber("Accel-Z", imu.getAccelZ());
+		
+		SmartDashboard.putNumber("Pitch", imu.getPitch());
+		SmartDashboard.putNumber("Roll", imu.getRoll());
+		SmartDashboard.putNumber("Yaw", imu.getYaw());
+		
+		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
+		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
 	}
 }
