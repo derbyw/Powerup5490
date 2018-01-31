@@ -33,7 +33,7 @@ public class Chassis extends Subsystem {
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
     public Winch m_Winch = new Winch();
     
-    //ADIS16448_IMU imu = new ADIS16448_IMU();
+    ADIS16448_IMU imu = new ADIS16448_IMU();
     
 	
 	//private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
@@ -62,7 +62,7 @@ public class Chassis extends Subsystem {
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());
 		
-		/*
+		
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -77,7 +77,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
-		*/
+		
 		
     }
     
@@ -96,13 +96,29 @@ public class Chassis extends Subsystem {
 		*/
     	
     	m_Winch.log();
+    	
+		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
+		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
+		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
+		
+		SmartDashboard.putNumber("Accel-X", imu.getAccelX());
+		SmartDashboard.putNumber("Accel-Y", imu.getAccelY());
+		SmartDashboard.putNumber("Accel-Z", imu.getAccelZ());
+		
+		SmartDashboard.putNumber("Pitch", imu.getPitch());
+		SmartDashboard.putNumber("Roll", imu.getRoll());
+		SmartDashboard.putNumber("Yaw", imu.getYaw());
+		
+		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
+		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		
 	}
 
 	public void Drive(Joystick driveStick)
 	{
-		double speed = (-1*driveStick.getThrottle()+1)/2;
-		//speed = .2;
-		m_robotDrive.driveCartesian(speed*driveStick.getY(), -speed*driveStick.getX(), speed*driveStick.getTwist(), 0);
+		double speed = (-.9*driveStick.getThrottle()+1)/2;
+		speed += .1;
+		m_robotDrive.driveCartesian(speed*driveStick.getTwist(), -speed*driveStick.getX(), speed*driveStick.getY(), 0);
 	}
 	
 	public void StopMotors()
