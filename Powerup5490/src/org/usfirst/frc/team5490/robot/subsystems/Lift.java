@@ -75,14 +75,16 @@ public class Lift extends Subsystem {
 	 * Return true when the which lift triggers the "top" limit switch.
 	 */
 	public boolean isAtTop() {
-		return m_lsTop.get();
+		//return m_lsTop.get();
+		return false;
 	}
 
 	/**
 	 * Return true when the which lift triggers the "bottom" limit switch.
 	 */
 	public boolean isAtBottom() {
-		return m_lsBottom.get();
+		//return m_lsBottom.get();
+		return false;
 	}
 }
 

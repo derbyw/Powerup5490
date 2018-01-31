@@ -20,10 +20,11 @@ public class RobotMap {
 	public static int mtrFrontRight = 1;
 	public static int mtrRearRight = 2;
 	public static int mtrRearLeft = 3;	
-	public static int mtrWinch = 4;	
-	public static int mtrGripper = 6;
-	public static int mtrLift = 5;
 	
+	
+	public static int mtrLift = 4; 
+	public static int mtrWinch = 6;	
+	public static int mtrGripper = 5;
 	
 	// IMU Reservations
 	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels
@@ -32,9 +33,9 @@ public class RobotMap {
 	// m_interrupt - MXP DIO0 -> DIO10 - IMU interrupt
 	// m_reset = MXP DIO8 -> DIO18 - IMU reset
 	// MOSI = MXP DIO7 -> DIO17 - SPI MOSI
-	// MISO = MXP DIO7 -> DIO16 - SPI MISO
-	// CLK = MXP DIO7 -> DIO15 - SPI CLK
-	// CS = MXP DIO7 -> DIO14 - SPI CS
+	// MISO = MXP DIO6 -> DIO16 - SPI MISO
+	// CLK = MXP DIO5 -> DIO15 - SPI CLK
+	// CS = MXP DIO4 -> DIO14 - SPI CS
 	
 	// reserve these too..
 	// I2C SDA = MXP DIO 15 - DIO25

@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	
-	private Joystick m_joystick = new Joystick(1);
+	private Joystick m_joystick = new Joystick(0);
 
 	
 	//// CREATING BUTTONS
@@ -83,10 +83,10 @@ public class OI {
 		
 		// Create some buttons
 		
-		JoystickButton lu = new JoystickButton(m_joystick, 7);
-		JoystickButton ld = new JoystickButton(m_joystick, 8);
-		JoystickButton gopen = new JoystickButton(m_joystick, 9);
-		JoystickButton gclose = new JoystickButton(m_joystick, 10);
+		JoystickButton lu = new JoystickButton(m_joystick, 9);
+		JoystickButton ld = new JoystickButton(m_joystick, 10);
+		JoystickButton gopen = new JoystickButton(m_joystick, 2);
+		JoystickButton gclose = new JoystickButton(m_joystick, 1);
 		JoystickButton wstore = new JoystickButton(m_joystick, 11);
 		JoystickButton woperate = new JoystickButton(m_joystick, 12);
 		

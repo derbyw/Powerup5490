@@ -71,11 +71,13 @@ public class Gripper extends Subsystem {
 	 * the limit switch.
 	 */
 	public boolean isGrabbing() {
-		return m_lclose.get();
+		//return m_lclose.get();
+		return false;
 	}
 
 	public boolean isOpen() {
-		return m_lopen.get();
+		//return m_lopen.get();
+		return false;
 	}
 
 	
