@@ -36,7 +36,7 @@ public class Chassis extends Subsystem {
     //ADIS16448_IMU imu = new ADIS16448_IMU();
     
 	
-	private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
+	//private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
     
 
     // Put methods for controlling this subsystem
@@ -56,7 +56,7 @@ public class Chassis extends Subsystem {
 		
 
 		// ToDo determine when the light should come on/off
-		addChild("Lightmast", m_lightmast);
+		//addChild("Lightmast", m_lightmast);
 
 		
 		//When no other command is running let the operator drive around using the joystick		 
