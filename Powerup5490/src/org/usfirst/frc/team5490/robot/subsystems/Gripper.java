@@ -38,7 +38,7 @@ public class Gripper extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new GripperOpen());
+        //setDefaultCommand(new GripperOpen());
     }
     
     public void log() {

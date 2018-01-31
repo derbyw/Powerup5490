@@ -25,8 +25,7 @@ public class LiftDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Robot.m_Lift.isAtBottom();
-        return false;
+    	return Robot.m_Lift.isAtBottom();
     }
 
     // Called once after isFinished returns true
@@ -36,5 +35,6 @@ public class LiftDown extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.m_Lift.stop();
     }
 }

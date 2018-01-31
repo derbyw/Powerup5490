@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team5490.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -15,15 +15,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5490.robot.subsystems.Chassis;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
-import org.usfirst.frc.team5490.robot.subsystems.Winch;
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
 
 import org.usfirst.frc.team5490.robot.commands.WinchToStore;
 import org.usfirst.frc.team5490.robot.commands.Autonomous;
+import org.usfirst.frc.team5490.robot.commands.DriveRobot;
 import org.usfirst.frc.team5490.robot.commands.GripperOpen;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 import org.usfirst.frc.team5490.robot.commands.WinchToOperate;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -35,14 +36,13 @@ import edu.wpi.first.wpilibj.Joystick;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends IterativeRobot {
 	
 	// create our assemblies..
 	public static Chassis m_Chassis;
 	public static Lift m_Lift;
 	public static Gripper m_Gripper;
 	public static OI m_oi;
-	public static Winch m_Winch;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -54,11 +54,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		
+		
 		m_Chassis = new Chassis();
-		m_Winch = new Winch();
+		
 		m_Lift = new Lift();
 		m_Gripper = new Gripper();		
 		m_oi = new OI();
+		
+		m_autonomousCommand = new DriveRobot();
+		
 		
 		// instantiate the command used for the autonomous period
 		// add version of auto operation here..
@@ -69,6 +73,7 @@ public class Robot extends TimedRobot {
 		// 
 		// this lest the dashboard choose which on to run at start
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
 		
 		
 	}
@@ -102,8 +107,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
+	
 		
-		m_autonomousCommand = m_chooser.getSelected();
+		//m_autonomousCommand = m_chooser.getSelected();
 		
 		/*
 		 *  code to pull automode code from dashboard
@@ -121,9 +127,11 @@ public class Robot extends TimedRobot {
 		 
 
 		// schedule the autonomous command (example)
+		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
 	}
 
 	/**
@@ -168,8 +176,7 @@ public class Robot extends TimedRobot {
 	 */
 	private void log() {
 		m_Chassis.log();
-		m_Winch.log();
-		m_Lift.log();
-		m_Gripper.log();		
+		//m_Lift.log();
+		//m_Gripper.log();		
 	}
 }

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WinchToOperate extends Command {
 
     public WinchToOperate() {
-    	requires(Robot.m_Winch);
+    	requires(Robot.m_Chassis);
     }
 
     // Called just before this Command runs the first time
@@ -19,12 +19,12 @@ public class WinchToOperate extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Winch.wind();
+    	Robot.m_Chassis.m_Winch.wind();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.m_Winch.isLiftStored();        
+    	return Robot.m_Chassis.m_Winch.isLiftStored();        
     }
 
     // Called once after isFinished returns true

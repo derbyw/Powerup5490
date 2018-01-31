@@ -31,9 +31,9 @@ public class Chassis extends Subsystem {
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
     
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
+    public Winch m_Winch = new Winch();
     
-    
-    ADIS16448_IMU imu = new ADIS16448_IMU();
+    //ADIS16448_IMU imu = new ADIS16448_IMU();
     
 	
 	private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
@@ -44,7 +44,7 @@ public class Chassis extends Subsystem {
 	// see DriveTrain example
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+
 		
 		motorFrontLeft.setInverted(true);
 		motorRearLeft.setInverted(true);
@@ -52,7 +52,7 @@ public class Chassis extends Subsystem {
 		// Let's name the sensors on the LiveWindow
 		
 		addChild("Drive", m_robotDrive);
-		
+		addChild("Winch", m_Winch);
 		
 
 		// ToDo determine when the light should come on/off
@@ -62,7 +62,7 @@ public class Chassis extends Subsystem {
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());
 		
-		
+		/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -77,7 +77,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
-		
+		*/
 		
     }
     
@@ -95,12 +95,13 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
 		*/
     	
-    	
+    	m_Winch.log();
 	}
 
 	public void Drive(Joystick driveStick)
 	{
 		double speed = (-1*driveStick.getThrottle()+1)/2;
+		//speed = .2;
 		m_robotDrive.driveCartesian(speed*driveStick.getY(), -speed*driveStick.getX(), speed*driveStick.getTwist(), 0);
 	}
 	

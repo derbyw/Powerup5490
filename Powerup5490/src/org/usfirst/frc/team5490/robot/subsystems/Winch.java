@@ -22,8 +22,8 @@ public class Winch extends Subsystem {
     Encoder 		m_WinchEncoder = new Encoder(RobotMap.WinchEncoderA,RobotMap.WinchEncoderB);
     
     // Limit switches
-    private DigitalInput m_lvertical = new DigitalInput(RobotMap.LS_WinchUp);
-	private DigitalInput m_lstored = new DigitalInput(RobotMap.LS_WinchDown);
+    //private DigitalInput m_lvertical = new DigitalInput(RobotMap.LS_WinchUp);
+	//private DigitalInput m_lstored = new DigitalInput(RobotMap.LS_WinchDown);
 
 
     // Put methods for controlling this subsystem
@@ -72,14 +72,17 @@ public class Winch extends Subsystem {
 	 * Return true when the which lift triggers the "vertical" limit switch.
 	 */
 	public boolean isLiftVertical() {
-		return m_lvertical.get();
+		//return m_lvertical.get();
+		return false;
 	}
+		
 
 	/**
 	 * Return true when the which lift triggers the "stored" limit switch.
 	 */
 	public boolean isLiftStored() {
-		return m_lstored.get();
+		//return m_lstored.get();
+		return false;
 	}
 
 

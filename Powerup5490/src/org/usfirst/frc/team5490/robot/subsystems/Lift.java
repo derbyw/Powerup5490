@@ -1,22 +1,19 @@
 package org.usfirst.frc.team5490.robot.subsystems;
 
-import org.usfirst.frc.team5490.robot.Robot;
 import org.usfirst.frc.team5490.robot.RobotMap;
+import org.usfirst.frc.team5490.robot.commands.LiftDown;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Lift extends PIDSubsystem {
-
-	private static final double kP_real = 4;
-	private static final double kI_real = 0.07;
+public class Lift extends Subsystem {
 
 	
     // Winch objects
@@ -30,10 +27,8 @@ public class Lift extends PIDSubsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public Lift() {		
-		super(kP_real, kI_real, 0);
-
-		setAbsoluteTolerance(0.005);
+	public Lift() {
+		super();
 
 		// Let's name everything on the LiveWindow
 		addChild("Lift Motor", motorLift);
@@ -42,26 +37,12 @@ public class Lift extends PIDSubsystem {
 		addChild("Down Limit Switch", m_lsBottom);
 	}
 	
-	/**
-	 * Use the encoder as the PID sensor. This method is automatically
-	 * called by the subsystem.
-	 */
-	@Override
-	protected double returnPIDInput() {
-		return m_LiftEncoder.get();
-	}
+	
 
-	/**
-	 * Use the motor as the PID output. This method is automatically called by
-	 * the subsystem.
-	 */
-	@Override
-	protected void usePIDOutput(double power) {
-		motorLift.set(power);
-	}
-		
-	@Override
-    public void initDefaultCommand() {      
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new LiftDown());
+    	 
     }
     
     public void log() {
@@ -73,14 +54,14 @@ public class Lift extends PIDSubsystem {
 	 * Set the lift motor to move in the down direction.
 	 */
 	public void lower() {
-		motorLift.set(-1);
+		motorLift.set(-0.2);
 	}
 
 	/**
 	 * Set the lift motor to move in the up direction.
 	 */
 	public void raise() {
-		motorLift.set(1);
+		motorLift.set(.2);
 	}
 
 	/**

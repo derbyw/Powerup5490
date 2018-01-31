@@ -15,37 +15,33 @@ package org.usfirst.frc.team5490.robot;
  */
 public class RobotMap {
 
-	// define the motor mapping
+	// The following mapping is final as of 1/29/18
 	public static int mtrFrontLeft = 0;
 	public static int mtrFrontRight = 1;
 	public static int mtrRearRight = 2;
 	public static int mtrRearLeft = 3;	
 	public static int mtrWinch = 4;	
-	public static int mtrGripper = 5;
-	public static int mtrLift = 6;
+	public static int mtrGripper = 6;
+	public static int mtrLift = 5;
 	
 	// Encoder map
 	// mapping is TBD
 	// ToDo -- none of this is confirmed till things are wired
-	public static int WinchEncoderA = 1;
-	public static int WinchEncoderB = 2;
-	public static int LiftEncoderA = 3;
-	public static int LiftEncoderB = 4;	
-	public static int GripperEncoderA = 5;
-	public static int GripperEncoderB = 6;
+	public static int WinchEncoderA = 10;
+	public static int WinchEncoderB = 12;
+	public static int LiftEncoderA = 13;
+	public static int LiftEncoderB = 14;	
+	public static int GripperEncoderA = 15;
+	public static int GripperEncoderB = 16;
 	
 	
-	public static int FrontLeftEncoder = 0;
-	public static int FrontRightEncoder = 2;
-	public static int RearRightEncoder = 4;
-	public static int RearLeftEncoder = 5;	
-
+	
 	
 	// Limit switches
 	// mapping is TBD
 	// ToDo -- none of this is confirmed	
-	public static int LS_WinchUp = 1;
-	public static int LS_WinchDown = 2;
+	public static int LS_WinchUp = 8;
+	public static int LS_WinchDown = 9;
 
 	public static int LS_LiftUp = 3;
 	public static int LS_LiftDown = 4;
