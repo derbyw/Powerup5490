@@ -10,13 +10,16 @@ import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
 
 
-import edu.wpi.first.wpilibj.DigitalOutput;
+//import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick;
 
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
+
+
+
 
 /**
  *
@@ -34,6 +37,24 @@ public class Chassis extends Subsystem {
     public Winch m_Winch = new Winch();
     
     ADIS16448_IMU imu = new ADIS16448_IMU();
+    
+
+    /*
+     *   
+    Hcurve.Size = 9;
+
+
+    i = 0; // at pad
+    Hcurve.P(i).x = m.pad_depth;
+    Hcurve.P(i).y = pheight;
+    Hcurve.r(i).x = (theight - pheight) * 2;
+    Hcurve.r(i).y = 0;
+    */
+    
+    /*
+     * (non-Javadoc)
+     * @see edu.wpi.first.wpilibj.command.Subsystem#initDefaultCommand()
+     */
     
 	
 	//private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
