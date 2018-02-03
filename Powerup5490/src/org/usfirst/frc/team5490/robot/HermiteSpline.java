@@ -7,12 +7,16 @@ package org.usfirst.frc.team5490.robot;
 
 public class HermiteSpline {
 	
+	// how many points to use to find the path length estimate..
+	private int EstimateGranularity = 100;
 
 	private Point3D[] m_P;
 	private Point3D[] mm_T;
 	
 	
 	private Point3D m_Point = new Point3D();
+	
+	
 	
 
 	
@@ -48,35 +52,70 @@ public class HermiteSpline {
 	// calculate a point in the span of control points i-1..i 
 	// i is index of control points
 	// t is percentage between points  (i.e. range is 0..1)
-	public Point3D Calc(int i, float t)
+	public Point3D Calc(int segment, double percent)
 	{
-	    double t2 = 0;
-	    double t3 = 0;
+	    double percent2 = 0;
+	    double percent3 = 0;
 	    double c = 0;
 	    double a = 0;
 	    double b = 0;
 	    double d = 0;
 	    
 	
-	    if (i < 1 || i > m_P.length)
+	    if (segment < 1 || segment > m_P.length)
 	    {	
-		    t2 = t * t;
-		    t3 = t2 * t;
+		    percent2 = percent * percent;
+		    percent3 = percent2 * percent;
 		    
 		    //Curve.x = cx(0) * t3 + cx(1) * t2 + cx(2) * t + cx(3)
 		    //Curve.y = cy(0) * t3 + cy(1) * t2 + cy(2) * t + cy(3)
 		    //Curve.z = cz(0) * t3 + cz(1) * t2 + cz(2) * t + cz(3)
 		
-		    a = 2 * t3 - 3 * t2 + 1;		//h1
-		    b = -2 * t3 + 3 * t2;			//h2	    	
-		    c = t3 - 2 * t2 + t;			//h3
-		    d = (t3 - t2); 					//h4
+		    a = 2 * percent3 - 3 * percent2 + 1;		//h1
+		    b = -2 * percent3 + 3 * percent2;			//h2	    	
+		    c = percent3 - 2 * percent2 + percent;		//h3
+		    d = (percent3 - percent2); 					//h4
 		
-		    m_Point.x = a * m_P[i - 1].x + b * m_P[i].x + c * mm_T[i - 1].x + d * mm_T[i].x;
-		    m_Point.y = a * m_P[i - 1].y + b * m_P[i].y + c * mm_T[i - 1].y + d * mm_T[i].y;
-		    m_Point.z = a * m_P[i - 1].z + b * m_P[i].z + c * mm_T[i - 1].z + d * mm_T[i].z;
+		    m_Point.x = a * m_P[segment - 1].x + b * m_P[segment].x + c * mm_T[segment - 1].x + d * mm_T[segment].x;
+		    m_Point.y = a * m_P[segment - 1].y + b * m_P[segment].y + c * mm_T[segment - 1].y + d * mm_T[segment].y;
+		    
+		    // we *may* want to just calculate slope here instead of a 3 dimension so that we can
+		    // get the "twist" output the mechanum drive wants..
+		    // for now use the 3rd dimension
+		    m_Point.z = a * m_P[segment - 1].z + b * m_P[segment].z + c * mm_T[segment - 1].z + d * mm_T[segment].z;
 	    }
 	    
 	    return m_Point;	
+	}
+	
+	// calculate the XY path length (in whatever units the points are in) so that we can scale the path according to 
+	// to the robots speed.
+	// numerically integrate the path to estimate the path length
+	public double PathLength(int segment)
+	{
+		double length = 0;
+		
+		if ((segment > 0) && (segment < m_P.length))  {
+			Point3D LastPoint = new Point3D(m_P[segment-1]);
+			Point3D Point;
+			
+			double scale = 1.0 / (double)EstimateGranularity;
+			double percent = scale;
+			
+			// start at 1 cause we know the first point is 0,0
+			for(int i = 1; i < EstimateGranularity; i++) {			
+				//  get the next point on the path
+				Point = Calc(segment, percent);
+				// find delta X and Y for the segment
+				double deltaX = Point.x - LastPoint.x;
+				double deltaY = Point.y - LastPoint.y;
+				// use the Pythagorean theorem to get distance..
+				// and add it to our sum
+				length += Math.sqrt(deltaX*deltaX + deltaY*deltaY); 
+				// move on to the span ...
+				percent += scale;
+			}	
+		}
+		return length;	
 	}
 }

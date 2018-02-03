@@ -10,4 +10,17 @@ public class Point3D
     public Point3D()
     {
     }
+    
+    // make a copy...
+    public Point3D(Point3D source)
+    {
+    	Copy(source);
+    }
+    
+    public void Copy(Point3D source)
+	{
+		x = source.x;
+		y = source.y;
+		z = source.z;
+	}
 }
