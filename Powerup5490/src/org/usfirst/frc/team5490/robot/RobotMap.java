@@ -60,10 +60,10 @@ public class RobotMap {
 	
 	
 	// Encoder map
-	public static int WinchEncoderA = 0;
-	public static int WinchEncoderB = 1;
-	public static int LiftEncoderA = 2;
-	public static int LiftEncoderB = 3;	
+	public static int LiftEncoderA = 0;
+	public static int LiftEncoderB = 1;	
+	public static int WinchEncoderA = 2;
+	public static int WinchEncoderB = 3;
 	public static int GripperEncoderA = 4;
 	public static int GripperEncoderB = 5;
 	

@@ -5,30 +5,39 @@ import org.usfirst.frc.team5490.robot.commands.LiftDown;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Lift extends Subsystem {
+public class Lift extends PIDSubsystem {
 
 	
     // Winch objects
     private Talon   motorLift = new Talon(RobotMap.mtrLift);   
     private Encoder m_LiftEncoder = new Encoder(RobotMap.LiftEncoderA,RobotMap.LiftEncoderB);
+    
      
     //Limit switches
     private DigitalInput m_lsTop = new DigitalInput(RobotMap.LS_LiftUp);
 	private DigitalInput m_lsBottom = new DigitalInput(RobotMap.LS_LiftDown);
 	
+	private static final double kP = 0.01;
+	private static final double kI = 0.0;
+
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
 	public Lift() {
-		super();
+		super(kP, kI, 0);
+		
+		
+		m_LiftEncoder.setDistancePerPulse(4.88 / 500);   // 4.88 mm per turn of the shaft / pulses per turn
+		setAbsoluteTolerance(0.1); // MM
+		
 
 		// Let's name everything on the LiveWindow
 		addChild("Lift Motor", motorLift);
@@ -85,6 +94,32 @@ public class Lift extends Subsystem {
 	public boolean isAtBottom() {
 		//return m_lsBottom.get();
 		return false;
+	}
+	
+	/**
+	 * Use the potentiometer as the PID sensor. This method is automatically
+	 * called by the subsystem.
+	 */
+	@Override
+	protected double returnPIDInput() {
+		return m_LiftEncoder.getDistance();
+	}
+	
+	
+	static double current;
+	
+	/**
+	 * Use the motor as the PID output. This method is automatically called by
+	 * the subsystem.
+	 */
+	@Override
+	protected void usePIDOutput(double power) {
+		//
+		double weight= 1;	// 		
+		
+		current = (1-weight) * current + (weight * power);
+		
+		motorLift.set(current*-1);
 	}
 }
 

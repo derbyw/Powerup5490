@@ -17,6 +17,7 @@ import org.usfirst.frc.team5490.robot.commands.GripperRelease;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 import org.usfirst.frc.team5490.robot.commands.LiftSwitch;
 import org.usfirst.frc.team5490.robot.commands.LiftScale;
+import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
 import org.usfirst.frc.team5490.robot.commands.LiftHook;
 import org.usfirst.frc.team5490.robot.commands.LiftRobot;   // same as lift down, but may be partial
 
@@ -90,8 +91,10 @@ public class OI {
 		JoystickButton wstore = new JoystickButton(m_joystick, 11);
 		JoystickButton woperate = new JoystickButton(m_joystick, 12);
 		
-		lu.toggleWhenPressed(new LiftHook());
-		ld.toggleWhenPressed(new LiftDown());
+		
+		
+		lu.toggleWhenPressed(new LiftSetpoint(1270));
+		ld.toggleWhenPressed(new LiftSetpoint(0));
 		
 		gopen.toggleWhenPressed(new GripperOpen());
 		gclose.toggleWhenPressed(new GripperClose());
