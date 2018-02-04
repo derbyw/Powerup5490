@@ -26,6 +26,9 @@ import com.analog.adis16448.frc.ADIS16448_IMU;
  */
 public class Chassis extends Subsystem {
 	
+	// lower limit for speed setting  
+	private static final double minimum_drive = 0.1;
+	
 	// Main Movement Drive 
 	
 	SpeedController motorFrontLeft = new Talon(RobotMap.mtrFrontLeft);
@@ -34,6 +37,7 @@ public class Chassis extends Subsystem {
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
     
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
+    
     public Winch m_Winch = new Winch();
     
     ADIS16448_IMU imu = new ADIS16448_IMU();
@@ -137,8 +141,9 @@ public class Chassis extends Subsystem {
 
 	public void Drive(Joystick driveStick)
 	{
-		double speed = (-.9*driveStick.getThrottle()+1)/2;
-		speed += .1;
+		double speedrange = 1 - minimum_drive;
+		double speed = (-speedrange*driveStick.getThrottle()+1)/2;
+		speed += minimum_drive;
 		m_robotDrive.driveCartesian(speed*driveStick.getTwist(), -speed*driveStick.getX(), speed*driveStick.getY(), 0);
 	}
 	
