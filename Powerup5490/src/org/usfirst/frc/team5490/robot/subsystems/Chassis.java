@@ -66,9 +66,9 @@ public class Chassis extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
 
-		
-		motorFrontLeft.setInverted(true);
-		motorRearLeft.setInverted(true);
+		// FRC documentation indicates this should not be necessary anymore 
+		//motorFrontLeft.setInverted(true);//
+		//motorRearLeft.setInverted(true);
 		
 		// Let's name the sensors on the LiveWindow
 		
