@@ -47,9 +47,10 @@ public class LiftSetpoint extends Command {
 	}
 	
 	
-	private void Create_Ramp() {		
-		double step = Math.PI / S_Curve.length;
-		// use a 0..Pi sine wave for the motor curve
+	private void Create_Ramp() {
+		
+		double step = (Math.PI / 2) / S_Curve.length;
+		// use a 0..90 sine wave for the motor velocity curve
 		for(int i = 0; i < S_Curve.length; i++) {
 			S_Curve[i] = Math.sin(step);
 		}	
