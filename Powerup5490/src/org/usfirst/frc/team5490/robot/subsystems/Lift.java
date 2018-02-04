@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Lift extends PIDSubsystem {
 
 	
+	private static final double mm_per_turn = 4.88;
+	private static final double pulses_per_revolution = 500;
+	private static final double motor_up_direction = -1;
+	
+	
     // Winch objects
     private Talon   motorLift = new Talon(RobotMap.mtrLift);   
     private Encoder m_LiftEncoder = new Encoder(RobotMap.LiftEncoderA,RobotMap.LiftEncoderB);
@@ -35,7 +40,8 @@ public class Lift extends PIDSubsystem {
 		super(kP, kI, 0);
 		
 		
-		m_LiftEncoder.setDistancePerPulse(4.88 / 500);   // 4.88 mm per turn of the shaft / pulses per turn
+		m_LiftEncoder.setDistancePerPulse(mm_per_turn / pulses_per_revolution);   // 4.88 mm per turn of the shaft / pulses per turn
+		
 		setAbsoluteTolerance(0.1); // MM
 		
 
@@ -62,15 +68,15 @@ public class Lift extends PIDSubsystem {
     /**
 	 * Set the lift motor to move in the down direction.
 	 */
-	public void lower() {
-		motorLift.set(-0.2);
+	public void lower(double percent) {
+		motorLift.set(percent * -1 * motor_up_direction);
 	}
 
 	/**
 	 * Set the lift motor to move in the up direction.
 	 */
-	public void raise() {
-		motorLift.set(.2);
+	public void raise(double percent) {
+		motorLift.set(percent * motor_up_direction);
 	}
 
 	/**
@@ -105,21 +111,13 @@ public class Lift extends PIDSubsystem {
 		return m_LiftEncoder.getDistance();
 	}
 	
-	
-	static double current;
-	
 	/**
 	 * Use the motor as the PID output. This method is automatically called by
 	 * the subsystem.
 	 */
 	@Override
 	protected void usePIDOutput(double power) {
-		//
-		double weight= 1;	// 		
-		
-		current = (1-weight) * current + (weight * power);
-		
-		motorLift.set(current*-1);
+		motorLift.set(power*motor_up_direction);
 	}
 }
 

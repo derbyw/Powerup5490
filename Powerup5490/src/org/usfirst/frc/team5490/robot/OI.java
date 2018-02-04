@@ -66,7 +66,7 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	
 	public OI() {
-		// Put our operatons Some buttons on the SmartDashboard
+		// Put our operations buttons on the SmartDashboard
 		
 		SmartDashboard.putData("Winch to Operate", new WinchToOperate());
 		SmartDashboard.putData("Winch to Store", new WinchToStore());
