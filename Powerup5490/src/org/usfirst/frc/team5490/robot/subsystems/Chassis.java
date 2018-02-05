@@ -144,7 +144,21 @@ public class Chassis extends Subsystem {
 		double speedrange = 1 - minimum_drive;
 		double speed = (-speedrange*driveStick.getThrottle()+1)/2;
 		speed += minimum_drive;
-		m_robotDrive.driveCartesian(speed*driveStick.getTwist(), -speed*driveStick.getX(), speed*driveStick.getY(), 0);
+		
+		//  this is *supposed* to be this --  
+		//driveCartesian(double ySpeed, double xSpeed, double zRotation, double gyroAngle)
+		// we had
+		//m_robotDrive.driveCartesian(speed*driveStick.getTwist(), -speed*driveStick.getX(), speed*driveStick.getY(), imu.getYaw());
+		//
+		// this *should* be right -- if not investigate motor wiring & config 
+		m_robotDrive.driveCartesian(speed*driveStick.getY(),speed*driveStick.getX(),speed*driveStick.getTwist(), imu.getYaw());
+				
+	}
+	
+	// Let an external function drive the chassis 
+	public void Drive(double X, double Y, double Z, double speed)
+	{
+		m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, imu.getYaw());
 	}
 	
 	public void StopMotors()

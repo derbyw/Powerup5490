@@ -9,6 +9,7 @@ public class Point3D
 
     public Point3D()
     {
+    	x = y = z = 0.0;
     }
     
     // make a copy...

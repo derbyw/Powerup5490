@@ -49,6 +49,12 @@ public class HermiteSpline {
 	    return mm_T[i];
 	}
 	
+	public int segments()
+	{
+		return m_P.length;
+	}
+	
+	
 	// calculate a point in the span of control points i-1..i 
 	// i is index of control points
 	// t is percentage between points  (i.e. range is 0..1)
@@ -87,6 +93,18 @@ public class HermiteSpline {
 	    
 	    return m_Point;	
 	}
+	
+
+	// get the length of all the segments...
+	public double TotalPathLength()
+	{
+    	double estimated_move_length = 0;
+    	for(int i = 0; i < m_P.length; i++)  {
+    		estimated_move_length += PathLength(i);
+    	}	
+    	return estimated_move_length;
+	}
+
 	
 	// calculate the XY path length (in whatever units the points are in) so that we can scale the path according to 
 	// to the robots speed.
