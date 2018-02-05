@@ -22,8 +22,8 @@ public class HermiteSpline {
 	
 	public void Size(int points)
 	{        
-        m_P = new Point3D[points + 1];
-        mm_T = new Point3D[points + 1];
+        m_P = new Point3D[points];
+        mm_T = new Point3D[points];
 
         for (int i = 0; i < points; i++)
         {
@@ -39,12 +39,12 @@ public class HermiteSpline {
 	}
 	
 	
-	public Point3D P(short i)
+	public Point3D P(int i)
 	{
 	    return m_P[i];
 	}
 	
-	public Point3D T(short i)
+	public Point3D T(int i)
 	{
 	    return mm_T[i];
 	}
@@ -112,6 +112,7 @@ public class HermiteSpline {
 	public double PathLength(int segment)
 	{
 		double length = 0;
+		
 		
 		if ((segment > 0) && (segment < m_P.length))  {
 			Point3D LastPoint = new Point3D(m_P[segment-1]);

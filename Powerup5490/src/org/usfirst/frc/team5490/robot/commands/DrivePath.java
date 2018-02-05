@@ -49,7 +49,7 @@ public class DrivePath extends Command {
     	
     	
     	// mechanum wheels mess this up due to slip but it's a start
-    	double max_in_per_sec = max_motor * gear_ratio * (2 * Math.PI * (wheel_diameter/2));
+    	double max_in_per_sec = max_motor * gear_ratio * (2 * Math.PI * (wheel_diameter/2)) / 60.0;
     	
     	// nominal velocity at the users speed setting..
     	adjusted_in_per_sec = max_in_per_sec * speed;   	
@@ -58,7 +58,7 @@ public class DrivePath extends Command {
     	percent_step_per_tick = new double[m_path.segments()];	// percent per tick in a segment
     	
     	
-    	for(int i = 0; i < m_path.segments(); i++)  {
+    	for(int i = 1; i < m_path.segments(); i++)  {
     		double estimated_move_length = m_path.PathLength(i);
     		// so we want the percent to move in the segment for a tick update 
     		percent_step_per_tick[i] =  adjusted_in_per_sec / estimated_move_length;
@@ -68,6 +68,13 @@ public class DrivePath extends Command {
     	requires(Robot.m_Chassis);    
     	
     }
+    
+    // Allow us to set the initial position (current)
+    public void Init(Point3D start_pos)
+    {
+    	last.Copy(start_pos);    	
+    }
+    
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {   
@@ -80,6 +87,9 @@ public class DrivePath extends Command {
     	double sy = (current.y - last.y) * scan_freq;
     	double sz = (current.z - last.z) * scan_freq;
     	
+    	// ToDo - figure out slope to motor output mapping
+    	// need way to normalize slopes here
+    	
     	// send the path velocities to the motors.. 
     	Robot.m_Chassis.Drive(sx, sy, sz, speed);    
     	
@@ -87,7 +97,7 @@ public class DrivePath extends Command {
     	percent += percent_step_per_tick[segment];
     	if (percent > 1) {  // bump to next path segment
     		segment++;		// are we done..
-    		if (segment > m_path.segments()) {
+    		if (segment >= m_path.segments()) {
     			done = true;
     		}
     		//percent -= 1.0;  // start the next segment with the remainder
