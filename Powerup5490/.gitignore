@@ -1,6 +1,7 @@
 .metadata
 bin/
 tmp/
+dist/
 *.tmp
 *.bak
 *.swp
@@ -9,6 +10,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+.classpath
 
 # External tool builders
 .externalToolBuilders/
@@ -50,3 +53,4 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+/build/
