@@ -166,5 +166,20 @@ public class Chassis extends Subsystem {
 		m_robotDrive.driveCartesian(0,0,0,0);		
 	}
 	
+	public void moveForward()
+	{
+		motorFrontLeft.set(1);
+		motorRearLeft.set(1);
+		motorFrontRight.set(1);
+		motorRearRight.set(1);
+	}
+	
+	public void moveBackward()
+	{
+		motorFrontLeft.set(-1);
+		motorRearLeft.set(-1);
+		motorFrontRight.set(-1);
+		motorRearRight.set(-1);
+	}
 }
 

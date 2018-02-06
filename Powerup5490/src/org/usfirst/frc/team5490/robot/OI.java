@@ -16,6 +16,8 @@ import org.usfirst.frc.team5490.robot.commands.GripperRelease;
 
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 import org.usfirst.frc.team5490.robot.commands.LiftSwitch;
+import org.usfirst.frc.team5490.robot.commands.MoveFullBackward;
+import org.usfirst.frc.team5490.robot.commands.MoveFullForward;
 import org.usfirst.frc.team5490.robot.commands.LiftScale;
 import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
 import org.usfirst.frc.team5490.robot.commands.LiftHook;
@@ -90,7 +92,8 @@ public class OI {
 		JoystickButton gclose = new JoystickButton(m_joystick, 1);
 		JoystickButton wstore = new JoystickButton(m_joystick, 11);
 		JoystickButton woperate = new JoystickButton(m_joystick, 12);
-		
+		JoystickButton forward = new JoystickButton(m_joystick, 5);
+		JoystickButton backward = new JoystickButton(m_joystick, 3);
 		
 		
 		lu.toggleWhenPressed(new LiftSetpoint(1270));
@@ -101,7 +104,9 @@ public class OI {
 		
 		wstore.toggleWhenPressed(new WinchToStore());
 		woperate.toggleWhenPressed(new WinchToOperate());
-
+		
+		forward.toggleWhenPressed(new MoveFullForward());
+		forward.toggleWhenPressed(new MoveFullBackward());
 
 		// Connect the buttons to commands
 
