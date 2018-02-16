@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 
 import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
@@ -12,11 +13,12 @@ import org.usfirst.frc.team5490.robot.commands.DriveRobot;
 
 //import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick;
-
-
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 
@@ -32,10 +34,12 @@ public class Chassis extends Subsystem {
 	// Main Movement Drive 
 	
 	SpeedController motorFrontLeft = new Talon(RobotMap.mtrFrontLeft);
-    SpeedController motorRearLeft= new Talon(RobotMap.mtrRearLeft);  
+    //WPI_TalonSRX motorRearLeft= new WPI_TalonSRX(RobotMap.mtrRearLeft);  
+	SpeedController motorRearLeft = new Talon(RobotMap.mtrRearLeft);
     SpeedController motorFrontRight= new Talon(RobotMap.mtrFrontRight);
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
     
+	//RobotDrive m_robotDrive = new RobotDrive(motorFrontLeft, motorRearLeft, motorFrontRight, motorRearRight);
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
     
     public Winch m_Winch = new Winch();
@@ -70,14 +74,14 @@ public class Chassis extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
 
-		// FRC documentation indicates this should not be necessary anymore 
-		//motorFrontLeft.setInverted(true);//
-		//motorRearLeft.setInverted(true);
-		
+		// (2/14/2018) Inversion proved to be necessary to get the robot moving in the right direction 
+    	motorFrontLeft.setInverted(true);
+    	motorRearRight.setInverted(true);
+    			
 		// Let's name the sensors on the LiveWindow
 		
-		addChild("Drive", m_robotDrive);
-		addChild("Winch", m_Winch);
+		//addChild("Drive", m_robotDrive);
+		//addChild("Winch", m_Winch);
 		
 
 		// ToDo determine when the light should come on/off
@@ -122,6 +126,11 @@ public class Chassis extends Subsystem {
     	
     	m_Winch.log();
     	
+    	SmartDashboard.putNumber("motorFrontLeft", motorFrontLeft.get());
+    	SmartDashboard.putNumber("motorFrontRight", motorFrontRight.get());
+    	SmartDashboard.putNumber("motorRearLeft", motorRearLeft.get());
+    	SmartDashboard.putNumber("motorRearRight", motorRearRight.get());
+    	
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -139,11 +148,12 @@ public class Chassis extends Subsystem {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void Drive(Joystick driveStick)
 	{
-		double speedrange = 1 - minimum_drive;
-		double speed = (-speedrange*driveStick.getThrottle()+1)/2;
-		speed += minimum_drive;
+//		double speedrange = 1 - minimum_drive;
+//		double speed = (-speedrange*driveStick.getThrottle()+1)/2;
+//		speed += minimum_drive;
 		
 		//  this is *supposed* to be this --  
 		//driveCartesian(double ySpeed, double xSpeed, double zRotation, double gyroAngle)
@@ -151,33 +161,36 @@ public class Chassis extends Subsystem {
 		//m_robotDrive.driveCartesian(speed*driveStick.getTwist(), -speed*driveStick.getX(), speed*driveStick.getY(), imu.getYaw());
 		//
 		// this *should* be right -- if not investigate motor wiring & config 
-		m_robotDrive.driveCartesian(speed*driveStick.getY(),speed*driveStick.getX(),speed*driveStick.getTwist(), imu.getYaw());
-				
+		
+		// ADD SPEED LIMIT LATER
+		m_robotDrive.setDeadband(0.1);
+		m_robotDrive.driveCartesian(-driveStick.getY(),driveStick.getX(),driveStick.getZ());
+		
 	}
 	
 	// Let an external function drive the chassis 
 	public void Drive(double X, double Y, double Z, double speed)
 	{
-		m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, imu.getYaw());
+		//m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, imu.getYaw());
 	}
 	
 	public void StopMotors()
 	{		
-		m_robotDrive.driveCartesian(0,0,0,0);		
+		//m_robotDrive.driveCartesian(0,0,0,0);		
 	}
 	
 	public void moveForward()
 	{
-		motorFrontLeft.set(1);
-		motorRearLeft.set(1);
+		motorFrontLeft.set(-1);
+		motorRearLeft.set(-1);
 		motorFrontRight.set(1);
 		motorRearRight.set(1);
 	}
 	
 	public void moveBackward()
 	{
-		motorFrontLeft.set(-1);
-		motorRearLeft.set(-1);
+		motorFrontLeft.set(1);
+		motorRearLeft.set(1);
 		motorFrontRight.set(-1);
 		motorRearRight.set(-1);
 	}
