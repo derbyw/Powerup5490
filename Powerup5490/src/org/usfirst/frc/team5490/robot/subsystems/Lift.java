@@ -20,7 +20,7 @@ public class Lift extends PIDSubsystem {
 	private static final double motor_up_direction = -1;
 	
 	
-    // Winch objects
+    // Lift objects
     private Talon   motorLift = new Talon(RobotMap.mtrLift);   
     private Encoder m_LiftEncoder = new Encoder(RobotMap.LiftEncoderA,RobotMap.LiftEncoderB);
     
@@ -29,8 +29,9 @@ public class Lift extends PIDSubsystem {
     private DigitalInput m_lsTop = new DigitalInput(RobotMap.LS_LiftUp);
 	private DigitalInput m_lsBottom = new DigitalInput(RobotMap.LS_LiftDown);
 	
-	private static final double kP = 0.01;
-	private static final double kI = 0.0;
+	// Manually tuned as of 2/17/2018
+	private static final double kP = 0.0175;
+	private static final double kI = 0;
 
 	
     // Put methods for controlling this subsystem
@@ -42,7 +43,7 @@ public class Lift extends PIDSubsystem {
 		
 		m_LiftEncoder.setDistancePerPulse(mm_per_turn / pulses_per_revolution);   // 4.88 mm per turn of the shaft / pulses per turn
 		
-		setAbsoluteTolerance(0.1); // MM
+		setAbsoluteTolerance(0.05); // MM
 		
 
 		// Let's name everything on the LiveWindow
@@ -90,6 +91,7 @@ public class Lift extends PIDSubsystem {
 	 * Return true when the which lift triggers the "top" limit switch.
 	 */
 	public boolean isAtTop() {
+		// uncomment this when the limit switch is added
 		//return m_lsTop.get();
 		return false;
 	}
@@ -98,6 +100,7 @@ public class Lift extends PIDSubsystem {
 	 * Return true when the which lift triggers the "bottom" limit switch.
 	 */
 	public boolean isAtBottom() {
+		// uncomment this when the limit switch is added
 		//return m_lsBottom.get();
 		return false;
 	}
