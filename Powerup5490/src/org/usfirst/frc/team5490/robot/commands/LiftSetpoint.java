@@ -20,11 +20,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftSetpoint extends Command {
 	private double m_setpoint;
 	
-	private double pid_active_range = 25; // this is +/- mm, where we want to do PID control 
-	private int ramp_length = 10;
+	private double pid_active_range = 400; // this is +/- mm, where we want to do PID control 
+	private int ramp_length = 100;
 	private int velocity_step;
 	private double[] S_Curve;
-	
+
 	private enum ControlStates {
 		Accelerate_Up,
 		Fast_Up,
@@ -32,27 +32,25 @@ public class LiftSetpoint extends Command {
 		Fast_Down,		
 		Accelerate_Down,
 	}
-	
+
 	private ControlStates m_state;
 
 	public LiftSetpoint(double setpoint) {
 		m_setpoint = setpoint;
 		
-		
 		S_Curve = new double[ramp_length];
-		
-		m_state = ControlStates.PID;
-		
-		requires(Robot.m_Lift);
+				
+		requires(Robot.m_Lift);	
 	}
 	
-	
-	private void Create_Ramp() {
-		
+	private void create_ramp() {
+		// divides [0,pi/2] into "ramp_length" pieces
 		double step = (Math.PI / 2) / S_Curve.length;
-		// use a 0..90 sine wave for the motor velocity curve
+		
+		// values of sin(step) are stored into S_Curve
 		for(int i = 0; i < S_Curve.length; i++) {
 			S_Curve[i] = Math.sin(step);
+			step = (Math.PI / 2) / S_Curve.length * (i+1);
 		}	
 	}
 
@@ -69,7 +67,7 @@ public class LiftSetpoint extends Command {
 				return ControlStates.PID;
 			}			
 		} else {
-			if (required_delta < (-1 * pid_active_range* -1))  {
+			if (required_delta < (-1 * pid_active_range))  {
 				return  ControlStates.Accelerate_Down;
 			} else {
 				return  ControlStates.PID;
@@ -81,17 +79,14 @@ public class LiftSetpoint extends Command {
 	@Override
 	protected void initialize() {
 		
-		Create_Ramp();
+		create_ramp();
+		
+		Robot.m_Lift.disable();
+		Robot.m_Lift.setSetpoint(m_setpoint);
 		
 		velocity_step = 0;		
 
 		m_state = CheckState();
-		
-		// if we are starting in PID mode, then just kick it off here
-		if (m_state == ControlStates.PID) {		
-			Robot.m_Lift.enable();
-			Robot.m_Lift.setSetpoint(m_setpoint);
-		}
 	}
 	
     // Called repeatedly when this Command is scheduled to run
@@ -119,8 +114,7 @@ public class LiftSetpoint extends Command {
 	    		}
 	    		break;
 	    	case PID:
-	    		// nothing to do and no escape once we're here
-	    		// control runs in background 
+	    		Robot.m_Lift.enable();
 	    		break;
 	    	case Fast_Down:
 	    		 // full output down....
@@ -132,6 +126,7 @@ public class LiftSetpoint extends Command {
 	    	case Accelerate_Down:	
 	    		// follow velocity curve to get to full output
 	    		Robot.m_Lift.lower(S_Curve[velocity_step++]);
+	    		
 	    		if (required_delta > pid_active_range)  {
 	    			if (velocity_step >= S_Curve.length) m_state = ControlStates.Fast_Down;
 	    		} else {
