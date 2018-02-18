@@ -106,7 +106,7 @@ public class OI {
 		woperate.toggleWhenPressed(new WinchToOperate());
 		
 		forward.toggleWhenPressed(new MoveFullForward());
-		forward.toggleWhenPressed(new MoveFullBackward());
+		backward.toggleWhenPressed(new MoveFullBackward());
 
 		// Connect the buttons to commands
 
