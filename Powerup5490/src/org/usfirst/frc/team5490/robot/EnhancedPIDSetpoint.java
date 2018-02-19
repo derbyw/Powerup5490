@@ -88,8 +88,6 @@ public class EnhancedPIDSetpoint {
 	    		// follow velocity curve to get to full output
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.raise(S_Curve[velocity_step++]);
-	    		} else if (pid_subsystem == Robot.m_Winch) {
-	    			Robot.m_Winch.wind(S_Curve[velocity_step++]);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
 	    			// TODO figure out grippers
 	    		}
@@ -104,8 +102,6 @@ public class EnhancedPIDSetpoint {
 	    		// full output up....
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.raise(1);
-	    		} else if (pid_subsystem == Robot.m_Winch) {
-	    			Robot.m_Winch.wind(1);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
 	    			// TODO figure out grippers
 	    		}
@@ -121,8 +117,6 @@ public class EnhancedPIDSetpoint {
 	    		 // full output down....
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.lower(1);
-	    		} else if (pid_subsystem == Robot.m_Winch) {
-	    			Robot.m_Winch.unwind(1);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
 	    			// TODO figure out grippers
 	    		}
@@ -135,8 +129,6 @@ public class EnhancedPIDSetpoint {
 	    		// follow velocity curve to get to full output
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.lower(S_Curve[velocity_step++]);
-	    		} else if (pid_subsystem == Robot.m_Winch) {
-	    			Robot.m_Winch.unwind(S_Curve[velocity_step++]);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
 	    			// TODO figure out grippers
 	    		}

@@ -28,11 +28,11 @@ public class Lift extends PIDSubsystem {
 	
     // Lift objects
     private WPI_TalonSRX motorLift = new WPI_TalonSRX(RobotMap.mtrLift);   
-    private Encoder m_LiftEncoder = new Encoder(RobotMap.LiftEncoderA,RobotMap.LiftEncoderB);
+    private Encoder m_LiftEncoder = new Encoder(RobotMap.liftEncoderA,RobotMap.liftEncoderB);
      
     // Limit switches
-    private DigitalInput m_lsTop = new DigitalInput(RobotMap.LS_LiftUp);
-	private DigitalInput m_lsBottom = new DigitalInput(RobotMap.LS_LiftDown);
+    private DigitalInput m_lsTop = new DigitalInput(RobotMap.ls_liftUp);
+	private DigitalInput m_lsBottom = new DigitalInput(RobotMap.ls_liftDown);
 	
 	
 	public Lift() {

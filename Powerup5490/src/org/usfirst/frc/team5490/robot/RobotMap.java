@@ -61,22 +61,20 @@ public class RobotMap {
 	
 	
 	// Encoder map
-	public static int LiftEncoderA = 0;
-	public static int LiftEncoderB = 1;	
-	public static int WinchEncoderA = 2;
-	public static int WinchEncoderB = 3;
-	public static int GripperEncoderA = 4;
-	public static int GripperEncoderB = 5;
+	public static int liftEncoderA = 0;
+	public static int liftEncoderB = 1;	
+	public static int gripperEncoderA = 4;
+	public static int gripperEncoderB = 5;
 	
 	// Limit switches
-	public static int LS_WinchUp = 6;
-	public static int LS_WinchDown = 7;
+	public static int ls_winchUp = 6;
+	public static int ls_winchDown = 7;
 
-	public static int LS_LiftUp = 8;
-	public static int LS_LiftDown = 9;
+	public static int ls_liftUp = 8;
+	public static int ls_liftDown = 9;
 
-	public static int LS_GripperOpen = 11;
-	public static int LS_GripperClosed = 12;
+	public static int LS_gripperOpen = 11;
+	public static int LS_gripperClosed = 12;
 	
 	
 	
