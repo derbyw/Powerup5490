@@ -15,9 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5490.robot.subsystems.Chassis;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
-
-
-
+import org.usfirst.frc.team5490.robot.subsystems.Winch;
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
 
 import org.usfirst.frc.team5490.robot.commands.Autonomous;
@@ -42,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static Chassis m_Chassis;
 	public static Lift m_Lift;
 	public static Gripper m_Gripper;
+	public static Winch m_Winch;
 	public static OI m_oi;
 	
 	Command m_autonomousCommand;
@@ -60,7 +59,8 @@ public class Robot extends IterativeRobot {
 		m_Chassis = new Chassis();
 		
 		m_Lift = new Lift();
-		m_Gripper = new Gripper();		
+		m_Gripper = new Gripper();
+		m_Winch = new Winch();
 		m_oi = new OI();
 		
 		m_autonomousCommand = new DriveRobot();
@@ -182,6 +182,7 @@ public class Robot extends IterativeRobot {
 		m_Chassis.log();
 		m_Lift.log();
 		m_Gripper.log();
+		m_Winch.log();
 		
 
 	}
