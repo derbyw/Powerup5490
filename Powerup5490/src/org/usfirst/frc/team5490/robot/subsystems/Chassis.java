@@ -163,8 +163,10 @@ public class Chassis extends Subsystem {
 		// this *should* be right -- if not investigate motor wiring & config 
 		
 		// ADD SPEED LIMIT LATER
-		m_robotDrive.setDeadband(0.1);
+		m_robotDrive.setDeadband(0.2);
 		m_robotDrive.driveCartesian(-driveStick.getY(),driveStick.getX(),driveStick.getZ());
+		
+		//m_robotDrive.arcadeDrive(driveStick);
 		
 	}
 	
