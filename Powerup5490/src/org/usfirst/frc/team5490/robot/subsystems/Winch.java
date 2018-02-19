@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Talon;
 
 import org.usfirst.frc.team5490.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 
 /**
  * 
@@ -16,7 +18,9 @@ import org.usfirst.frc.team5490.robot.RobotMap;
 public class Winch extends Subsystem {
 	
     // Winch objects
-    SpeedController motorWinch = new Talon(RobotMap.mtrWinch);
+    private SpeedController motorWinch = new WPI_TalonSRX(RobotMap.mtrWinch);
+    
+    // TODO determine wind direction for winch
     private static final double motor_wind_direction = -1;
     
     // Limit switches
@@ -34,14 +38,14 @@ public class Winch extends Subsystem {
 	}
     
 	/**
-	 * Set the winch motor to move in the un-spooled direction.
+	 * Set the winch motor to move in the un-spooled direction. Percent ranges from 0 to 1.
 	 */
 	public void unwind(double percent) {
 		motorWinch.set(percent * -1 * motor_wind_direction);
 	}
 
 	/**
-	 * Set the winch motor to move in the spooled direction.
+	 * Set the winch motor to move in the spooled direction. Percent ranges from 0 to 1.
 	 */
 	public void wind(double percent) {
 		motorWinch.set(percent * motor_wind_direction);
