@@ -21,7 +21,7 @@ public class GripperClose extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Gripper.close();
+    	Robot.m_Gripper.close(1);
     	
     }
 

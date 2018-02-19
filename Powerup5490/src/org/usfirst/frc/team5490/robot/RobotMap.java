@@ -22,9 +22,10 @@ public class RobotMap {
 	public static int mtrRearLeft = 3;	
 	
 	
-	public static int mtrLift = 4; 
-	public static int mtrWinch = 6;	
-	public static int mtrGripper = 5;
+	public static int mtrLift = 4; 	
+	public static int mtrGripperLeft = 5;
+	public static int mtrGripperRight = 6;
+	public static int mtrWinch = 7;
 	
 	// IMU Reservations
 	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels
