@@ -3,62 +3,57 @@ package org.usfirst.frc.team5490.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 import org.usfirst.frc.team5490.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 
 /**
- *
+ * 
  */
 public class Winch extends Subsystem {
 	
     // Winch objects
-    SpeedController motorWinch = new Talon(RobotMap.mtrWinch);
+    private WPI_TalonSRX motorWinch = new WPI_TalonSRX(RobotMap.mtrWinch);
     
-    // Define the winch encoder 
-    Encoder 		m_WinchEncoder = new Encoder(RobotMap.WinchEncoderA,RobotMap.WinchEncoderB);
+    // TODO determine wind direction for winch
+    private static final double motor_wind_direction = -1;
+    private static final double motorSpeed = 0.1;
     
     // Limit switches
-    private DigitalInput m_lvertical = new DigitalInput(RobotMap.LS_WinchUp);
-	private DigitalInput m_lstored = new DigitalInput(RobotMap.LS_WinchDown);
+    private DigitalInput m_lvertical = new DigitalInput(RobotMap.ls_winchVertical);
+	private DigitalInput m_lstored = new DigitalInput(RobotMap.ls_winchStored);
 
-
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	
-		addChild("Winch Encoder", m_WinchEncoder);
-		
-		
-		// ToDo calculate based on Drum size
-		m_WinchEncoder.setDistancePerPulse((4.0 / 12.0 * Math.PI) / 360.0);
-
     }
     
     public void log() {
+    	// winch motor info
+    	SmartDashboard.putData("Winch motor", motorWinch);
+       	SmartDashboard.putNumber("Winch Speed", motorWinch.get());
     	
-    	SmartDashboard.putNumber("Winch Speed", m_WinchEncoder.getRate());
-    	SmartDashboard.putNumber("Winch Distance", m_WinchEncoder.getDistance());
+    	// limit switches
+    	SmartDashboard.putBoolean("Lift vertical?", this.isLiftVertical());
+    	SmartDashboard.putBoolean("Lift stored?", this.isLiftStored());
 	}
     
 	/**
-	 * Set the winch motor to move in the un-spooled direction.
+	 * Set the winch motor to move in the un-spooled direction. Percent ranges from 0 to 1.
 	 */
 	public void unwind() {
-		motorWinch.set(-1);
+		motorWinch.set(motorSpeed * -1 * motor_wind_direction);
 	}
 
 	/**
-	 * Set the winch motor to move in the spooled direction.
+	 * Set the winch motor to move in the spooled direction. Percent ranges from 0 to 1.
 	 */
 	public void wind() {
-		motorWinch.set(1);
+		motorWinch.set(motorSpeed * motor_wind_direction);
 	}
 
 	/**
@@ -72,8 +67,7 @@ public class Winch extends Subsystem {
 	 * Return true when the which lift triggers the "vertical" limit switch.
 	 */
 	public boolean isLiftVertical() {
-		//return m_lvertical.get();		
-		return false;
+		return m_lvertical.get();
 	}
 		
 
@@ -81,10 +75,7 @@ public class Winch extends Subsystem {
 	 * Return true when the which lift triggers the "stored" limit switch.
 	 */
 	public boolean isLiftStored() {
-		//return m_lstored.get();
-		return false;
+		return m_lstored.get();
 	}
-
-
 }
 

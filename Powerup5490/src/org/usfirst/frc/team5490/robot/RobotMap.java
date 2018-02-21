@@ -16,15 +16,16 @@ package org.usfirst.frc.team5490.robot;
 public class RobotMap {
 
 	// The following mapping is final as of 1/29/18
-	public static int mtrFrontLeft = 0;
-	public static int mtrFrontRight = 1;
-	public static int mtrRearRight = 2;
-	public static int mtrRearLeft = 3;	
+	public static int mtrFrontLeft = 4;
+	public static int mtrFrontRight = 5;
+	public static int mtrRearRight = 6;
+	public static int mtrRearLeft = 7;	
 	
 	
-	public static int mtrLift = 4; 
-	public static int mtrWinch = 6;	
-	public static int mtrGripper = 5;
+	public static int mtrLift = 1; 	
+	public static int mtrGripperLeft = 2;
+	public static int mtrGripperRight = 3;
+	public static int mtrWinch = 4;
 	
 	// IMU Reservations
 	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels
@@ -60,22 +61,17 @@ public class RobotMap {
 	
 	
 	// Encoder map
-	public static int LiftEncoderA = 0;
-	public static int LiftEncoderB = 1;	
-	public static int WinchEncoderA = 2;
-	public static int WinchEncoderB = 3;
-	public static int GripperEncoderA = 4;
-	public static int GripperEncoderB = 5;
+	public static int liftEncoderA = 0;
+	public static int liftEncoderB = 1;	
+	public static int gripperEncoderA = 2;
+	public static int gripperEncoderB = 3;
 	
 	// Limit switches
-	public static int LS_WinchUp = 6;
-	public static int LS_WinchDown = 7;
+	public static int ls_winchVertical = 4;
+	public static int ls_winchStored = 5;
 
-	public static int LS_LiftUp = 8;
-	public static int LS_LiftDown = 9;
-
-	public static int LS_GripperOpen = 11;
-	public static int LS_GripperClosed = 12;
+	public static int ls_liftUp = 6;
+	public static int ls_liftDown = 7;
 	
 	
 	

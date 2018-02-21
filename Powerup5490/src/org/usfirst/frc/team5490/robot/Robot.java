@@ -15,9 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5490.robot.subsystems.Chassis;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
-
-
-
+import org.usfirst.frc.team5490.robot.subsystems.Winch;
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
 
 import org.usfirst.frc.team5490.robot.commands.Autonomous;
@@ -60,7 +58,7 @@ public class Robot extends IterativeRobot {
 		m_Chassis = new Chassis();
 		
 		m_Lift = new Lift();
-		m_Gripper = new Gripper();		
+		m_Gripper = new Gripper();
 		m_oi = new OI();
 		
 		m_autonomousCommand = new DriveRobot();
@@ -72,8 +70,8 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Gripper Open", new GripperOpen());
 		m_chooser.addObject("Lift Down", new LiftDown());
 		
-		// 
-		// this lest the dashboard choose which on to run at start
+		
+		// this lets the dashboard choose which on to run at start
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		
@@ -87,7 +85,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
@@ -173,6 +171,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		log();
 	}
 	
 	/**
@@ -182,7 +181,5 @@ public class Robot extends IterativeRobot {
 		m_Chassis.log();
 		m_Lift.log();
 		m_Gripper.log();
-		
-
 	}
 }
