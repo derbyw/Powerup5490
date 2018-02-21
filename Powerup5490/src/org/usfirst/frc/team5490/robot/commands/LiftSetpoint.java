@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
- * Move the lift (and gripper) to a given location. This command finishes when it is
+ * Move the lift to a given location. This command finishes when it is
  * within the tolerance, but leaves the PID loop running to maintain the
  * position. Other commands using the lift should make sure they disable
  * PID!
@@ -28,21 +28,22 @@ public class LiftSetpoint extends Command {
 	private static double pid_active_range = 400;
 	private static int ramp_length = 100;
 	
-	private static double m_setpoint;
-	
-	private EnhancedPIDSetpoint enhancedPID = 
-			new EnhancedPIDSetpoint(pid_subsystem, pid_active_range, ramp_length);
+	private double m_setpoint;
 	
 	public LiftSetpoint(double setpoint) {
 		m_setpoint = setpoint;
 		requires(pid_subsystem);
 	}
 	
+	private EnhancedPIDSetpoint enhancedPID = 
+			new EnhancedPIDSetpoint(pid_subsystem, pid_active_range, ramp_length);
+	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		enhancedPID.initialize(m_setpoint);
 	}
+	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		enhancedPID.execute();
@@ -51,7 +52,19 @@ public class LiftSetpoint extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return enhancedPID.isFinished();
+		return pid_subsystem.onTarget() || Robot.m_Lift.isAtTop() || Robot.m_Lift.isAtBottom(); 
+	}
+	
+	@Override
+	protected void end() {
+		if (Robot.m_Lift.isAtBottom()) {
+			Robot.m_Lift.liftEncoder.reset();
+		}
+	}
+	
+	@Override
+	protected void interrupted() {
+		end();
 	}
 	
 }
@@ -79,8 +92,6 @@ public class LiftSetpoint extends Command {
 //
 //	public LiftSetpoint(double setpoint) {
 //		m_setpoint = setpoint;
-//		
-//		S_Curve = new double[ramp_length];
 //				
 //		requires(Robot.m_Lift);	
 //	}
@@ -123,6 +134,7 @@ public class LiftSetpoint extends Command {
 //	@Override
 //	protected void initialize() {
 //		
+//		S_Curve = new double[ramp_length];
 //		create_ramp();
 //		
 //		Robot.m_Lift.disable();
@@ -186,8 +198,3 @@ public class LiftSetpoint extends Command {
 //		return Robot.m_Lift.onTarget();
 //	}
 //}
-
-
-
-
-

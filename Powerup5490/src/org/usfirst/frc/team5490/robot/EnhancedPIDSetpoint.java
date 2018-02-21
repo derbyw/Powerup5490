@@ -12,13 +12,8 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class EnhancedPIDSetpoint {
 	
-	public EnhancedPIDSetpoint(PIDSubsystem pid_subsystem, double pid_active_range, int rampLength) {
-    	this.pid_active_range = pid_active_range;
-    	this.pid_subsystem = pid_subsystem;
-    	this.rampLength = rampLength;
-    	S_Curve = new double[this.rampLength];
-    }
-
+	private double m_setpoint;
+	
 	private int velocity_step;
 	private double[] S_Curve;
 	private int rampLength;
@@ -34,6 +29,12 @@ public class EnhancedPIDSetpoint {
 	}
 	
 	private ControlStates m_state;
+	
+	public EnhancedPIDSetpoint(PIDSubsystem pid_subsystem, double pid_active_range, int rampLength) {
+    	this.pid_active_range = pid_active_range;
+    	this.pid_subsystem = pid_subsystem;
+    	this.rampLength = rampLength;
+    }
 	
 	private void create_ramp() {
 		// divides [0,pi/2] into "ramp_length" pieces
@@ -69,10 +70,12 @@ public class EnhancedPIDSetpoint {
 	}
 	
 	public void initialize(double setpoint) {
+		S_Curve = new double[rampLength];
 		create_ramp();
 		
 		pid_subsystem.disable();
-		pid_subsystem.setSetpoint(setpoint);
+		m_setpoint = setpoint;
+		pid_subsystem.setSetpoint(m_setpoint);
 		
 		velocity_step = 0;		
 
@@ -89,7 +92,7 @@ public class EnhancedPIDSetpoint {
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.raise(S_Curve[velocity_step++]);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			// TODO figure out grippers
+	    			Robot.m_Gripper.close(S_Curve[velocity_step++]);
 	    		}
 	    		
 	    		if (required_delta > pid_active_range)  {
@@ -103,7 +106,7 @@ public class EnhancedPIDSetpoint {
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.raise(1);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			// TODO figure out grippers
+	    			Robot.m_Gripper.close(1);
 	    		}
 	    		
 	    		if (required_delta <= pid_active_range)  {
@@ -118,7 +121,7 @@ public class EnhancedPIDSetpoint {
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.lower(1);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			// TODO figure out grippers
+	    			Robot.m_Gripper.open(1);
 	    		}
 	    		
 	    		if (required_delta <= pid_active_range)  {
@@ -130,7 +133,7 @@ public class EnhancedPIDSetpoint {
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.lower(S_Curve[velocity_step++]);
 	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			// TODO figure out grippers
+	    			Robot.m_Gripper.close(S_Curve[velocity_step++]);
 	    		}
 	    		
 	    		if (required_delta > pid_active_range)  {
