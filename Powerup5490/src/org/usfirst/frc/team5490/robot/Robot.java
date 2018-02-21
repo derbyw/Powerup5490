@@ -40,7 +40,6 @@ public class Robot extends IterativeRobot {
 	public static Chassis m_Chassis;
 	public static Lift m_Lift;
 	public static Gripper m_Gripper;
-	public static Winch m_Winch;
 	public static OI m_oi;
 	
 	Command m_autonomousCommand;
@@ -60,7 +59,6 @@ public class Robot extends IterativeRobot {
 		
 		m_Lift = new Lift();
 		m_Gripper = new Gripper();
-		m_Winch = new Winch();
 		m_oi = new OI();
 		
 		m_autonomousCommand = new DriveRobot();
@@ -72,8 +70,8 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Gripper Open", new GripperOpen());
 		m_chooser.addObject("Lift Down", new LiftDown());
 		
-		// 
-		// this lest the dashboard choose which on to run at start
+		
+		// this lets the dashboard choose which on to run at start
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		
@@ -87,7 +85,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
@@ -173,6 +171,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		log();
 	}
 	
 	/**
@@ -182,8 +181,5 @@ public class Robot extends IterativeRobot {
 		m_Chassis.log();
 		m_Lift.log();
 		m_Gripper.log();
-		m_Winch.log();
-		
-
 	}
 }
