@@ -19,7 +19,7 @@ public class WinchToStore extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Chassis.m_Winch.unwind(1);
+    	Robot.m_Chassis.m_Winch.unwind();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,6 +35,6 @@ public class WinchToStore extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    		end();
+    	end();
     }
 }
