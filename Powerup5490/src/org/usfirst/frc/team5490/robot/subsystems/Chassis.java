@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 
@@ -32,9 +30,7 @@ public class Chassis extends Subsystem {
 	private static final double minimum_drive = 0.1;
 	
 	// Main Movement Drive 
-	
 	SpeedController motorFrontLeft = new Talon(RobotMap.mtrFrontLeft);
-    //WPI_TalonSRX motorRearLeft= new WPI_TalonSRX(RobotMap.mtrRearLeft);  
 	SpeedController motorRearLeft = new Talon(RobotMap.mtrRearLeft);
     SpeedController motorFrontRight= new Talon(RobotMap.mtrFrontRight);
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
@@ -91,23 +87,6 @@ public class Chassis extends Subsystem {
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());
 		
-		
-		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
-		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
-		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
-		
-		SmartDashboard.putNumber("Accel-X", imu.getAccelX());
-		SmartDashboard.putNumber("Accel-Y", imu.getAccelY());
-		SmartDashboard.putNumber("Accel-Z", imu.getAccelZ());
-		
-		SmartDashboard.putNumber("Pitch", imu.getPitch());
-		SmartDashboard.putNumber("Roll", imu.getRoll());
-		SmartDashboard.putNumber("Yaw", imu.getYaw());
-		
-		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
-		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
-		
-		
     }
     
    
@@ -126,10 +105,12 @@ public class Chassis extends Subsystem {
     	
     	m_Winch.log();
     	
-    	SmartDashboard.putNumber("motorFrontLeft", motorFrontLeft.get());
-    	SmartDashboard.putNumber("motorFrontRight", motorFrontRight.get());
-    	SmartDashboard.putNumber("motorRearLeft", motorRearLeft.get());
-    	SmartDashboard.putNumber("motorRearRight", motorRearRight.get());
+//    	SmartDashboard.putData("IMU board", imu);
+    	
+    	SmartDashboard.putNumber("FL", -1* motorFrontLeft.get());
+    	SmartDashboard.putNumber("FR", motorFrontRight.get());
+    	SmartDashboard.putNumber("RL", -1 * motorRearLeft.get());
+    	SmartDashboard.putNumber("RR", motorRearRight.get());
     	
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
@@ -143,6 +124,8 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Roll", imu.getRoll());
 		SmartDashboard.putNumber("Yaw", imu.getYaw());
 		
+		SmartDashboard.putNumber("Angle-Z", imu.getAngleZ());
+		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
 		
@@ -151,9 +134,9 @@ public class Chassis extends Subsystem {
 	@SuppressWarnings("deprecation")
 	public void Drive(Joystick driveStick)
 	{
-//		double speedrange = 1 - minimum_drive;
-//		double speed = (-speedrange*driveStick.getThrottle()+1)/2;
-//		speed += minimum_drive;
+		double speedrange = 1 - minimum_drive;
+		double speed = (-speedrange*driveStick.getThrottle()+1)/2;
+		speed += minimum_drive;
 		
 		//  this is *supposed* to be this --  
 		//driveCartesian(double ySpeed, double xSpeed, double zRotation, double gyroAngle)
@@ -163,8 +146,9 @@ public class Chassis extends Subsystem {
 		// this *should* be right -- if not investigate motor wiring & config 
 		
 		// ADD SPEED LIMIT LATER
+		// TODO IMPORTANT: when the joystick is sent tilted little bit to the back, the rear wheels go forward slowly; may not be an issue on the new robot
 		m_robotDrive.setDeadband(0.2);
-		m_robotDrive.driveCartesian(-driveStick.getY(),driveStick.getX(),driveStick.getZ());
+		m_robotDrive.driveCartesian(-speed*driveStick.getY(),speed*driveStick.getX(),speed*driveStick.getZ(), imu.getAngleZ());
 		
 		//m_robotDrive.arcadeDrive(driveStick);
 		
@@ -173,12 +157,13 @@ public class Chassis extends Subsystem {
 	// Let an external function drive the chassis 
 	public void Drive(double X, double Y, double Z, double speed)
 	{
-		//m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, imu.getYaw());
+		// TODO need to set something to reset the IMU board before the autonomous period
+		m_robotDrive.driveCartesian(-Y* speed, X * speed, Z * speed, imu.getAngleZ());
 	}
 	
 	public void StopMotors()
 	{		
-		//m_robotDrive.driveCartesian(0,0,0,0);		
+		m_robotDrive.driveCartesian(0,0,0,0);		
 	}
 	
 	public void moveForward()
