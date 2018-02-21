@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5490.robot.subsystems;
 
+import org.usfirst.frc.team5490.robot.Robot;
 import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 
@@ -7,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,25 +29,19 @@ public class Lift extends PIDSubsystem {
 	private static final double motor_up_direction = -1;
 	
     // Lift objects
-    private WPI_TalonSRX motorLift = new WPI_TalonSRX(RobotMap.mtrLift);   
-    private Encoder m_LiftEncoder = new Encoder(RobotMap.liftEncoderA,RobotMap.liftEncoderB);
+    WPI_TalonSRX motorLift = new WPI_TalonSRX(RobotMap.mtrLift);   
+    public Encoder liftEncoder = new Encoder(RobotMap.liftEncoderA,RobotMap.liftEncoderB);
      
     // Limit switches
-    private DigitalInput m_lsTop = new DigitalInput(RobotMap.ls_liftUp);
-	private DigitalInput m_lsBottom = new DigitalInput(RobotMap.ls_liftDown);
+    public DigitalInput m_lsTop = new DigitalInput(RobotMap.ls_liftUp);
+	public DigitalInput m_lsBottom = new DigitalInput(RobotMap.ls_liftDown);
 	
 	
 	public Lift() {
 		super(kP, kI, 0);
-		m_LiftEncoder.setDistancePerPulse(mm_per_turn / pulses_per_revolution);   // 4.88 mm per turn of the shaft / pulses per turn
+		liftEncoder.setDistancePerPulse(mm_per_turn / pulses_per_revolution);   // 4.88 mm per turn of the shaft / pulses per turn
 		setAbsoluteTolerance(tolerance); // MM
 		
-
-		// Let's name everything on the LiveWindow
-		addChild("Lift Motor", motorLift);
-		addChild("Lift Encoder", m_LiftEncoder);
-		addChild("Up Limit Switch", m_lsTop);
-		addChild("Down Limit Switch", m_lsBottom);
 	}
 	
 	
@@ -57,8 +53,25 @@ public class Lift extends PIDSubsystem {
     }
     
     public void log() {
-    	SmartDashboard.putNumber("Lift Speed", m_LiftEncoder.getRate());
-    	SmartDashboard.putNumber("Lift Distance", m_LiftEncoder.getDistance());
+    	SmartDashboard.putNumber("Lift Speed", liftEncoder.getRate());
+    	SmartDashboard.putNumber("Lift Position", Robot.m_Lift.getPosition());	// TODO see if this is legal
+    	SmartDashboard.putNumber("Lift Distance", liftEncoder.getDistance());
+    	
+    	// TODO seems to work... eliminate the comment if confirmed that values are updated properly
+    	SmartDashboard.putData("Lift Motor", motorLift);
+    	SmartDashboard.putData("Lift Encoder", liftEncoder);
+    	
+    	// limit switches
+    	// TODO fix it back to putData when nav f*cking fixes the connection for l.s.
+    	SmartDashboard.putBoolean("LiftIsAtTop", this.isAtTop());
+    	SmartDashboard.putBoolean("LiftIsAtBottom", this.isAtBottom());
+
+    	
+    	// Let's name everything on the LiveWindow
+    	addChild("Lift Motor", motorLift);
+    	addChild("Lift Encoder", liftEncoder);
+    	addChild("Up Limit Switch", m_lsTop);
+    	addChild("Down Limit Switch", m_lsBottom);
 	}
     
     
@@ -87,18 +100,16 @@ public class Lift extends PIDSubsystem {
 	 * Return true when the which lift triggers the "top" limit switch.
 	 */
 	public boolean isAtTop() {
-		// TODO uncomment this when the limit switch is added
-		//return m_lsTop.get();
-		return false;
+		// TODO take out ! IF nav switches the conenction for l.s.
+		return ! m_lsTop.get();
 	}
 
 	/**
 	 * Return true when the which lift triggers the "bottom" limit switch.
 	 */
 	public boolean isAtBottom() {
-		// TODO uncomment this when the limit switch is added
-		//return m_lsBottom.get();
-		return false;
+		// TODO take out ! IF nav switches the conenction for l.s.
+		return ! m_lsBottom.get();
 	}
 	
 	/**
@@ -107,7 +118,7 @@ public class Lift extends PIDSubsystem {
 	 */
 	@Override
 	protected double returnPIDInput() {
-		return m_LiftEncoder.getDistance();
+		return liftEncoder.getDistance();
 	}
 	
 	/**
