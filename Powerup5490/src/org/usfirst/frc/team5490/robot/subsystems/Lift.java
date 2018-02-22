@@ -3,6 +3,8 @@ package org.usfirst.frc.team5490.robot.subsystems;
 import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
@@ -21,7 +23,7 @@ public class Lift extends PIDSubsystem {
 	
 	
     // Lift objects
-    private Talon   motorLift = new Talon(RobotMap.mtrLift);   
+    private WPI_TalonSRX   motorLift = new WPI_TalonSRX(RobotMap.mtrLift);   
     private Encoder m_LiftEncoder = new Encoder(RobotMap.LiftEncoderA,RobotMap.LiftEncoderB);
     
      
@@ -40,6 +42,12 @@ public class Lift extends PIDSubsystem {
 	public Lift() {
 		super(kP, kI, 0);
 		
+		motorLift.configContinuousCurrentLimit(40, 0);
+		motorLift.configPeakCurrentLimit(45, 0);
+		motorLift.configPeakCurrentDuration(100, 0);
+		motorLift.enableCurrentLimit(false);		// kill current limit
+		motorLift.configOpenloopRamp(0, 0);			// we do the lamp here..
+
 		
 		m_LiftEncoder.setDistancePerPulse(mm_per_turn / pulses_per_revolution);   // 4.88 mm per turn of the shaft / pulses per turn
 		

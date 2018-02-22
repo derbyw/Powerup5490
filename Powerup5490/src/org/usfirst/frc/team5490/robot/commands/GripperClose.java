@@ -16,24 +16,24 @@ public class GripperClose extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		Robot.m_Gripper.enable();
+		Robot.m_Gripper.setSetpoint(0);
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Gripper.close();
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
-    	return Robot.m_Gripper.isGrabbing();        
+    	return Robot.m_Gripper.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.m_Gripper.stop();
+    	Robot.m_Gripper.disable();
+    	Robot.m_Gripper.manual_stop();
     }
     
 

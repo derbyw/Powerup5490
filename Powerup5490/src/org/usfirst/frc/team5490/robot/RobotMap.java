@@ -21,10 +21,11 @@ public class RobotMap {
 	public static int mtrRearRight = 2;
 	public static int mtrRearLeft = 3;	
 	
-	
-	public static int mtrLift = 4; 
-	public static int mtrWinch = 6;	
-	public static int mtrGripper = 5;
+	// the following are CAN addresses for the Talon SRX's	 
+	public static int mtrWinch = 1;	
+	public static int mtrLGripper = 2;
+	public static int mtrRGripper = 3;
+	public static int mtrLift = 4;
 	
 	// IMU Reservations
 	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels
@@ -62,10 +63,10 @@ public class RobotMap {
 	// Encoder map
 	public static int LiftEncoderA = 0;
 	public static int LiftEncoderB = 1;	
-	public static int WinchEncoderA = 2;
-	public static int WinchEncoderB = 3;
-	public static int GripperEncoderA = 4;
-	public static int GripperEncoderB = 5;
+	public static int GripperEncoderA = 2;
+	public static int GripperEncoderB = 3;
+	//public static int WinchEncoderA = 4;
+	//public static int WinchEncoderB = 5;
 	
 	// Limit switches
 	public static int LS_WinchUp = 6;

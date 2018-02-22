@@ -44,7 +44,7 @@ public class Chassis extends Subsystem {
     
     public Winch m_Winch = new Winch();
     
-    ADIS16448_IMU imu = new ADIS16448_IMU();
+    //ADIS16448_IMU imu = new ADIS16448_IMU();
     
 
     /*
@@ -91,7 +91,7 @@ public class Chassis extends Subsystem {
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());
 		
-		
+		/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -106,6 +106,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		*/
 		
 		
     }
@@ -131,6 +132,7 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putNumber("motorRearLeft", motorRearLeft.get());
     	SmartDashboard.putNumber("motorRearRight", motorRearRight.get());
     	
+    	/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -145,6 +147,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		*/
 		
 	}
 
@@ -172,6 +175,7 @@ public class Chassis extends Subsystem {
 	public void Drive(double X, double Y, double Z, double speed)
 	{
 		//m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, imu.getYaw());
+		m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, 0);
 	}
 	
 	public void StopMotors()
