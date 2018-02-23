@@ -11,6 +11,7 @@ import org.usfirst.frc.team5490.robot.commands.WinchToOperate;
 import org.usfirst.frc.team5490.robot.commands.WinchToStore;
 
 import org.usfirst.frc.team5490.robot.commands.GripperOpen;
+import org.usfirst.frc.team5490.robot.commands.GripperReady;
 import org.usfirst.frc.team5490.robot.commands.GripperClose;
 import org.usfirst.frc.team5490.robot.commands.GripperRelease;
 
@@ -80,6 +81,13 @@ public class OI {
 		SmartDashboard.putData("Gripper Close", new GripperClose());
 		SmartDashboard.putData("Gripper Release", new GripperRelease());
 		SmartDashboard.putData("Gripper Open", new GripperOpen());
+		SmartDashboard.putData("Gripper Ready", new GripperReady());
+		
+		SmartDashboard.putData("Gripper Cal L+", new Cal_LGrip_plus());
+		SmartDashboard.putData("Gripper Cal L-", new Cal_LGrip_minus());
+		SmartDashboard.putData("Gripper Cal R+", new Cal_RGrip_plus());
+		SmartDashboard.putData("Gripper Cal R-", new Cal_RGrip_minus());
+		
 		
 		SmartDashboard.putData("Lift Down", new LiftDown());
 		SmartDashboard.putData("Lift Switch", new LiftSwitch());

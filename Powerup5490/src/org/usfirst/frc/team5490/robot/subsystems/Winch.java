@@ -74,17 +74,19 @@ public class Winch extends Subsystem {
 
 	/**
 	 * Return true when the which lift triggers the "vertical" limit switch.
+	 * active low -- note - contact pulls switch low  
 	 */
 	public boolean isLiftVertical() {
-		return m_lvertical.get();
+		return ! m_lvertical.get();
 	}
 		
 
 	/**
 	 * Return true when the which lift triggers the "stored" limit switch.
+	 * active low -- note - contact pulls switch low
 	 */
 	public boolean isLiftStored() {
-		return m_lstored.get();
+		return ! m_lstored.get();
 	}
 }
 

@@ -39,16 +39,15 @@ public class Gripper extends PIDSubsystem {
 	private static final double deg_per_turn = 2 * Math.PI;
 	private static final double pulses_per_revolution = 500;
 	
-	
-	
 	private static final double PowerCubeWidth = 12;	// inches
 
-	
-	WPI_TalonSRX mLGripper = new WPI_TalonSRX(RobotMap.mtrLGripper);
-	WPI_TalonSRX mRGripper = new WPI_TalonSRX(RobotMap.mtrRGripper);
-	
 	private static final double kP = 0.7;
 	private static final double kI = 0.02;
+
+	
+	private WPI_TalonSRX mLGripper = new WPI_TalonSRX(RobotMap.mtrLGripper);
+	private WPI_TalonSRX mRGripper = new WPI_TalonSRX(RobotMap.mtrRGripper);
+	
         
     private Encoder LGripperEncoder = new Encoder(RobotMap.gripperEncoderA,RobotMap.gripperEncoderB);
         
@@ -61,20 +60,20 @@ public class Gripper extends PIDSubsystem {
 		setAbsoluteTolerance(0.008); // 1/5 deg in radians	should be close enough
 		
     	// Define current limiting
-		mLGripper.configContinuousCurrentLimit(4, 0);
-		mLGripper.configPeakCurrentLimit(8, 0);
-		mLGripper.configPeakCurrentDuration(100, 0);
-		mLGripper.enableCurrentLimit(true);
-		mLGripper.configOpenloopRamp(0, 0);
+		mLGripper.configContinuousCurrentLimit(5, 0);
+		mLGripper.configPeakCurrentLimit(10, 0);
+		mLGripper.configPeakCurrentDuration(200, 0);
+		mLGripper.enableCurrentLimit(true);		
+		mLGripper.configOpenloopRamp(0.05, 0);
 		
-		mRGripper.configContinuousCurrentLimit(4, 0);
-		mRGripper.configPeakCurrentLimit(8, 0);
-		mRGripper.configPeakCurrentDuration(100, 0);
+		mRGripper.configContinuousCurrentLimit(5, 0);
+		mRGripper.configPeakCurrentLimit(10, 0);
+		mRGripper.configPeakCurrentDuration(200, 0);
 		mRGripper.enableCurrentLimit(true);
-	    mRGripper.configOpenloopRamp(0, 0);
-		mRGripper.setInverted(true);
+	    mRGripper.configOpenloopRamp(0.05, 0);
+	    mRGripper.setInverted(true);
 		
-	
+		
 		LGripperEncoder.setDistancePerPulse(deg_per_turn / ((large_gear_teeth / small_gear_teeth) * pulses_per_revolution));   // degrees per pulse
 
 
@@ -98,29 +97,19 @@ public class Gripper extends PIDSubsystem {
     	SmartDashboard.putNumber("Gripper Speed", LGripperEncoder.getRate());
     	SmartDashboard.putNumber("Gripper Angle", angle);
     	SmartDashboard.putNumber("Grip Distance", CalcGripperPos(angle));
-
-    	/*
-    	SmartDashboard.putData("gripperLeft", gripperLeft);
-    	SmartDashboard.putData("gripperRight", gripperRight);
-    	SmartDashboard.putData("Gripper Encoder (L)", gripperEncoder);
     	
-    	// Let's name everything on the LiveWindow
-    	addChild("gripperLeft", gripperLeft);
-    	addChild("gripperRight", gripperRight);
-    	*/
-
+    	SmartDashboard.putData("Gripper Encoder (L)", LGripperEncoder);
+    	
 	}
     
     // enable independent control of both motors 
-	public void enable_calibrate() {
-		disable();		
-		mRGripper.set(ControlMode.Disabled,0);
+	public void enable_calibrate() {		
+		disable();
 	}
 	
 	// resume slaved motor control 
 	public void disable_calibrate() {		
 		manual_stop();
-
 	}
 
 	/// reset the position to zero 
@@ -235,13 +224,9 @@ public class Gripper extends PIDSubsystem {
 	 * the subsystem.
 	 */
 	@Override
-	protected void usePIDOutput(double power) {
-		// clip if necessary
-		if (power > 1.0) power = 1.0;
-		if (power < -1.0) power = -1.0;
-		
+	protected void usePIDOutput(double power) {		
 		mLGripper.set(power);
-		mRGripper.set(power);		
+		mRGripper.set(power);
 	}	
 }
 
