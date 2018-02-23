@@ -1,24 +1,22 @@
 package org.usfirst.frc.team5490.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5490.robot.Robot;
 import org.usfirst.frc.team5490.robot.RobotMap;
-import org.usfirst.frc.team5490.robot.commands.GripperOpen;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 
 
 
 /**
  *
- * The gripper subsystem is a simple system with two "snowblower" motors for opening and closing the gripper bars
+ * The gripper subsystem is a simple system with two "snowblower" motors for opening and closing the gripper bars.
+ * It is assumed that 0 is the "open" orientation.
  * 
  * The two motors are slaved together and controlled by a single encoder for sensing position
  * To support setup and calibration a calibrate mode allows individual positioning and resetting of the zero position
@@ -30,7 +28,7 @@ import edu.wpi.first.wpilibj.Encoder;
  */
 public class Gripper extends PIDSubsystem {
 
-	
+
 	private static final double motor_offset = 4.5;	// inches -- distance from griper center to center of motor hubs
 	//private static final double short_arm_length = 5.9;	// inches -- arm length - hub center to center of grip bar
 	private static final double arm_length = 10.9;	// inches -- arm length - hub center to center of grip bar
@@ -52,10 +50,11 @@ public class Gripper extends PIDSubsystem {
 	private static final double kP = 0.7;
 	private static final double kI = 0.02;
         
-    private Encoder LGripperEncoder = new Encoder(RobotMap.GripperEncoderA,RobotMap.GripperEncoderB);
+    private Encoder LGripperEncoder = new Encoder(RobotMap.gripperEncoderA,RobotMap.gripperEncoderB);
         
     private double  mBox_Angle;	
 	
+
 	public Gripper() {
 		super(kP, kI, 0);
 		
@@ -98,7 +97,18 @@ public class Gripper extends PIDSubsystem {
     	double angle = LGripperEncoder.getDistance();
     	SmartDashboard.putNumber("Gripper Speed", LGripperEncoder.getRate());
     	SmartDashboard.putNumber("Gripper Angle", angle);
-    	SmartDashboard.putNumber("Grip Distance", CalcGripperPos(angle));    	
+    	SmartDashboard.putNumber("Grip Distance", CalcGripperPos(angle));
+
+    	/*
+    	SmartDashboard.putData("gripperLeft", gripperLeft);
+    	SmartDashboard.putData("gripperRight", gripperRight);
+    	SmartDashboard.putData("Gripper Encoder (L)", gripperEncoder);
+    	
+    	// Let's name everything on the LiveWindow
+    	addChild("gripperLeft", gripperLeft);
+    	addChild("gripperRight", gripperRight);
+    	*/
+
 	}
     
     // enable independent control of both motors 
@@ -110,6 +120,7 @@ public class Gripper extends PIDSubsystem {
 	// resume slaved motor control 
 	public void disable_calibrate() {		
 		manual_stop();
+
 	}
 
 	/// reset the position to zero 
@@ -133,18 +144,20 @@ public class Gripper extends PIDSubsystem {
 	}
 
 	/**
-	 * Set the claw motor to move in the open direction.
+	 * Set the claw motor to move in the open direction. Percent ranges from 0 to 1.
 	 */
 	public void manual_open() {
 		disable();
 		mLGripper.set(0.1);
 		mRGripper.set(0.1);
+
 	}
 	
 
 	/**
-	 * Set the claw motor to move in the close direction.
+	 * Set the claw motor to move in the close direction. Percent ranges from 0 to 1.
 	 */
+
 	public void manual_close() {
 		disable();
 		mLGripper.set(-0.1);
@@ -154,6 +167,7 @@ public class Gripper extends PIDSubsystem {
 	/**
 	 * Stops the claw motor from moving.
 	 */
+
 	public void manual_stop() {
 		disable();
 		mLGripper.set(0);
@@ -194,6 +208,9 @@ public class Gripper extends PIDSubsystem {
 		return (Math.abs(LGripperEncoder.getDistance()) <= mBox_Angle);
 	}
 
+	/**
+	 * Return true when the grippers are fully open.
+	 */
 	public boolean isOpen() {
 		return (Math.abs(LGripperEncoder.getDistance()) > mBox_Angle);		
 	}

@@ -5,20 +5,22 @@ import org.usfirst.frc.team5490.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Command for manually opening the gripper.
  */
 public class GripperOpen extends Command {
 
 	
 	
-    public GripperOpen() {
-    	requires(Robot.m_Gripper);
-    }
+	public GripperOpen() {
+		requires(Robot.m_Gripper);
+	}
+	
 
     // Called just before this Command runs the first time
     protected void initialize() {    	
 		Robot.m_Gripper.enable();
 		Robot.m_Gripper.SetDistanceSetpoint(28, true);	// open to 28 inches
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,6 +28,7 @@ public class GripperOpen extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+
     protected boolean isFinished() {       
     	return Robot.m_Gripper.onTarget();
     }

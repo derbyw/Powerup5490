@@ -11,7 +11,6 @@ public class LiftDown extends Command {
 
     public LiftDown() {
     	requires(Robot.m_Lift);
-
     }
 
     // Called just before this Command runs the first time
@@ -31,6 +30,7 @@ public class LiftDown extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.m_Lift.stop();
+    	Robot.m_Lift.Reset();
     }
 
     // Called when another command which requires one or more of the same

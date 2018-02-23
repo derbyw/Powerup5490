@@ -15,12 +15,13 @@ package org.usfirst.frc.team5490.robot;
  */
 public class RobotMap {
 
-	// The following mapping is final as of 1/29/18
+	// The following mapping is final as of 2/22/18
 	public static int mtrFrontLeft = 0;
 	public static int mtrFrontRight = 1;
 	public static int mtrRearRight = 2;
 	public static int mtrRearLeft = 3;	
 	
+
 	// the following are CAN addresses for the Talon SRX's	 
 	public static int mtrWinch = 1;	
 	public static int mtrLGripper = 2;
@@ -61,23 +62,17 @@ public class RobotMap {
 	
 	
 	// Encoder map
-	public static int LiftEncoderA = 0;
-	public static int LiftEncoderB = 1;	
-	public static int GripperEncoderA = 2;
-	public static int GripperEncoderB = 3;
-	
-	//public static int WinchEncoderA = 4;
-	//public static int WinchEncoderB = 5;
+	public static int liftEncoderA = 0;
+	public static int liftEncoderB = 1;	
+	public static int gripperEncoderA = 2;
+	public static int gripperEncoderB = 3;
 	
 	// Limit switches
-	public static int LS_WinchUp = 6;
-	public static int LS_WinchDown = 7;
+	public static int ls_winchVertical = 4;
+	public static int ls_winchStored = 5;
 
-	public static int LS_LiftUp = 8;
-	public static int LS_LiftDown = 9;
-
-	public static int LS_GripperOpen = 11;
-	public static int LS_GripperClosed = 12;
+	public static int ls_liftUp = 6;
+	public static int ls_liftDown = 7;
 	
 	
 	
