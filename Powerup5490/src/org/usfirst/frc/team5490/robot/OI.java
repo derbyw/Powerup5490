@@ -22,6 +22,10 @@ import org.usfirst.frc.team5490.robot.commands.LiftScale;
 import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
 import org.usfirst.frc.team5490.robot.commands.LiftHook;
 import org.usfirst.frc.team5490.robot.commands.LiftRobot;   // same as lift down, but may be partial
+import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_minus;
+import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_plus;
+import org.usfirst.frc.team5490.robot.commands.Cal_RGrip_minus;
+import org.usfirst.frc.team5490.robot.commands.Cal_RGrip_plus;
 
 
 
@@ -83,6 +87,14 @@ public class OI {
 		SmartDashboard.putData("Lift Hook", new LiftHook());
 		SmartDashboard.putData("Lift Robot", new LiftRobot());
 		
+		// Gripper calibrate buttons
+		/*
+		SmartDashboard.putData("Lift Robot", new LiftRobot());
+		SmartDashboard.putData("Lift Robot", new LiftRobot());
+		SmartDashboard.putData("Lift Robot", new LiftRobot());
+		SmartDashboard.putData("Lift Robot", new LiftRobot());
+		*/
+		
 		
 		// Create some buttons
 		
@@ -94,6 +106,12 @@ public class OI {
 		JoystickButton woperate = new JoystickButton(m_joystick, 12);
 		JoystickButton forward = new JoystickButton(m_joystick, 5);
 		JoystickButton backward = new JoystickButton(m_joystick, 3);
+		
+		// allow "zero" to be established with both gripper motors
+		JoystickButton grip_calib_Lminus = new JoystickButton(m_joystick, 4);
+		JoystickButton grip_calib_Lplus = new JoystickButton(m_joystick, 6);
+		JoystickButton grip_calib_Rminus = new JoystickButton(m_joystick, 7);
+		JoystickButton grip_calib_Rplus = new JoystickButton(m_joystick, 8);
 		
 		
 		lu.toggleWhenPressed(new LiftSetpoint(1270));
@@ -107,6 +125,13 @@ public class OI {
 		
 		forward.toggleWhenPressed(new MoveFullForward());
 		backward.toggleWhenPressed(new MoveFullBackward());
+		
+		
+		// These should probably be in the smart dashboard not on joystick
+		grip_calib_Lminus.whileHeld(new Cal_LGrip_minus());
+		grip_calib_Lplus.whileHeld(new Cal_LGrip_plus());
+		grip_calib_Rminus.whileHeld(new Cal_RGrip_minus());
+		grip_calib_Rplus.whileHeld(new Cal_RGrip_plus());
 
 		// Connect the buttons to commands
 

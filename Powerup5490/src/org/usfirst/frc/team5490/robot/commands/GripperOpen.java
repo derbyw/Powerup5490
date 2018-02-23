@@ -18,7 +18,7 @@ public class GripperOpen extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {    	
 		Robot.m_Gripper.enable();
-		Robot.m_Gripper.setSetpoint(120);
+		Robot.m_Gripper.SetDistanceSetpoint(28, true);	// open to 28 inches
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -15,9 +15,8 @@ public class GripperRelease extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-
-    	///back off 5 degrees
-    	Robot.m_Gripper.RelativeTarget(-5);
+    	///back off 5 degrees    	
+    	Robot.m_Gripper.SetDistanceSetpoint(13, true);	// open to 13 inches in quadrant I
 		Robot.m_Gripper.enable();
     }
 

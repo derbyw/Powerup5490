@@ -7,36 +7,32 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GripperClose extends Command {
+public class Cal_LGrip_plus extends Command {
 
-    public GripperClose() {
-    	
+    public Cal_LGrip_plus() {
     	requires(Robot.m_Gripper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.m_Gripper.enable();
-		//Robot.m_Gripper.setSetpoint(70 * Math.PI / 180);
-		Robot.m_Gripper.SetDistanceSetpoint(11, false);	// close to 10 inches
-    	
+    	Robot.m_Gripper.enable_calibrate();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.m_Gripper.manual_Lplus();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.m_Gripper.onTarget();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.m_Gripper.disable();
-    	Robot.m_Gripper.manual_stop();
+    	Robot.m_Gripper.Zero();
+    	Robot.m_Gripper.disable_calibrate();
     }
-    
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
