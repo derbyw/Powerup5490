@@ -19,14 +19,13 @@ public class ResetPID extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.m_Gripper.gripperEncoder.reset();
-    	Robot.m_Lift.liftEncoder.reset();
+    protected void execute() {    	
+    	Robot.m_Lift.Reset();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.m_Gripper.getPosition() == 0 && Robot.m_Lift.getPosition() == 0;
+        return  Robot.m_Lift.getPosition() == 0;
     }
 
     // Called once after isFinished returns true

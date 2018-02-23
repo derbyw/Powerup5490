@@ -15,25 +15,24 @@ public class GripperRelease extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		// capture encoder position
-    		// target = capture + X TBD
+    	///back off 5 degrees    	
+    	Robot.m_Gripper.SetDistanceSetpoint(13, true);	// open to 13 inches in quadrant I
+		Robot.m_Gripper.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Gripper.open(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()    
     protected boolean isFinished() {
-    	// should be using encoder here 
-    	
-    	return ! Robot.m_Gripper.isGrabbing();
+    	return Robot.m_Gripper.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.m_Gripper.stop();
+    	Robot.m_Gripper.disable();
+    	Robot.m_Gripper.manual_stop();
     }
 
     // Called when another command which requires one or more of the same

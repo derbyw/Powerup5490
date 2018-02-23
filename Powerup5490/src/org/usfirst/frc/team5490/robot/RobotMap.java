@@ -15,17 +15,18 @@ package org.usfirst.frc.team5490.robot;
  */
 public class RobotMap {
 
-	// The following mapping is final as of 1/29/18
-	public static int mtrFrontLeft = 4;
-	public static int mtrFrontRight = 5;
-	public static int mtrRearRight = 6;
-	public static int mtrRearLeft = 7;	
+	// The following mapping is final as of 2/22/18
+	public static int mtrFrontLeft = 0;
+	public static int mtrFrontRight = 1;
+	public static int mtrRearRight = 2;
+	public static int mtrRearLeft = 3;	
 	
-	
-	public static int mtrLift = 1; 	
-	public static int mtrGripperLeft = 2;
-	public static int mtrGripperRight = 3;
-	public static int mtrWinch = 4;
+
+	// the following are CAN addresses for the Talon SRX's	 
+	public static int mtrWinch = 1;	
+	public static int mtrLGripper = 2;
+	public static int mtrRGripper = 3;
+	public static int mtrLift = 4;
 	
 	// IMU Reservations
 	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels

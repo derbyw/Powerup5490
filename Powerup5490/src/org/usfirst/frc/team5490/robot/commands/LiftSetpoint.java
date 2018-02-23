@@ -58,7 +58,7 @@ public class LiftSetpoint extends Command {
 	@Override
 	protected void end() {
 		if (Robot.m_Lift.isAtBottom()) {
-			Robot.m_Lift.liftEncoder.reset();
+			Robot.m_Lift.Reset();
 		}
 	}
 	

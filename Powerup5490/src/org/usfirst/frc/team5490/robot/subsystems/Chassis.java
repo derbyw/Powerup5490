@@ -40,7 +40,7 @@ public class Chassis extends Subsystem {
     
     public Winch m_Winch = new Winch();
     
-    ADIS16448_IMU imu = new ADIS16448_IMU();
+    //ADIS16448_IMU imu = new ADIS16448_IMU();
     
 
     /*
@@ -87,6 +87,23 @@ public class Chassis extends Subsystem {
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());
 		
+
+		/*
+		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
+		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
+		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
+		
+		SmartDashboard.putNumber("Accel-X", imu.getAccelX());
+		SmartDashboard.putNumber("Accel-Y", imu.getAccelY());
+		SmartDashboard.putNumber("Accel-Z", imu.getAccelZ());
+		
+		SmartDashboard.putNumber("Pitch", imu.getPitch());
+		SmartDashboard.putNumber("Roll", imu.getRoll());
+		SmartDashboard.putNumber("Yaw", imu.getYaw());
+		
+		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
+		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		*/
     }
     
    
@@ -112,6 +129,7 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putNumber("RL", -1 * motorRearLeft.get());
     	SmartDashboard.putNumber("RR", motorRearRight.get());
     	
+    	/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -128,10 +146,11 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		*/
 		
 	}
 
-	@SuppressWarnings("deprecation")
+	
 	public void Drive(Joystick driveStick)
 	{
 		double speedrange = 1 - minimum_drive;
@@ -148,7 +167,8 @@ public class Chassis extends Subsystem {
 		// ADD SPEED LIMIT LATER
 		// TODO IMPORTANT: when the joystick is sent tilted little bit to the back, the rear wheels go forward slowly; may not be an issue on the new robot
 		m_robotDrive.setDeadband(0.2);
-		m_robotDrive.driveCartesian(-speed*driveStick.getY(),speed*driveStick.getX(),speed*driveStick.getZ(), imu.getAngleZ());
+		//m_robotDrive.driveCartesian(-speed*driveStick.getY(),speed*driveStick.getX(),speed*driveStick.getZ(), imu.getAngleZ());
+		m_robotDrive.driveCartesian(-speed*driveStick.getY(),speed*driveStick.getX(),speed*driveStick.getZ(), 0);
 		
 		//m_robotDrive.arcadeDrive(driveStick);
 		
@@ -157,8 +177,9 @@ public class Chassis extends Subsystem {
 	// Let an external function drive the chassis 
 	public void Drive(double X, double Y, double Z, double speed)
 	{
-		// TODO need to set something to reset the IMU board before the autonomous period
-		m_robotDrive.driveCartesian(-Y* speed, X * speed, Z * speed, imu.getAngleZ());
+		//, imu.getAngleZ());
+		//m_robotDrive.driveCartesian(Y* speed, X * speed, Z * speed, imu.getYaw());
+		m_robotDrive.driveCartesian(-Y* speed, X * speed, Z * speed, 0);
 	}
 	
 	public void StopMotors()

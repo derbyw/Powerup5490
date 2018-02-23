@@ -91,10 +91,7 @@ public class EnhancedPIDSetpoint {
 	    		// follow velocity curve to get to full output
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.raise(S_Curve[velocity_step++]);
-	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			Robot.m_Gripper.close(S_Curve[velocity_step++]);
-	    		}
-	    		
+	    		} 	    		
 	    		if (required_delta > pid_active_range)  {
 	    			if (velocity_step >= S_Curve.length) m_state = ControlStates.Fast_Up;
 	    		} else {
@@ -105,9 +102,7 @@ public class EnhancedPIDSetpoint {
 	    		// full output up....
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.raise(1);
-	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			Robot.m_Gripper.close(1);
-	    		}
+	    		} 
 	    		
 	    		if (required_delta <= pid_active_range)  {
 	    			m_state = ControlStates.PID;
@@ -120,9 +115,7 @@ public class EnhancedPIDSetpoint {
 	    		 // full output down....
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.lower(1);
-	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			Robot.m_Gripper.open(1);
-	    		}
+	    		} 
 	    		
 	    		if (required_delta <= pid_active_range)  {
 	    			m_state = ControlStates.PID;
@@ -132,9 +125,7 @@ public class EnhancedPIDSetpoint {
 	    		// follow velocity curve to get to full output
 	    		if (pid_subsystem == Robot.m_Lift) {
 	    			Robot.m_Lift.lower(S_Curve[velocity_step++]);
-	    		} else if (pid_subsystem == Robot.m_Gripper) {
-	    			Robot.m_Gripper.close(S_Curve[velocity_step++]);
-	    		}
+	    		} 
 	    		
 	    		if (required_delta > pid_active_range)  {
 	    			if (velocity_step >= S_Curve.length) m_state = ControlStates.Fast_Down;

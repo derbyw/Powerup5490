@@ -3,7 +3,6 @@ package org.usfirst.frc.team5490.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.SpeedController;
 
 import org.usfirst.frc.team5490.robot.RobotMap;
 
@@ -16,11 +15,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Winch extends Subsystem {
 	
     // Winch objects
-    private WPI_TalonSRX motorWinch = new WPI_TalonSRX(RobotMap.mtrWinch);
-    
+    WPI_TalonSRX motorWinch= new WPI_TalonSRX(RobotMap.mtrWinch);    
+
     // TODO determine wind direction for winch
     private static final double motor_wind_direction = -1;
     private static final double motorSpeed = 0.1;
+
     
     // Limit switches
     private DigitalInput m_lvertical = new DigitalInput(RobotMap.ls_winchVertical);
@@ -30,6 +30,15 @@ public class Winch extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	
+    	// Define current limiting
+    	motorWinch.configContinuousCurrentLimit(10, 0);
+    	motorWinch.configPeakCurrentLimit(15, 0);
+    	motorWinch.configPeakCurrentDuration(100, 0);
+    	motorWinch.enableCurrentLimit(true);    	
+    	motorWinch.configOpenloopRamp(2, 0);
+    	
+
     }
     
     public void log() {
@@ -65,17 +74,19 @@ public class Winch extends Subsystem {
 
 	/**
 	 * Return true when the which lift triggers the "vertical" limit switch.
+	 * active low -- note - contact pulls switch low  
 	 */
 	public boolean isLiftVertical() {
-		return m_lvertical.get();
+		return ! m_lvertical.get();
 	}
 		
 
 	/**
 	 * Return true when the which lift triggers the "stored" limit switch.
+	 * active low -- note - contact pulls switch low
 	 */
 	public boolean isLiftStored() {
-		return m_lstored.get();
+		return ! m_lstored.get();
 	}
 }
 
