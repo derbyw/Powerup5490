@@ -31,6 +31,8 @@ public class Winch extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	
+    	
+    	
     	// Define current limiting
     	motorWinch.configContinuousCurrentLimit(10, 0);
     	motorWinch.configPeakCurrentLimit(15, 0);

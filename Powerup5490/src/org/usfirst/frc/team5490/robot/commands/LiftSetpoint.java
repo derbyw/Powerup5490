@@ -2,6 +2,7 @@ package org.usfirst.frc.team5490.robot.commands;
 
 import org.usfirst.frc.team5490.robot.EnhancedPIDSetpoint;
 import org.usfirst.frc.team5490.robot.Robot;
+import org.usfirst.frc.team5490.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -24,7 +25,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class LiftSetpoint extends Command {
 	
-	private static PIDSubsystem pid_subsystem = Robot.m_Lift;
+	private static Lift pid_subsystem = Robot.m_Lift;
 	private static double pid_active_range = 400;
 	private static int ramp_length = 100;
 	
@@ -52,7 +53,8 @@ public class LiftSetpoint extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return pid_subsystem.onTarget() || Robot.m_Lift.isAtTop() || Robot.m_Lift.isAtBottom(); 
+		
+		return (pid_subsystem.onTarget() && (! pid_subsystem.isClamped())); 
 	}
 	
 	@Override

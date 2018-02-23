@@ -37,6 +37,7 @@ public class Lift extends PIDSubsystem {
     public DigitalInput m_lsTop = new DigitalInput(RobotMap.ls_liftUp);
 	public DigitalInput m_lsBottom = new DigitalInput(RobotMap.ls_liftDown);
 	
+	private boolean m_clamped = false;
 	
 	public Lift() {
 		super(kP, kI, 0);
@@ -58,8 +59,6 @@ public class Lift extends PIDSubsystem {
 		// Let's name everything on the LiveWindow
 		addChild("Lift Motor", motorLift);
 		addChild("Lift Encoder", m_LiftEncoder);
-		addChild("Up Limit Switch", m_lsTop);
-		addChild("Down Limit Switch", m_lsBottom);
 
 	}
 	
@@ -82,15 +81,13 @@ public class Lift extends PIDSubsystem {
     	
     	// limit switches
     	// TODO fix it back to putData when nav f*cking fixes the connection for l.s.
-    	SmartDashboard.putBoolean("LiftIsAtTop", this.isAtTop());
-    	SmartDashboard.putBoolean("LiftIsAtBottom", this.isAtBottom());
+    	SmartDashboard.putBoolean("LiftAtTop", this.isAtTop());
+    	SmartDashboard.putBoolean("LiftAtBottom", this.isAtBottom());
 
     	
     	// Let's name everything on the LiveWindow
     	addChild("Lift Motor", motorLift);
     	addChild("Lift Encoder", m_LiftEncoder);
-    	addChild("Up Limit Switch", m_lsTop);
-    	addChild("Down Limit Switch", m_lsBottom);
 	}
     
     
@@ -125,7 +122,6 @@ public class Lift extends PIDSubsystem {
 	 * Return true when the which lift triggers the "top" limit switch.
 	 */
 	public boolean isAtTop() {
-		// TODO take out ! IF nav switches the conenction for l.s.
 		return ! m_lsTop.get();
 	}
 
@@ -133,9 +129,14 @@ public class Lift extends PIDSubsystem {
 	 * Return true when the which lift triggers the "bottom" limit switch.
 	 */
 	public boolean isAtBottom() {
-		// TODO take out ! IF nav switches the conenction for l.s.
 		return ! m_lsBottom.get();
 	}
+	
+	public boolean isClamped() {
+		// 
+		return m_clamped;
+	}
+
 	
 	/**
 	 * Use the magnetic encoder as the PID sensor. This method is automatically
@@ -152,7 +153,11 @@ public class Lift extends PIDSubsystem {
 	 */
 	@Override
 	protected void usePIDOutput(double power) {
-		motorLift.set(power*motor_up_direction);
+		double output = power*motor_up_direction;		
+		// detect and clamp output based on direction
+		m_clamped = (((output > 0) && isAtTop()) ||((output > 0) && isAtBottom()));
+		if (m_clamped) output = 0;			
+		motorLift.set(output);
 	}
 }
 
