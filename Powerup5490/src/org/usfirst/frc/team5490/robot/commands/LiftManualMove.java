@@ -19,7 +19,6 @@ public class LiftManualMove extends Command {
 	 */
 	public LiftManualMove(int direction) {
         requires(Robot.m_Lift);
-//        requires(Robot.m_Chassis);
         this.direction = direction;
 	}
 

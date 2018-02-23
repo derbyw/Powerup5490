@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.Victor;
 
 import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
+import org.usfirst.frc.team5490.robot.HermiteSpline;
 
 
 //import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
+
 
 
 
@@ -40,35 +41,47 @@ public class Chassis extends Subsystem {
     
     public Winch m_Winch = new Winch();
     
+    private static HermiteSpline Hcurve;
+    
     //ADIS16448_IMU imu = new ADIS16448_IMU();
     
-
-    /*
-     *   
-    Hcurve.Size = 9;
-
-
-    i = 0; // at pad
-    Hcurve.P(i).x = m.pad_depth;
-    Hcurve.P(i).y = pheight;
-    Hcurve.r(i).x = (theight - pheight) * 2;
-    Hcurve.r(i).y = 0;
-    */
     
-    /*
-     * (non-Javadoc)
-     * @see edu.wpi.first.wpilibj.command.Subsystem#initDefaultCommand()
-     */
+
+
+    
+    
+     
+    
+
     
 	
-	//private DigitalOutput m_lightmast = new	DigitalOutput(RobotMap.out_Lightmast);
-    
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	// see DriveTrain example
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
+    	
+        Hcurve = new HermiteSpline();
+        Hcurve.Size(2);
+    		
+    				// Define point and tangent for point 1 (starting)
+        Hcurve.P(0).x = 0;
+        Hcurve.P(0).y = 0;
+        Hcurve.P(0).z = 0;		// angle
+    		
+        Hcurve.T(0).x = 50;
+        Hcurve.T(0).y = 5;
+        Hcurve.T(0).z = 10;		// angle
+    		
+        Hcurve.P(1).x = 20;
+        Hcurve.P(1).y = 15;
+        Hcurve.P(1).z = 45 * (Math.PI/180.0);		// angle (in radians)
+
+        Hcurve.T(1).x = 50;
+        Hcurve.T(1).y = 0;
+        Hcurve.T(0).z = 10;		// angle
+
 
 		// (2/14/2018) Inversion proved to be necessary to get the robot moving in the right direction 
     	motorFrontLeft.setInverted(true);
