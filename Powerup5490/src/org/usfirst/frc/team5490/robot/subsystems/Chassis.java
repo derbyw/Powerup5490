@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.Talon;
 
 import org.usfirst.frc.team5490.robot.RobotMap;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
+
+import org.usfirst.frc.team5490.robot.Point3D;
+
 import org.usfirst.frc.team5490.robot.HermiteSpline;
 
 
@@ -41,20 +44,19 @@ public class Chassis extends Subsystem {
     
     public Winch m_Winch = new Winch();
     
+    
+    private static HermiteSpline JoystickCurve;
+    
     private static HermiteSpline Hcurve;
     
     //ADIS16448_IMU imu = new ADIS16448_IMU();
     
     
+    public int segment;
+    public double percent;
+    public double tick; 
     
-  
     
-    
-     
-    
-
-    
-	
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -62,25 +64,8 @@ public class Chassis extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
     	
-        Hcurve = new HermiteSpline();
-        Hcurve.Size(2);
-    		
-    				// Define point and tangent for point 1 (starting)
-        Hcurve.P(0).x = 0;
-        Hcurve.P(0).y = 0;
-        Hcurve.P(0).z = 0;		// angle
-    		
-        Hcurve.T(0).x = 50;
-        Hcurve.T(0).y = 5;
-        Hcurve.T(0).z = 10;		// angle
-    		
-        Hcurve.P(1).x = 20;
-        Hcurve.P(1).y = 15;
-        Hcurve.P(1).z = 45 * (Math.PI/180.0);		// angle (in radians)
-
-        Hcurve.T(1).x = 50;
-        Hcurve.T(1).y = 0;
-        Hcurve.T(0).z = 10;		// angle
+    	DefineJoystickResponse();
+    	
 
 
 		// (2/14/2018) Inversion proved to be necessary to get the robot moving in the right direction 
@@ -99,6 +84,10 @@ public class Chassis extends Subsystem {
 		
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());
+		SmartDashboard.putNumber("Path Segment: ", segment);
+		SmartDashboard.putNumber("Path percent: ", percent);
+		SmartDashboard.putNumber("Path timer: ", tick);
+		 
 		
 
 		/*
@@ -119,20 +108,34 @@ public class Chassis extends Subsystem {
 		*/
     }
     
+    private void DefineJoystickResponse()
+    {
+    	JoystickCurve = new HermiteSpline();
+    	JoystickCurve.Size(2);
+		
+				// Define point and tangent for point 1 (starting)
+    	JoystickCurve.P(0).x = 0;
+    	JoystickCurve.P(0).y = 0;
+    	JoystickCurve.P(0).z = 0;		// angle
+		
+    	JoystickCurve.T(0).x = 50;
+    	JoystickCurve.T(0).y = 0;
+    	JoystickCurve.T(0).z = 0;		// angle
+		
+    	JoystickCurve.P(1).x = 1;
+    	JoystickCurve.P(1).y = 1;
+    	JoystickCurve.P(1).z = 1;
+
+    	JoystickCurve.T(1).x = -15;
+    	JoystickCurve.T(1).y = 0;
+    	JoystickCurve.T(0).z = 0;		// angle
+    }
+    
    
     public void log() 
     {
     	
     	// put class variables we want to see on dashboard or capture here
-    	
-		/* example
-		SmartDashboard.putNumber("Left Distance", m_leftEncoder.getDistance());		 
-		SmartDashboard.putNumber("Right Distance", m_rightEncoder.getDistance());
-		SmartDashboard.putNumber("Left Speed", m_leftEncoder.getRate());
-		SmartDashboard.putNumber("Right Speed", m_rightEncoder.getRate());
-		SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
-		*/
-    	
     	m_Winch.log();
     	
 //    	SmartDashboard.putData("IMU board", imu);
@@ -141,7 +144,11 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putNumber("FR", motorFrontRight.get());
     	SmartDashboard.putNumber("RL", motorRearLeft.get());
     	SmartDashboard.putNumber("RR", motorRearRight.get());
-    	
+
+		SmartDashboard.putNumber("Path Segment: ", segment);
+		SmartDashboard.putNumber("Path percent: ", percent);
+		SmartDashboard.putNumber("Path timer: ", tick);
+
     	/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
@@ -182,7 +189,38 @@ public class Chassis extends Subsystem {
 		//  Z twist
 		//  So we swap orientations here to avoid brain cramps..
 		//
-		m_robotDrive.driveCartesian(speed*driveStick.getX(),speed*driveStick.getY(),speed*driveStick.getZ(), 0);
+		
+		/*
+		double Xreq = -1 * driveStick.getX();
+		double Yreq = driveStick.getY();
+		double Zreq = driveStick.getX();
+		
+		// 
+		// make a non-linear response to the joystick that smoothes out
+		// initial response - this keeps twist from doing weird things
+		// use same response for each axis...
+		// the curve works for 0..1 so remove polarity for calc 
+		Point3D xscale = JoystickCurve.Calc(1, Math.abs(Xreq));
+		Point3D yscale = JoystickCurve.Calc(1, Math.abs(Yreq));
+		Point3D zscale = JoystickCurve.Calc(1, Math.abs(Zreq));
+		
+		double Xout = speed * xscale.y;
+		double Yout = speed * yscale.y;
+		double Zout = speed * zscale.y;
+		
+		// restore polarity
+		if (Xreq < 0) Xout *= -1;
+		if (Yreq < 0) Yout *= -1;
+		if (Zreq < 0) Zout *= -1;
+		
+		
+		m_robotDrive.driveCartesian(Xout, Yout, Zout, 0);
+		*/
+		
+		m_robotDrive.driveCartesian(-1 * speed*driveStick.getX(),
+									speed*driveStick.getY(),
+									-0.25*driveStick.getZ(), 0);
+									
 		
 		//
 		
@@ -203,7 +241,12 @@ public class Chassis extends Subsystem {
 		//  Z twist
 		//  So we swap orientations here to avoid brain cramps..
 		//
-		m_robotDrive.driveCartesian(X * speed, Y * speed, Z * speed, 0);
+		if (X > 1.0) X = 1.0;
+		if (Y > 1.0) Y = 1.0;
+		if (Z > 1.0) Z = 1.0;
+		if (speed > 1.0) speed = 1.0;
+		
+		m_robotDrive.driveCartesian(-1 * X * speed, Y * speed, Z * speed, 0);
 	}
 	
 	public void StopMotors()
