@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *  This is a base class - do not call directly
+ *  derived classes need to define the path array
  */
 public class PathSequence extends Command {
 	
@@ -17,38 +18,21 @@ public class PathSequence extends Command {
 	private int index;
 	private double timer;
 	private double tickrate = 0.02;
-	private double speed = 0.4;
+	
 	private boolean done = false;
 	
 	
-	private PathRecord[] 	path;
-	
+	protected PathRecord[] 	path;
 
 
     public PathSequence() {
     	requires(Robot.m_Chassis);
+    	
+
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-    	
-    	// there should be a cleaner way to initialize arrays but this works.. 
-    	path = new PathRecord[10];
-    	// box
-    	path[0] = new PathRecord(-1, 0, 0, speed, 1);
-    	path[1] = new PathRecord( 0, 1, 0, speed, 1);
-    	path[2] = new PathRecord( 0,-1, 0, speed, 1);
-    	path[3] = new PathRecord( 1, 0, 0, speed, 1);
-    	// spin and back
-    	path[4] = new PathRecord( 0, 0, 1, speed, 1);
-    	path[5] = new PathRecord( 0, 0, -1, speed, 1);
-    	
-    	// diagonal
-    	path[6] = new PathRecord( 1, 1, 0, speed, 1);
-    	path[7] = new PathRecord( 1, -1, 0, speed, 1);
-    	path[8] = new PathRecord( -1, 1, 0, speed, 1);
-    	path[9] = new PathRecord( -1, -1, 0, speed, 1);
-    	
+    protected void initialize() {    	
     	timer = 0.0;
     	state = 0;
     	index = 0;
@@ -59,8 +43,6 @@ public class PathSequence extends Command {
     protected void execute() {
     	switch(state) {
 		case 0:
-			path[0] = new PathRecord(-1, 0, 0,speed,1);
-			
 			Robot.m_Chassis.Drive(path[index].X, path[index].Y, path[index].Z, path[index].speed);
 			if (timer > path[index].duration) {
 				timer = 0;

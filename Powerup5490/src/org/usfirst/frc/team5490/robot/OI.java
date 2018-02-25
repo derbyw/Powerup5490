@@ -17,10 +17,7 @@ import org.usfirst.frc.team5490.robot.commands.GripperRelease;
 
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 import org.usfirst.frc.team5490.robot.commands.LiftSwitch;
-import org.usfirst.frc.team5490.robot.commands.MoveFullBackward;
-import org.usfirst.frc.team5490.robot.commands.MoveFullForward;
-import org.usfirst.frc.team5490.robot.commands.PathSequence;
-import org.usfirst.frc.team5490.robot.commands.TestSpline;
+import org.usfirst.frc.team5490.robot.commands.TestSequencer;
 import org.usfirst.frc.team5490.robot.commands.LiftScale;
 import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
 import org.usfirst.frc.team5490.robot.commands.LiftHook;
@@ -29,7 +26,9 @@ import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_minus;
 import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_plus;
 import org.usfirst.frc.team5490.robot.commands.Cal_RGrip_minus;
 import org.usfirst.frc.team5490.robot.commands.Cal_RGrip_plus;
-import org.usfirst.frc.team5490.robot.commands.DrivePath;
+
+//import org.usfirst.frc.team5490.robot.commands.TestSpline;
+//import org.usfirst.frc.team5490.robot.commands.DrivePath;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -131,8 +130,8 @@ public class OI {
 		wstore.toggleWhenPressed(new WinchToStore());
 		woperate.toggleWhenPressed(new WinchToOperate());
 		
-		forward.toggleWhenPressed(new PathSequence());
-		backward.toggleWhenPressed(new PathSequence());
+		forward.toggleWhenPressed(new TestSequencer());
+		backward.toggleWhenPressed(new TestSequencer());
 		
 		
 		// These should probably be in the smart dashboard not on joystick
