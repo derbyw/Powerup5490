@@ -28,7 +28,7 @@ public class GripperClose extends Command {
     protected void initialize() {
 		Robot.m_Gripper.enable();
 		//Robot.m_Gripper.setSetpoint(70 * Math.PI / 180);
-		Robot.m_Gripper.SetDistanceSetpoint(11, false);	// close to 10 inches
+		Robot.m_Gripper.SetDistanceSetpoint(10, true);	// close to 10 inches
     }
 
     // Called repeatedly when this Command is scheduled to run

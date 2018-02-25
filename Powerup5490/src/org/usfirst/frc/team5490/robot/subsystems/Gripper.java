@@ -37,12 +37,13 @@ public class Gripper extends PIDSubsystem {
 	private static final double large_gear_teeth = 90;
 	private static final double small_gear_teeth = 15;
 	private static final double deg_per_turn = 2 * Math.PI;
-	private static final double pulses_per_revolution = 500;
+	private static final double pulses_per_revolution = 700;
 	
 	private static final double PowerCubeWidth = 12;	// inches
 
-	private static final double kP = 0.7;
-	private static final double kI = 0.02;
+	private static final double kP = 0.5;
+	private static final double kI = 0;
+//	private static final double kI = 0.02;
 
 	
 	private WPI_TalonSRX mLGripper = new WPI_TalonSRX(RobotMap.mtrLGripper);
@@ -60,14 +61,14 @@ public class Gripper extends PIDSubsystem {
 		setAbsoluteTolerance(0.008); // 1/5 deg in radians	should be close enough
 		
     	// Define current limiting
-		mLGripper.configContinuousCurrentLimit(5, 0);
-		mLGripper.configPeakCurrentLimit(10, 0);
+		mLGripper.configContinuousCurrentLimit(20, 0);
+		mLGripper.configPeakCurrentLimit(25, 0);
 		mLGripper.configPeakCurrentDuration(200, 0);
 		mLGripper.enableCurrentLimit(true);		
 		mLGripper.configOpenloopRamp(0.05, 0);
 		
-		mRGripper.configContinuousCurrentLimit(5, 0);
-		mRGripper.configPeakCurrentLimit(10, 0);
+		mRGripper.configContinuousCurrentLimit(20, 0);
+		mRGripper.configPeakCurrentLimit(25, 0);
 		mRGripper.configPeakCurrentDuration(200, 0);
 		mRGripper.enableCurrentLimit(true);
 	    mRGripper.configOpenloopRamp(0.05, 0);
@@ -95,7 +96,7 @@ public class Gripper extends PIDSubsystem {
     public void log() {
     	double angle = LGripperEncoder.getDistance();
     	SmartDashboard.putNumber("Gripper Speed", LGripperEncoder.getRate());
-    	SmartDashboard.putNumber("Gripper Angle", angle);
+    	SmartDashboard.putNumber("Gripper Angle", angle*(180/Math.PI));
     	SmartDashboard.putNumber("Grip Distance", CalcGripperPos(angle));
     	
     	SmartDashboard.putData("Gripper Encoder (L)", LGripperEncoder);
