@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team5490.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -54,6 +57,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
+		UsbCamera jevoisCam = CameraServer.getInstance().startAutomaticCapture();
+		jevoisCam.setVideoMode(PixelFormat.kYUYV,320,254,60);
 		
 		m_Chassis = new Chassis();
 		
