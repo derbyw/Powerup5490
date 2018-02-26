@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GripperOpen extends Command {
 
-	
+
+	private static final double open_speed = 0.4;
 	
 	public GripperOpen() {
 		requires(Robot.m_Gripper);
@@ -18,12 +19,14 @@ public class GripperOpen extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {    	
-		Robot.m_Gripper.enable();
-		Robot.m_Gripper.SetDistanceSetpoint(20, true);
+		//Robot.m_Gripper.enable();
+		//Robot.m_Gripper.SetDistanceSetpoint(20, true);
+    	Robot.m_Gripper.disable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
+    	Robot.m_Gripper.manual_open(open_speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

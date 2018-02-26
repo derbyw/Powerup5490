@@ -124,8 +124,8 @@ public class OI {
 		lu.toggleWhenPressed(new LiftSetpoint(800));
 		ld.toggleWhenPressed(new LiftSetpoint(0));
 		
-		gopen.toggleWhenPressed(new GripperOpen());
-		gclose.toggleWhenPressed(new GripperClose());
+		gopen.whileHeld(new GripperOpen());
+		gclose.whileHeld(new GripperClose());
 		
 		wstore.toggleWhenPressed(new WinchToStore());
 		woperate.toggleWhenPressed(new WinchToOperate());

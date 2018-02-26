@@ -135,10 +135,10 @@ public class Gripper extends PIDSubsystem {
 	/**
 	 * Set the claw motor to move in the open direction. Percent ranges from 0 to 1.
 	 */
-	public void manual_open() {
+	public void manual_open(double speed) {
 		disable();
-		mLGripper.set(0.1);
-		mRGripper.set(0.1);
+		mLGripper.set(speed);
+		mRGripper.set(speed);
 
 	}
 	
@@ -147,10 +147,10 @@ public class Gripper extends PIDSubsystem {
 	 * Set the claw motor to move in the close direction. Percent ranges from 0 to 1.
 	 */
 
-	public void manual_close() {
+	public void manual_close(double speed) {
 		disable();
-		mLGripper.set(-0.1);
-		mRGripper.set(-0.1);
+		mLGripper.set(-1 * speed);
+		mRGripper.set(-1 * speed);
 	}
 
 	/**
