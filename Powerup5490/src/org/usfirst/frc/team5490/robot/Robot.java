@@ -7,7 +7,11 @@
 
 package org.usfirst.frc.team5490.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -52,8 +56,9 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
-		
+	public void robotInit() {		
+		UsbCamera jevoisCam = CameraServer.getInstance().startAutomaticCapture();
+		jevoisCam.setVideoMode(PixelFormat.kYUYV,320,254,60);
 		
 		m_Chassis = new Chassis();
 		
@@ -71,8 +76,11 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Lift Down", new LiftDown());
 		
 		
+		
 		// this lets the dashboard choose which on to run at start
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+//		SmartDashboard.putString("Camera", cam.readString());
 		
 		
 		
