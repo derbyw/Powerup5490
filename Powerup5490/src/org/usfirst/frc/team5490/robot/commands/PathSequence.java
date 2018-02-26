@@ -19,6 +19,8 @@ public class PathSequence extends Command {
 	private double timer;
 	private double tickrate = 0.02;
 	
+	private double mspeed;
+	
 	private boolean done = false;
 	
 	
@@ -37,13 +39,17 @@ public class PathSequence extends Command {
     	state = 0;
     	index = 0;
     	done = false;
+    	mspeed = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	switch(state) {
 		case 0:
-			Robot.m_Chassis.Drive(path[index].X, path[index].Y, path[index].Z, path[index].speed);
+			
+			mspeed = .9 * mspeed + 0.1 * path[index].speed;
+			
+			Robot.m_Chassis.Drive(path[index].X, path[index].Y, path[index].Z, mspeed);
 			if (timer > path[index].duration) {
 				timer = 0;
 				index++;

@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TestSequencer extends PathSequence {
 
-	private double speed = 0.4;
+	private double speed = 1;
 	
     public TestSequencer() {
     	super();
     	
-    	PathRecord[] 	p =  {
-    			
+    	PathRecord[] 	p =  {    			
+    			new PathRecord( 0, 1, 0, speed, 1.5),
+    			/*
         		new PathRecord(-1, 0, 0, speed, 1),
         		new PathRecord( 0, 1, 0, speed, 1),
             	new PathRecord( 0,-1, 0, speed, 1),
@@ -28,7 +29,8 @@ public class TestSequencer extends PathSequence {
             	new PathRecord( 1, 1, 0, speed, 1),
             	new PathRecord( 1, -1, 0, speed, 1),
             	new PathRecord( -1, 1, 0, speed, 1),
-            	new PathRecord( -1, -1, 0, speed, 1)    			
+            	new PathRecord( -1, -1, 0, speed, 1)
+            	*/    			
         	};
     	path = p;
 

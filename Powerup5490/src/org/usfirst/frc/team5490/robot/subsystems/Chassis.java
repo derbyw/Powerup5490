@@ -19,7 +19,7 @@ import org.usfirst.frc.team5490.robot.HermiteSpline;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-//import com.analog.adis16448.frc.ADIS16448_IMU;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 
 
 
@@ -39,7 +39,6 @@ public class Chassis extends Subsystem {
     SpeedController motorFrontRight= new Talon(RobotMap.mtrFrontRight);
     SpeedController motorRearRight = new Talon(RobotMap.mtrRearRight);
     
-	//RobotDrive m_robotDrive = new RobotDrive(motorFrontLeft, motorRearLeft, motorFrontRight, motorRearRight);
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
     
     public Winch m_Winch = new Winch();
@@ -49,7 +48,7 @@ public class Chassis extends Subsystem {
     
     private static HermiteSpline Hcurve;
     
-    //ADIS16448_IMU imu = new ADIS16448_IMU();
+    ADIS16448_IMU imu = new ADIS16448_IMU();
     
     
     public int segment;
@@ -90,7 +89,7 @@ public class Chassis extends Subsystem {
 		 
 		
 
-		/*
+		
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -105,7 +104,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
-		*/
+		
     }
     
     private void DefineJoystickResponse()
@@ -138,7 +137,7 @@ public class Chassis extends Subsystem {
     	// put class variables we want to see on dashboard or capture here
     	m_Winch.log();
     	
-//    	SmartDashboard.putData("IMU board", imu);
+    	SmartDashboard.putData("IMU board", imu);
     	
     	SmartDashboard.putNumber("FL", motorFrontLeft.get());
     	SmartDashboard.putNumber("FR", motorFrontRight.get());
@@ -149,7 +148,7 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Path percent: ", percent);
 		SmartDashboard.putNumber("Path timer: ", tick);
 
-    	/*
+    	
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -166,7 +165,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
-		*/
+		
 		
 	}
 
@@ -246,7 +245,7 @@ public class Chassis extends Subsystem {
 		if (Z > 1.0) Z = 1.0;
 		if (speed > 1.0) speed = 1.0;
 		
-		m_robotDrive.driveCartesian(-1 * X * speed, Y * speed, Z * speed, 0);
+		m_robotDrive.driveCartesian( -1 * X * speed, -1 * Y * speed, Z * speed, imu.getAngleY());
 	}
 	
 	public void StopMotors()
