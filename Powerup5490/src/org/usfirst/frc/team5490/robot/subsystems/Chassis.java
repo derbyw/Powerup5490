@@ -137,7 +137,6 @@ public class Chassis extends Subsystem {
     	// put class variables we want to see on dashboard or capture here
     	m_Winch.log();
     	
-    	SmartDashboard.putData("IMU board", imu);
     	
     	SmartDashboard.putNumber("FL", motorFrontLeft.get());
     	SmartDashboard.putNumber("FR", motorFrontRight.get());

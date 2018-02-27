@@ -45,7 +45,7 @@ public class Winch extends Subsystem {
     
     public void log() {
     	// winch motor info
-    	SmartDashboard.putData("Winch motor", motorWinch);
+//    	SmartDashboard.putData("Winch motor", motorWinch);
        	SmartDashboard.putNumber("Winch Speed", motorWinch.get());
     	
     	// limit switches
