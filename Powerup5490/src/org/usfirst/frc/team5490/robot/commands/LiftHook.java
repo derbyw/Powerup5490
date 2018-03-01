@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftHook extends LiftSetpoint {
 
+	//TODO determine exact value for hook
 	private static final double hookpos = 900;
 
     public LiftHook() {    	

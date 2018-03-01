@@ -93,12 +93,13 @@ public class Gripper extends PIDSubsystem {
     }
     
     public void log() {
-    	double angle = LGripperEncoder.getDistance();
-    	SmartDashboard.putNumber("Gripper Speed", LGripperEncoder.getRate());
-    	SmartDashboard.putNumber("Gripper Angle", angle);
-    	SmartDashboard.putNumber("Grip Distance", CalcGripperPos(angle));
+    	// TODO take these out completely if we confirm that PID is gone
+//    	double angle = LGripperEncoder.getDistance();
+//    	SmartDashboard.putNumber("Gripper Speed", LGripperEncoder.getRate());
+//    	SmartDashboard.putNumber("Gripper Angle", angle);
+//    	SmartDashboard.putNumber("Grip Distance", CalcGripperPos(angle));
     	
-    	SmartDashboard.putData("Gripper Encoder (L)", LGripperEncoder);
+//    	SmartDashboard.putData("Gripper Encoder (L)", LGripperEncoder);
     	
 	}
     
@@ -137,8 +138,8 @@ public class Gripper extends PIDSubsystem {
 	 */
 	public void manual_open(double speed) {
 		disable();
-		mLGripper.set(speed);
-		mRGripper.set(speed);
+		mLGripper.set(-1 * speed);
+		mRGripper.set(-1 * speed);
 
 	}
 	
@@ -149,8 +150,8 @@ public class Gripper extends PIDSubsystem {
 
 	public void manual_close(double speed) {
 		disable();
-		mLGripper.set(-1 * speed);
-		mRGripper.set(-1 * speed);
+		mLGripper.set(speed);
+		mRGripper.set(speed);
 	}
 
 	/**

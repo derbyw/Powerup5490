@@ -72,12 +72,13 @@ public class Lift extends PIDSubsystem {
     
     public void log() {
     	SmartDashboard.putNumber("Lift Speed", m_LiftEncoder.getRate());
-    	SmartDashboard.putNumber("Lift Position", Robot.m_Lift.getPosition());	// TODO see if this is legal
+    	SmartDashboard.putNumber("Lift Position", this.getPosition());
     	SmartDashboard.putNumber("Lift Distance", m_LiftEncoder.getDistance());
+    	SmartDashboard.putNumber("Lift dpp", m_LiftEncoder.getDistancePerPulse());
     	
-    	// TODO seems to work... eliminate the comment if confirmed that values are updated properly
-    	SmartDashboard.putData("Lift Motor", motorLift);
-    	SmartDashboard.putData("Lift Encoder", m_LiftEncoder);
+    	// Because things that are put in the SmartDashboard through putData() have no 
+//    	SmartDashboard.putData("Lift Motor", motorLift);
+//    	SmartDashboard.putData("Lift Encoder", m_LiftEncoder);
     	
     	// limit switches
     	// TODO fix it back to putData when nav f*cking fixes the connection for l.s.
@@ -155,7 +156,8 @@ public class Lift extends PIDSubsystem {
 	protected void usePIDOutput(double power) {
 		double output = power*motor_up_direction;		
 		// detect and clamp output based on direction
-		m_clamped = (((output > 0) && isAtTop()) ||((output > 0) && isAtBottom()));
+		// TODO for isAtBottom, output < 0 if I'm not mistaken... check later
+		m_clamped = (((output > 0) && isAtTop()) || ((output < 0) && isAtBottom()));
 		if (m_clamped) output = 0;			
 		motorLift.set(output);
 	}
