@@ -21,7 +21,7 @@ public class GripperClose extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.m_Gripper.disable();	// TODO we really don't need this b/c we don't have PID anymore
 		//Robot.m_Gripper.enable();
 		//Robot.m_Gripper.SetDistanceSetpoint(11, false);	// close to 10 inches
     }
@@ -33,7 +33,7 @@ public class GripperClose extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;  // 
+    	return false;
     }
 
     // Called once after isFinished returns true

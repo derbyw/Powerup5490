@@ -21,6 +21,7 @@ import org.usfirst.frc.team5490.robot.commands.TestSequencer;
 import org.usfirst.frc.team5490.robot.commands.LiftScale;
 import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
 import org.usfirst.frc.team5490.robot.commands.LiftHook;
+import org.usfirst.frc.team5490.robot.commands.LiftManualMove;
 import org.usfirst.frc.team5490.robot.commands.LiftRobot;   // same as lift down, but may be partial
 import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_minus;
 import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_plus;
@@ -103,44 +104,81 @@ public class OI {
 		*/
 		
 		
-		// Create some buttons
+		// BUTTON MAPPINGS
+		JoystickButton trigger = new JoystickButton(m_joystick, 1);
+		JoystickButton thumb = new JoystickButton(m_joystick, 2);
 		
-		JoystickButton lu = new JoystickButton(m_joystick, 9);
-		JoystickButton ld = new JoystickButton(m_joystick, 10);
-		JoystickButton gopen = new JoystickButton(m_joystick, 2);
-		JoystickButton gclose = new JoystickButton(m_joystick, 1);
-		JoystickButton wstore = new JoystickButton(m_joystick, 11);
-		JoystickButton woperate = new JoystickButton(m_joystick, 12);
-		JoystickButton forward = new JoystickButton(m_joystick, 5);
-		JoystickButton backward = new JoystickButton(m_joystick, 3);
+		// Top buttons (counterclockwise from top left: 5-3-4-6)
+		JoystickButton button5 = new JoystickButton(m_joystick, 5);
+		JoystickButton button3 = new JoystickButton(m_joystick, 3);
+		JoystickButton liftManualDown= new JoystickButton(m_joystick, 4);
+		JoystickButton liftManualUp = new JoystickButton(m_joystick, 6);
 		
-		// allow "zero" to be established with both gripper motors
-		JoystickButton grip_calib_Lminus = new JoystickButton(m_joystick, 4);
-		JoystickButton grip_calib_Lplus = new JoystickButton(m_joystick, 6);
-		JoystickButton grip_calib_Rminus = new JoystickButton(m_joystick, 7);
-		JoystickButton grip_calib_Rplus = new JoystickButton(m_joystick, 8);
-		
-		
-		lu.toggleWhenPressed(new LiftSetpoint(800));
-		ld.toggleWhenPressed(new LiftSetpoint(0));
-		
-		gopen.whileHeld(new GripperOpen());
-		gclose.whileHeld(new GripperClose());
-		
-		wstore.toggleWhenPressed(new WinchToStore());
-		woperate.toggleWhenPressed(new WinchToOperate());
-		
-		forward.toggleWhenPressed(new TestSequencer());
-		backward.toggleWhenPressed(new TestSequencer());
+		// Side buttons (from top left)
+		JoystickButton button7 = new JoystickButton(m_joystick, 7);
+		JoystickButton button8 = new JoystickButton(m_joystick, 8);
+		JoystickButton button9 = new JoystickButton(m_joystick, 9);
+		JoystickButton button10 = new JoystickButton(m_joystick, 10);
+		JoystickButton button11 = new JoystickButton(m_joystick, 11);
+		JoystickButton button12 = new JoystickButton(m_joystick, 12);
 		
 		
-		// These should probably be in the smart dashboard not on joystick
-		grip_calib_Lminus.whileHeld(new Cal_LGrip_minus());
-		grip_calib_Lplus.whileHeld(new Cal_LGrip_plus());
-		grip_calib_Rminus.whileHeld(new Cal_RGrip_minus());
-		grip_calib_Rplus.whileHeld(new Cal_RGrip_plus());
+		
+		// COMMAND MAPPINGS
+		trigger.whileHeld(new GripperClose());
+		thumb.whileHeld(new GripperOpen());
+		
+		// TODO for testing purposes
+		button3.toggleWhenPressed(new WinchToStore());
+		button5.toggleWhenPressed(new WinchToOperate());
+		liftManualDown.whileHeld(new LiftManualMove(-1, 0.5));
+		liftManualUp.whileHeld(new LiftManualMove(1, 0.5));
+		
+		// TODO change mappings depending on the driver's preferences
+		button7.whenPressed(new LiftDown());
+		button9.whenPressed(new LiftSwitch());
+		button10.whenPressed(new LiftScale());
+		button11.whenPressed(new LiftHook());
+		button12.whileHeld(new LiftRobot());
+		
 
-		// Connect the buttons to commands
+
+		
+//		JoystickButton lu = new JoystickButton(m_joystick, 9);
+//		JoystickButton ld = new JoystickButton(m_joystick, 10);
+//		JoystickButton gopen = new JoystickButton(m_joystick, 2);
+//		JoystickButton gclose = new JoystickButton(m_joystick, 1);
+//		JoystickButton wstore = new JoystickButton(m_joystick, 11);
+//		JoystickButton woperate = new JoystickButton(m_joystick, 12);
+//		JoystickButton forward = new JoystickButton(m_joystick, 5);
+//		JoystickButton backward = new JoystickButton(m_joystick, 3);
+//		
+//		// allow "zero" to be established with both gripper motors
+//		JoystickButton grip_calib_Lminus = new JoystickButton(m_joystick, 4);
+//		JoystickButton grip_calib_Lplus = new JoystickButton(m_joystick, 6);
+//		JoystickButton grip_calib_Rminus = new JoystickButton(m_joystick, 7);
+//		JoystickButton grip_calib_Rplus = new JoystickButton(m_joystick, 8);
+//		
+//		
+//		lu.toggleWhenPressed(new LiftSetpoint(800));
+//		ld.toggleWhenPressed(new LiftSetpoint(0));
+//		
+//		gopen.whileHeld(new GripperOpen());
+//		gclose.whileHeld(new GripperClose());
+//		
+//		wstore.toggleWhenPressed(new WinchToStore());
+//		woperate.toggleWhenPressed(new WinchToOperate());
+//		
+//		forward.toggleWhenPressed(new TestSequencer());
+//		backward.toggleWhenPressed(new TestSequencer());
+//		
+//		
+//		// These should probably be in the smart dashboard not on joystick
+//		grip_calib_Lminus.whileHeld(new Cal_LGrip_minus());
+//		grip_calib_Lplus.whileHeld(new Cal_LGrip_plus());
+//		grip_calib_Rminus.whileHeld(new Cal_RGrip_minus());
+//		grip_calib_Rplus.whileHeld(new Cal_RGrip_plus());
+
 
 	}
 	

@@ -43,10 +43,17 @@ public class LiftManualMove extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {    	
-//    	return false;
-    	// TODO uncomment when transferred to new robot
-        return Robot.m_Lift.isAtTop() == true  || Robot.m_Lift.isAtBottom() == true;
+    protected boolean isFinished() {
+//    	boolean isAtMax = false;
+//    	if (direction == 1 && Robot.m_Lift.isAtTop()) {
+//    		isAtMax = true;
+//    	} else if (direction == -1 && Robot.m_Lift.isAtBottom()) {
+//    		isAtMax = true;
+//    	}
+//    	
+//        return isAtMax;
+        
+        return (direction == 1 && Robot.m_Lift.isAtTop()) || (direction == -1 && Robot.m_Lift.isAtBottom());
     }
 
     // Called once after isFinished returns true
