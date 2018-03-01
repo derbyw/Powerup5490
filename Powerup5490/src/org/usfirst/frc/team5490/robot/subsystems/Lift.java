@@ -156,7 +156,8 @@ public class Lift extends PIDSubsystem {
 	protected void usePIDOutput(double power) {
 		double output = power*motor_up_direction;		
 		// detect and clamp output based on direction
-		m_clamped = (((output > 0) && isAtTop()) ||((output > 0) && isAtBottom()));
+		// TODO for isAtBottom, output < 0 if I'm not mistaken... check later
+		m_clamped = (((output > 0) && isAtTop()) || ((output < 0) && isAtBottom()));
 		if (m_clamped) output = 0;			
 		motorLift.set(output);
 	}

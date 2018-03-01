@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GripperOpen extends Command {
 
-
 	private static final double open_speed = 0.4;
 	
 	public GripperOpen() {
@@ -31,8 +30,9 @@ public class GripperOpen extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
 
-    protected boolean isFinished() {       
-    	return Robot.m_Gripper.onTarget();
+    protected boolean isFinished() {
+//    	return Robot.m_Gripper.onTarget();	//since we're not using PID anymore..
+    	return false;
     }
 
     // Called once after isFinished returns true

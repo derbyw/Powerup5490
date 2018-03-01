@@ -138,16 +138,15 @@ public class Chassis extends Subsystem {
     	m_Winch.log();
     	
     	
-    	SmartDashboard.putNumber("FL", motorFrontLeft.get());
+    	SmartDashboard.putNumber("FL", -1 * motorFrontLeft.get());
     	SmartDashboard.putNumber("FR", motorFrontRight.get());
-    	SmartDashboard.putNumber("RL", motorRearLeft.get());
+    	SmartDashboard.putNumber("RL", -1 * motorRearLeft.get());
     	SmartDashboard.putNumber("RR", motorRearRight.get());
 
 		SmartDashboard.putNumber("Path Segment: ", segment);
 		SmartDashboard.putNumber("Path percent: ", percent);
 		SmartDashboard.putNumber("Path timer: ", tick);
 
-    	
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -160,6 +159,8 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Roll", imu.getRoll());
 		SmartDashboard.putNumber("Yaw", imu.getYaw());
 		
+		SmartDashboard.putNumber("Angle-X", imu.getAngleX());
+		SmartDashboard.putNumber("Angle-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Angle-Z", imu.getAngleZ());
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
