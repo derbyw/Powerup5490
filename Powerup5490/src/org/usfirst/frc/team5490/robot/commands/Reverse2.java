@@ -15,7 +15,7 @@ public class Reverse2 extends PathSequence {
     	super();
     	
     	PathRecord[] 	p =  {    			
-    			new PathRecord( 0, 1, 0, speed, 1),
+    			new PathRecord( 0, -1, 0, speed, 1),
 
         	};
     	path = p;
