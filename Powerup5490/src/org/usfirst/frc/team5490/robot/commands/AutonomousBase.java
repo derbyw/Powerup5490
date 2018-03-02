@@ -1,13 +1,9 @@
 package org.usfirst.frc.team5490.robot.commands;
 
 import org.usfirst.frc.team5490.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-/**
- *
- */
-public abstract class Autonomous extends Command {
+public abstract class AutonomousBase extends CommandGroup {
 
 	public enum AutoStart {
 		Left,
@@ -15,10 +11,10 @@ public abstract class Autonomous extends Command {
 		Right,
 	}
 	
-	private AutoStart state;
+	public AutoStart state;
 	public String gameData;
 	
-    public Autonomous() {
+    public AutonomousBase() {
     	requires(Robot.m_Chassis);
     	requires(Robot.m_Lift);
     	

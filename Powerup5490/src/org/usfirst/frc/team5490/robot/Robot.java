@@ -10,6 +10,7 @@ package org.usfirst.frc.team5490.robot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,8 +22,11 @@ import org.usfirst.frc.team5490.robot.subsystems.Chassis;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
 import org.usfirst.frc.team5490.robot.subsystems.Winch;
 import org.usfirst.frc.team5490.robot.subsystems.Gripper;
+import org.usfirst.frc.team5490.robot.commands.AutoCenter;
+import org.usfirst.frc.team5490.robot.commands.AutoLeft;
+import org.usfirst.frc.team5490.robot.commands.AutoRight;
 
-import org.usfirst.frc.team5490.robot.commands.Autonomous;
+import org.usfirst.frc.team5490.robot.commands.AutonomousBase;
 import org.usfirst.frc.team5490.robot.commands.DriveRobot;
 import org.usfirst.frc.team5490.robot.commands.GripperOpen;
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
@@ -66,18 +70,15 @@ public class Robot extends IterativeRobot {
 		m_Gripper = new Gripper();
 		m_oi = new OI();
 		
-		m_autonomousCommand = new DriveRobot();
 		
 		
 		// instantiate the command used for the autonomous period
 		// add version of auto operation here..
-		m_chooser.addDefault("Basic Start", new WinchToOperate());
-		m_chooser.addObject("Gripper Open", new GripperOpen());
-		m_chooser.addObject("Lift Down", new LiftDown());
+		m_chooser.addDefault("LeftStart", new AutoLeft());
+		m_chooser.addObject("CenterStart", new AutoCenter());
+		m_chooser.addObject("RightsStart", new AutoRight());
 		
-		
-		
-		// this lets the dashboard choose which on to run at start
+		// this lets the dashboard choose which one to run at start
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 //		SmartDashboard.putString("Camera", cam.readString());
@@ -101,6 +102,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		log();
 	}
+	
+	
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -116,16 +119,36 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+
+		/*
+		String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
+		switch(autoSelected) { 
+			case "LeftStart": 
+				
+				break; 
+			case "Default":
+				break;
+			default:
+				//autonomousCommand = new ExampleCommand(); 
+				break; 
+		}
+		*/
+
 	
-		
-		//m_autonomousCommand = m_chooser.getSelected();
+        //  pass the game data into the command for the start position
+        AutonomousBase startcmd = (AutonomousBase)m_chooser.getSelected();
+        startcmd.gameData = gameData;
+		m_autonomousCommand = startcmd;
 		
 		/*
 		 *  code to pull automode code from dashboard
+		*  
 		String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
 		switch(autoSelected) { 
-			case "My Auto": 
-				//autonomousCommand = new MyAutoCommand(); 
+			case "LeftStart": 
+				m_autonomousCommand.
 				break; 
 			case "Default Auto": 
 			default:
@@ -135,8 +158,7 @@ public class Robot extends IterativeRobot {
 		*/
 		 
 
-		// schedule the autonomous command (example)
-		
+		// schedule the autonomous command (example)		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}

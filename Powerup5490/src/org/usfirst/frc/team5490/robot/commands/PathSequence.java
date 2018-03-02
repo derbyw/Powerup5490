@@ -32,6 +32,11 @@ public class PathSequence extends Command {
     	
 
     }
+    
+    public PathSequence(PathRecord[] p) {
+    	requires(Robot.m_Chassis);
+    	
+    	path = p;    }
 
     // Called just before this Command runs the first time
     protected void initialize() {    	

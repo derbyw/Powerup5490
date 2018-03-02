@@ -15,7 +15,7 @@ public class TestSequencer extends PathSequence {
     	super();
     	
     	PathRecord[] 	p =  {    			
-    			new PathRecord( 0, 1, 0, speed, 1.5),
+    			new PathRecord( 0, 0.4, 0, speed, 1.5),
     			/*
         		new PathRecord(-1, 0, 0, speed, 1),
         		new PathRecord( 0, 1, 0, speed, 1),
