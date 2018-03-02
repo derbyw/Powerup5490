@@ -5,7 +5,7 @@ import org.usfirst.frc.team5490.robot.Robot;
 import org.usfirst.frc.team5490.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+
 
 /**
  * Move the lift to a given location. This command finishes when it is

@@ -3,7 +3,7 @@ package org.usfirst.frc.team5490.robot.commands;
 import org.usfirst.frc.team5490.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *	Command for manually moving the lift - primarily for testing purposes. May be kept for the purposes of resetting to zero.
