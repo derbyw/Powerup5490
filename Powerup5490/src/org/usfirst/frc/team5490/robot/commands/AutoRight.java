@@ -88,31 +88,40 @@ public class AutoRight extends AutonomousBase {
          	switch(gameData) {
          	case "LLL":
          		p = ToLeftFarSwitch;
+         		addSequential(new DeliverSwitch());
          		break;
          	case "LLR":
          		p = ToRightFarSwitch;
+         		addSequential(new DeliverSwitch());
          		break;
          	case "LRL":
          		p = ToRightScale;
+         		addSequential(new DeliverScale());
          		break;
          	case "LRR":
          		p = ToRightScale;
+         		addSequential(new DeliverScale());
          		break;
          	case "RLL":
          		p = ToRightNearSwitch;
+         		addSequential(new DeliverSwitch());
          		break;
          	case "RLR":
          		p = ToRightNearSwitch;
+         		addSequential(new DeliverSwitch());
          		break;
          	case "RRL":
          		p = ToRightScale;
+         		addSequential(new DeliverScale());
          		break;
          	case "RRR":
          		p = ToRightNearSwitch;
+         		addSequential(new DeliverSwitch());
          		break;
          	default:
          		// can't decode message - just assume far right switch
          		p = ToRightFarSwitch;
+         		addSequential(new DeliverSwitch());
          		break;
          	}
          }

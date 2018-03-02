@@ -84,31 +84,40 @@ public class AutoCenter extends AutonomousBase {
 	     	switch(gameData) {
 	     	case "LLL":
 	     		p = ToLeftNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "LLR":
 	     		p = ToLeftNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "LRL":
 	     		p = ToLeftNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "LRR":
 	     		p = ToLeftNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "RLL":
 	     		p = ToRightNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "RLR":
 	     		p = ToRightNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "RRL":
 	     		p = ToRightNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "RRR":
 	     		p = ToRightNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	default:
 	     		// can't decode message - just assume far right switch
 	     		p = ToRightScale;
+	     		addSequential(new DeliverScale());
 	     		break;
 	     	}
 	     }

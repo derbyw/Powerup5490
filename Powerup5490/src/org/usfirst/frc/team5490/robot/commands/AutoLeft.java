@@ -72,7 +72,6 @@ public class AutoLeft extends AutonomousBase {
     	
     	addParallel(new WinchToOperate());
     	PathDriver= new PathSequence();
-    	addSequential(PathDriver);   
     }
 
     // Called just before this Command runs the first time
@@ -86,31 +85,40 @@ public class AutoLeft extends AutonomousBase {
 	     	switch(gameData) {
 	     	case "LLL":
 	     		p = ToLeftFarSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "LLR":
 	     		p = ToLeftFarSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "LRL":
 	     		p = ToLeftFarSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "LRR":
 	     		p = ToLeftNearSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "RLL":
 	     		p = ToLeftScale;
+	     		addSequential(new DeliverScale());
 	     		break;
 	     	case "RLR":
 	     		p = ToLeftScale;
+	     		addSequential(new DeliverScale());
 	     		break;
 	     	case "RRL":
 	     		p = ToLeftFarSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	case "RRR":
 	     		p = ToRightScale;
+	     		addSequential(new DeliverScale());
 	     		break;
 	     	default:
 	     		// can't decode message - just assume far right switch
 	     		p = ToRightFarSwitch;
+	     		addSequential(new DeliverSwitch());
 	     		break;
 	     	}
 	     }
