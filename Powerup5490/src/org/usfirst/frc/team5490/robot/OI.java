@@ -23,6 +23,7 @@ import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
 import org.usfirst.frc.team5490.robot.commands.LiftHook;
 import org.usfirst.frc.team5490.robot.commands.LiftManualMove;
 import org.usfirst.frc.team5490.robot.commands.LiftRobot;   // same as lift down, but may be partial
+import org.usfirst.frc.team5490.robot.commands.AutoLeft;
 import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_minus;
 import org.usfirst.frc.team5490.robot.commands.Cal_LGrip_plus;
 import org.usfirst.frc.team5490.robot.commands.Cal_RGrip_minus;
@@ -129,7 +130,8 @@ public class OI {
 		thumb.whileHeld(new GripperOpen());
 		
 		// TODO for testing purposes
-		button3.toggleWhenPressed(new WinchToStore());
+		//button3.toggleWhenPressed(new WinchToStore());
+		button3.toggleWhenPressed(new AutoLeft());
 		button5.toggleWhenPressed(new WinchToOperate());
 		liftManualDown.whileHeld(new LiftManualMove(-1, 0.5));
 		liftManualUp.whileHeld(new LiftManualMove(1, 0.5));

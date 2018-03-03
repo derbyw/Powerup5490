@@ -36,6 +36,11 @@ public class LiftSetpoint extends Command {
 		requires(pid_subsystem);
 	}
 	
+	public void ChangeSetpoint(double new_setpoint)
+	{
+		m_setpoint = new_setpoint;
+	}
+	
 	private EnhancedPIDSetpoint enhancedPID = 
 			new EnhancedPIDSetpoint(pid_subsystem, pid_active_range, ramp_length);
 	

@@ -18,5 +18,8 @@ public abstract class AutonomousBase extends CommandGroup {
     	requires(Robot.m_Chassis);
     	requires(Robot.m_Lift);
     	
+    	gameData ="RRR";
+    	Robot.m_Chassis.ResetGyro();
+    	
     }
 }

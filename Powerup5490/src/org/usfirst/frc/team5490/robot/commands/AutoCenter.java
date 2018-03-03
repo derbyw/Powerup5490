@@ -1,12 +1,17 @@
 package org.usfirst.frc.team5490.robot.commands;
 
 import org.usfirst.frc.team5490.robot.PathRecord;
+import org.usfirst.frc.team5490.robot.RobotMap;
 
 /**
  *
  */
 public class AutoCenter extends AutonomousBase {
 
+	// ToDo determine this....
+	public static final double ScaleHeight = 800;
+	public static final double SwitchHeight = 300;
+	
 	public static final double Off = 0;
 	public static final double Fwd = 1;
 	public static final double Rev = -1;
@@ -64,13 +69,22 @@ public class AutoCenter extends AutonomousBase {
    	};
 	
 	PathSequence PathDriver;
+	LiftSetpoint liftdriver;
 	
     public AutoCenter() {
     	state = AutoStart.Center;
     	
-    	addParallel(new WinchToOperate());    	
+    	//addParallel(new WinchToOperate());    	
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
+    	//
+    	liftdriver = new LiftSetpoint(SwitchHeight);
+    	addSequential(liftdriver);    	
+    	addSequential(new Forward2());    	
+    	addSequential(new GripperRelease());
+    	addSequential(new Reverse2());
+    	addSequential(new LiftDown());    	
+
     }
 
     // Called just before this Command runs the first time
@@ -84,43 +98,46 @@ public class AutoCenter extends AutonomousBase {
 	     	switch(gameData) {
 	     	case "LLL":
 	     		p = ToLeftNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "LLR":
 	     		p = ToLeftNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "LRL":
 	     		p = ToLeftNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "LRR":
 	     		p = ToLeftNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "RLL":
 	     		p = ToRightNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "RLR":
 	     		p = ToRightNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "RRL":
 	     		p = ToRightNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	case "RRR":
 	     		p = ToRightNearSwitch;
-	     		addSequential(new DeliverSwitch());
+	     		
 	     		break;
 	     	default:
 	     		// can't decode message - just assume far right switch
 	     		p = ToRightScale;
-	     		addSequential(new DeliverScale());
+	     		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
 	     		break;
 	     	}
 	     }
+		 else {
+        	 p = ToRightNearSwitch;
+         }
 		 PathDriver.path = p;
     }
 

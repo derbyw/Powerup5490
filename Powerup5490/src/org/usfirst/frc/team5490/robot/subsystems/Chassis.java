@@ -2,6 +2,7 @@ package org.usfirst.frc.team5490.robot.subsystems;
 
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 
 
@@ -48,7 +50,8 @@ public class Chassis extends Subsystem {
     
     private static HermiteSpline Hcurve;
     
-    ADIS16448_IMU imu = new ADIS16448_IMU();
+    //ADIS16448_IMU imu = new ADIS16448_IMU();
+    public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
     
     
     public int segment;
@@ -65,7 +68,8 @@ public class Chassis extends Subsystem {
     	
     	DefineJoystickResponse();
     	
-
+    	gyro.calibrate();
+    	gyro.reset();
 
 		// (2/14/2018) Inversion proved to be necessary to get the robot moving in the right direction 
     	//motorFrontLeft.setInverted(true);
@@ -89,7 +93,7 @@ public class Chassis extends Subsystem {
 		 
 		
 
-		
+		/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -104,7 +108,9 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		*/
 		
+		SmartDashboard.putNumber("Gyro-X", gyro.getAngle());		
     }
     
     private void DefineJoystickResponse()
@@ -147,6 +153,8 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Path percent: ", percent);
 		SmartDashboard.putNumber("Path timer: ", tick);
 
+		SmartDashboard.putNumber("Gyro-Angle", gyro.getAngle());
+		/*
 		SmartDashboard.putNumber("Gyro-X", imu.getAngleX());
 		SmartDashboard.putNumber("Gyro-Y", imu.getAngleY());
 		SmartDashboard.putNumber("Gyro-Z", imu.getAngleZ());
@@ -165,6 +173,7 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Pressure: ", imu.getBarometricPressure());
 		SmartDashboard.putNumber("Temperature: ", imu.getTemperature());
+		*/
 		
 		
 	}
@@ -245,7 +254,8 @@ public class Chassis extends Subsystem {
 		if (Z > 1.0) Z = 1.0;
 		if (speed > 1.0) speed = 1.0;
 		
-		m_robotDrive.driveCartesian( -1 * X * speed, -1 * Y * speed, Z * speed, imu.getAngleY());
+		//m_robotDrive.driveCartesian( -1 * X * speed, -1 * Y * speed, Z * speed, imu.getAngleY());
+		m_robotDrive.driveCartesian( -1 * X * speed, -1 * Y * speed, Z * speed, 0);
 	}
 	
 	public void StopMotors()
@@ -261,6 +271,11 @@ public class Chassis extends Subsystem {
 	public void moveBackward()
 	{
 		m_robotDrive.driveCartesian(0,-1,0,0);
+	}
+	
+	public void ResetGyro()
+	{		
+		gyro.reset();
 	}
 }
 

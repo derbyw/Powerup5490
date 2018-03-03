@@ -22,7 +22,8 @@ public class PathSequence extends Command {
 	private double mspeed;
 	
 	private boolean done = false;
-	
+	private double start_angle;
+	private double target_angle;
 	
 	protected PathRecord[] 	path;
 
@@ -36,7 +37,8 @@ public class PathSequence extends Command {
     public PathSequence(PathRecord[] p) {
     	requires(Robot.m_Chassis);
     	
-    	path = p;    }
+    	path = p;    
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {    	
@@ -45,23 +47,66 @@ public class PathSequence extends Command {
     	index = 0;
     	done = false;
     	mspeed = 0;
+    	start_angle = Robot.m_Chassis.gyro.getAngle() % 360;
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double angle = Robot.m_Chassis.gyro.getAngle() % 360;
+
     	switch(state) {
-		case 0:
-			
+		case 0:						
+			start_angle = angle;
+			target_angle =  path[index].Z;
+			if (path[index].duration == 0) {				
+				state = 2;
+			} else { 
+				state++;
+			}
+			break;
+		case 1:    // just x & y
 			mspeed = .9 * mspeed + 0.1 * path[index].speed;
 			
-			Robot.m_Chassis.Drive(path[index].X, path[index].Y, path[index].Z, mspeed);
-			if (timer > path[index].duration) {
-				timer = 0;
+			double diff = angle - start_angle;
+			double z = 0;
+			if (Math.abs(diff) > 1) {
+				if (diff > 0)
+					z = .15;
+				else
+					z = -.15;
+			}			
+			
+			Robot.m_Chassis.Drive(path[index].X, path[index].Y, z, mspeed);		
+			
+			if (timer > path[index].duration)  {
+				timer = 0;				
 				index++;
-				if (index >= path.length) state++;
+				if (index >= path.length) 
+					state = 3;
+				else
+					state = 0;
 			}			
 			break;
-		case 1:
+		case 2:
+			//double mspeed = 1 - (Math.abs(target_angle - angle) / 360) * .25; 
+			double mspeed =  .25;
+			
+			if (target_angle > angle)
+				Robot.m_Chassis.Drive(0,0,-1,mspeed);
+			else
+				Robot.m_Chassis.Drive(0,0,1,mspeed);				
+			
+			if (Math.abs(target_angle - angle) < 1) {
+				timer = 0;				
+				index++;
+				if (index >= path.length) 
+					state = 3;
+				else
+					state = 0;
+			}			
+			break;
+		case 3:
 			done = true;
 			break;
 		default:

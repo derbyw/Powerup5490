@@ -75,5 +75,10 @@ public class RobotMap {
 	public static int ls_liftDown = 7;
 	
 	
+	// ToDo determine this....
+	public static double ScaleHeight = 800;
+	public static double SwitchHeight = 300;
+	
+	
 	
 }
