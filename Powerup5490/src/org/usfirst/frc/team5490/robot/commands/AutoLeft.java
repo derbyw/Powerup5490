@@ -20,8 +20,6 @@ public class AutoLeft extends AutonomousBase {
 	public static final double CW = -1;
 	public static final double CCW = 1;
 	
-	public static final double deg90 = 0;		// speed to turn 90deg in time90
-	public static final double time90 = 0;		// time to run 90deg at deg90
 	
 	// tested
 	PathRecord[] 	ToLeftNearSwitch =  {    			

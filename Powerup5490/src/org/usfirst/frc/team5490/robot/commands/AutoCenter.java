@@ -20,52 +20,86 @@ public class AutoCenter extends AutonomousBase {
 	public static final double CW = 1;
 	public static final double CCW = -1;
 	
-	public static final double deg90 = 0.4;		// speed to turn 90deg in time90
-	public static final double time90 = 1;		// time to run 90deg at deg90
-	
+
+	// un-tested
 	PathRecord[] 	ToLeftNearSwitch =  {    			
-			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'			
-			new PathRecord( Left,  Off, Off,    .57, 2),  			// Left 13'
-			new PathRecord(  Off,  Fwd, Off,    .5, 2),  			// forward 10'
-			new PathRecord(  Off,  Off,  CW, deg90, time90),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2			
+			new PathRecord(  Off,  Fwd, Off,    .45, 2),	 	// forward 5.7'			
+			new PathRecord(  Off,  Off, -90,      0, 0),		// rotate left  90
+			new PathRecord(  Off,  Fwd, Off,    .57, 2),	 	// forward 13'
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate right back to 0
+			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  	// forward 10'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off,  90,     0, 0),			// rotate right 90
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
    	};
+	
 	PathRecord[] 	ToRightNearSwitch =  {    			
-			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'			
-			new PathRecord(Right,  Off, Off,    .5, 2),  			// Right 10'
-			new PathRecord(  Off,  Fwd, Off,    .5, 2),  			// forward 10'
-			new PathRecord(  Off,  Off,  CW, deg90, time90),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2			
+			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'
+			new PathRecord(  Off,  Off, 90,      0, 0),			// rotate   90
+			//
+			new PathRecord(  Off,  Fwd, Off,    .5, 2),  		// forward 10'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate left  90
 			
+			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  	// forward 10'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off,  -90,     0, 0),		// rotate right 90			
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2
    	};
+	
+	//
 	PathRecord[] 	ToLeftScale =  {    			
-			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'			
-			new PathRecord( Left,  Off, Off,    .57, 2),  			// Left 13'
-			new PathRecord(  Off,  Fwd, Off,    .5, 5),  			// forward 25'
-			new PathRecord(  Off,  Off,  CW, deg90, time90),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2			
-   	};
-	PathRecord[] 	ToRightScale =  {    			
-			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'			
-			new PathRecord(Right,  Off, Off,    .5, 2),  			// Right 10'
-			new PathRecord(  Off,  Fwd, Off,    .5, 5),  			// forward 25'
-			new PathRecord(  Off,  Off,  CW, deg90, time90),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2		
+			new PathRecord(  Off,  Fwd, Off,    .45, 2),	 	// forward 5.7'			
+			new PathRecord(  Off,  Off, -90,      0, 0),		// rotate left  90
+			new PathRecord(  Off,  Fwd, Off,    .57, 2),	 	// forward 13'
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate right back to 0
+			new PathRecord(  Off,  Fwd, Off,    .5, 5),  		// forward 25'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off,  90,     0, 0),			// rotate right 90
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
 
    	};
-	PathRecord[] 	ToLeftFarSwitch =  {    			
-			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'			
-			new PathRecord( Left,  Off, Off,    .57, 2),  			// Left 13'
-			new PathRecord(  Off,  Fwd, Off,    .6, 4),  			// forward 30'
-			new PathRecord(  Off,  Off,  CW, deg90, time90),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2			
+	// tested
+	PathRecord[] 	ToRightScale =  {  			
+
+			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'
+			new PathRecord(  Off,  Off, 90,      0, 0),			// rotate   90
+			//
+			new PathRecord(  Off,  Fwd, Off,    .5, 2),  		// forward 10'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate left  90
+			
+			new PathRecord(  Off,  Fwd, Off,    .5, 5),  		// forward 25'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off,  -90,     0, 0),		// rotate right 90			
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
    	};
-	PathRecord[] 	ToRightFarSwitch =  {    			
-			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'			
-			new PathRecord(Right,  Off, Off,    .5, 2),  			// Right 10'
-			new PathRecord(  Off,  Fwd, Off,    .6, 4),  			// forward 30'
-			new PathRecord(  Off,  Off,  CW, deg90, time90),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2
+	PathRecord[] 	ToLeftFarSwitch =  {   			
+			new PathRecord(  Off,  Fwd, Off,    .45, 2),	 	// forward 5.7'			
+			new PathRecord(  Off,  Off, -90,      0, 0),		// rotate left  90
+			new PathRecord(  Off,  Fwd, Off,    .57, 2),	 	// forward 13'
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate right back to 0
+			new PathRecord(  Off,  Fwd, Off,    .6, 5),  		// forward 30'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off,  90,     0, 0),			// rotate right 90
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
+
+   	};
+	// tested
+	PathRecord[] 	ToRightFarSwitch =  {
+
+			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'
+			new PathRecord(  Off,  Off, 90,      0, 0),			// rotate   90
+			//
+			new PathRecord(  Off,  Fwd, Off,    .5, 2),  		// forward 10'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate left  90
+			
+			new PathRecord(  Off,  Fwd, Off,    .6, 5),  		// forward 30'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
+			new PathRecord(  Off,  Off,  -90,     0, 0),		// rotate right 90			
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
+			
    	};
 	
 	PathSequence PathDriver;
