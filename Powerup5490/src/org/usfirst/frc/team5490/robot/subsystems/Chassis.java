@@ -71,19 +71,6 @@ public class Chassis extends Subsystem {
     	gyro.calibrate();
     	gyro.reset();
 
-		// (2/14/2018) Inversion proved to be necessary to get the robot moving in the right direction 
-    	//motorFrontLeft.setInverted(true);
-    	//motorRearRight.setInverted(true);
-    			
-		// Let's name the sensors on the LiveWindow
-		
-		//addChild("Drive", m_robotDrive);
-		//addChild("Winch", m_Winch);
-		
-
-		// ToDo determine when the light should come on/off
-		//addChild("Lightmast", m_lightmast);
-
 		
 		//When no other command is running let the operator drive around using the joystick		 
 		setDefaultCommand(new DriveRobot());

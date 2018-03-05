@@ -19,7 +19,7 @@ public class Winch extends Subsystem {
 
     // TODO determine wind direction for winch
     private static final double motor_wind_direction = -1;
-    private static final double motorSpeed = 0.1;
+    private static final double motorSpeed = 0.5;
 
     
     // Limit switches
@@ -88,7 +88,7 @@ public class Winch extends Subsystem {
 	 * active low -- note - contact pulls switch low
 	 */
 	public boolean isLiftStored() {
-		return ! m_lstored.get();
+		return m_lstored.get();		// ToDo - this was inverted in Chae's version (why)		
 	}
 }
 

@@ -138,7 +138,7 @@ public class Gripper extends PIDSubsystem {
 	 */
 	public void manual_open(double speed) {
 		disable();
-		mLGripper.set(-1 * speed);
+		mLGripper.set(speed);		// check, why 
 		mRGripper.set(-1 * speed);
 
 	}
@@ -150,7 +150,7 @@ public class Gripper extends PIDSubsystem {
 
 	public void manual_close(double speed) {
 		disable();
-		mLGripper.set(speed);
+		mLGripper.set(-1*speed);   // check - why?
 		mRGripper.set(speed);
 	}
 

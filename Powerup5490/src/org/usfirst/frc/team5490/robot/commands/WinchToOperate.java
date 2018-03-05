@@ -24,7 +24,7 @@ public class WinchToOperate extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.m_Chassis.m_Winch.isLiftStored();        
+    	return Robot.m_Chassis.m_Winch.isLiftVertical();        
     }
 
     // Called once after isFinished returns true
