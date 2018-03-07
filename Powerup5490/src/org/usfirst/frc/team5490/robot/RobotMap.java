@@ -73,6 +73,14 @@ public class RobotMap {
 
 	public static int ls_liftUp = 6;
 	public static int ls_liftDown = 7;
+
+	// Allow technician to tell robot what the start position is
+	// with jumpers on the DIO inputs
+	public static int configStartA = 8;
+	public static int configStartB = 9;
+	public static int configStartC = 9;
+	
+
 	
 	
 	// ToDo determine this....
@@ -80,5 +88,10 @@ public class RobotMap {
 	public static double SwitchHeight = 300;
 	
 	
-	
+	public enum StartPositions
+	{
+		Left,
+		Center,
+		Right
+	}
 }

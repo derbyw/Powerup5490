@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 
 
@@ -44,6 +45,13 @@ public class Chassis extends Subsystem {
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
     
     public Winch m_Winch = new Winch();
+    
+	public DigitalInput m_lsConfigA = new DigitalInput(RobotMap.configStartA);
+	public DigitalInput m_lsConfigB = new DigitalInput(RobotMap.configStartB);
+	public DigitalInput m_lsConfigC = new DigitalInput(RobotMap.configStartC);
+	
+	
+
     
     
     private static HermiteSpline JoystickCurve;
@@ -99,6 +107,26 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Gyro-X", gyro.getAngle());		
     }
+    
+    
+    // returns the jumper configuration used to indicate which
+    public RobotMap.StartPositions GetStartPlacement()    
+	{
+    	
+    	int select = 0;
+    	if (m_lsConfigA.get()) select += 1;
+    	if (m_lsConfigB.get()) select += 2;
+    	//if (m_lsConfigC.get()) select += 4;
+    	
+    	switch(select) {
+    		case 1:		// 01 - center
+    		    return RobotMap.StartPositions.Center;
+    		case 2:		// 10  - right
+    		    return RobotMap.StartPositions.Right;
+    		default:	// 00, 11 - left
+    		    return RobotMap.StartPositions.Left;    		
+    	}
+	}
     
     private void DefineJoystickResponse()
     {

@@ -71,20 +71,6 @@ public class Robot extends IterativeRobot {
 		m_oi = new OI();
 		
 		
-		
-		// instantiate the command used for the autonomous period
-		// add version of auto operation here..
-		m_chooser.addDefault("LeftStart", new AutoLeft());
-		m_chooser.addObject("CenterStart", new AutoCenter());
-		m_chooser.addObject("RightsStart", new AutoRight());
-		
-		// this lets the dashboard choose which one to run at start
-		SmartDashboard.putData("Auto mode", m_chooser);
-		
-//		SmartDashboard.putString("Camera", cam.readString());
-		
-		
-		
 	}
 
 	/**
@@ -117,47 +103,29 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
-		
+	public void autonomousInit() {		
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-
-		/*
-		String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
-		switch(autoSelected) { 
-			case "LeftStart": 
-				
-				break; 
-			case "Default":
+		
+		// choose our start path based on the jumpers on the DIO
+		// the default is left position
+		AutonomousBase startcmd;
+		switch(m_Chassis.GetStartPlacement()) {
+			case Center:
+				startcmd = new AutoCenter();
+				break;
+			case Right:
+				startcmd = new AutoRight();
 				break;
 			default:
-				//autonomousCommand = new ExampleCommand(); 
-				break; 
+				startcmd = new AutoLeft();
+				break;				
 		}
-		*/
-
 	
-        //  pass the game data into the command for the start position
-        AutonomousBase startcmd = (AutonomousBase)m_chooser.getSelected();
+        //  pass the game data into the command for the start position        
         startcmd.gameData = gameData;
 		m_autonomousCommand = startcmd;
 		
-		/*
-		 *  code to pull automode code from dashboard
-		*  
-		String autoSelected = SmartDashboard.getString("Auto Selector", "Default"); 
-		switch(autoSelected) { 
-			case "LeftStart": 
-				m_autonomousCommand.
-				break; 
-			case "Default Auto": 
-			default:
-				//autonomousCommand = new ExampleCommand(); 
-				break; 
-		}
-		*/
-		 
-
 		// schedule the autonomous command (example)		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
