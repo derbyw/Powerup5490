@@ -123,9 +123,18 @@ public class AutoCenter extends AutonomousBase {
 
     // Called just before this Command runs the first time
     // establish the path we want for the driving code.
+    //
+    // Explanation:
+    //
+    //  Data regarding plate assignment is provided to each robot based on their alliance. In other words, the 
+    // Blue alliance will receive data corresponding to the location of the Blue plates and the Red alliance 
+    // will receive data corresponding to the location of the Red plates. The data is referenced from the perspective 
+    // of the Drive Team looking out from their Player Station. The data consists of three characters, each 'L' or 'R', 
+    // representing the location (Left or Right) of the Alliance's plate on each element, starting with the element closest 
+    // to the Alliance.    
     protected void initialize() {    	
 
-   	 	PathRecord[] p = ToRightScale; 
+   	 	PathRecord[] p = ToRightNearSwitch; 
 	 
 		 if(gameData.length() > 0)        	
 	     {
@@ -164,8 +173,8 @@ public class AutoCenter extends AutonomousBase {
 	     		break;
 	     	default:
 	     		// can't decode message - just assume far right switch
-	     		p = ToRightScale;
-	     		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+	     		p = ToRightNearSwitch;
+	     		//liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
 	     		break;
 	     	}
 	     }

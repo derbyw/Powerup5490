@@ -49,6 +49,26 @@ public class AutoRight extends AutonomousBase {
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
    	};
 	
+
+
+	// need testing
+	PathRecord[] 	ToLeftNearSwitchBehind =  {
+			new PathRecord(  Off,  Fwd, Off,    .65, 2),  		// forward 18'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// forward 2'
+			
+			new PathRecord(  Off,  Off, -90,      0, 0),			// rotate   90
+			//
+			new PathRecord(  Off,  Fwd, Off,    .65, 2),  		// forward 18'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// forward 10'
+			
+			new PathRecord(  Off,  Off, -180,      0, 0),			// rotate   90
+			
+			//bump into switch wall
+			new PathRecord(  Off,  Fwd, Off,    .4, 2),			// forward 2
+   	};
+	
+	
+	/*
 	PathRecord[] 	ToLeftFarSwitch =  {    			
 			new PathRecord(  Off,  Fwd, Off,    .4, 2),	 		// forward 5.7'
 			new PathRecord(  Off,  Off, -90,      0, 0),		// rotate  90 left
@@ -105,6 +125,7 @@ public class AutoRight extends AutonomousBase {
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
 
    	};
+   	*/
 
 	
 
@@ -133,25 +154,37 @@ public class AutoRight extends AutonomousBase {
 
     // Called just before this Command runs the first time
     // establish the path we want for the driving code.
+    //
+    // Explanation:
+    //
+    //  Data regarding plate assignment is provided to each robot based on their alliance. In other words, the 
+    // Blue alliance will receive data corresponding to the location of the Blue plates and the Red alliance 
+    // will receive data corresponding to the location of the Red plates. The data is referenced from the perspective 
+    // of the Drive Team looking out from their Player Station. The data consists of three characters, each 'L' or 'R', 
+    // representing the location (Left or Right) of the Alliance's plate on each element, starting with the element closest 
+    // to the Alliance.    
+
     protected void initialize() {
-    	 PathRecord[] p = ToRightFarSwitch; 
+    	 PathRecord[] p = ToRightNearSwitch; 
     	 
     	 if(gameData.length() > 0)        	
          {
          	switch(gameData) {
          	case "LLL":
-         		p = ToLeftFarSwitch;
+         		p = ToLeftNearSwitchBehind;
          		break;
          	case "LLR":
-         		p = ToRightFarSwitch;
+         		p = ToLeftNearSwitchBehind;
          		break;
          	case "LRL":
-         		p = ToRightScale;
-         		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+         		p = ToLeftNearSwitchBehind;
+         		// was to right scale
+         		// liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
          		break;
          	case "LRR":
-         		p = ToRightScale;
-         		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+         		p = ToLeftNearSwitchBehind;
+         		// was to right scale
+         		//liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
          		break;
          	case "RLL":
          		p = ToRightNearSwitch;
@@ -160,15 +193,16 @@ public class AutoRight extends AutonomousBase {
          		p = ToRightNearSwitch;
          		break;
          	case "RRL":
-         		p = ToRightScale;
-         		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+         		p = ToRightNearSwitch;
+         		//was to right scale
+         		// liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
          		break;
          	case "RRR":
          		p = ToRightNearSwitch;
          		break;
          	default:
          		// can't decode message - just assume far right switch
-         		p = ToRightFarSwitch;
+         		p = ToRightNearSwitch;
          		break;
          	}
          } else {

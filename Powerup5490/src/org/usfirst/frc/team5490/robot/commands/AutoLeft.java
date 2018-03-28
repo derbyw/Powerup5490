@@ -27,10 +27,10 @@ public class AutoLeft extends AutonomousBase {
 			new PathRecord(  Off,  Off, -90,      0, 0),		// rotate left  90
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),	 		// forward 2'
 			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate right back to 0
-			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  			// forward 10'
-			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  			// forward 10'
-			new PathRecord(  Off,  Off,  90,     0, 0),	// rotate right 90
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),				// forward 2			
+			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  	// forward 10'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// slow to stop
+			new PathRecord(  Off,  Off,  90,     0, 0),			// rotate right 90
+			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
    	};
 	
 	PathRecord[] 	ToRightNearSwitch =  {    			
@@ -38,15 +38,33 @@ public class AutoLeft extends AutonomousBase {
 			new PathRecord(  Off,  Off, 90,      0, 0),			// rotate   90
 			//
 			new PathRecord(  Off,  Fwd, Off,    .65, 2),  		// forward 18'
-			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// forward 10'
-			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate left  90
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// slow to stop
+			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate right to 90
 			
 			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  	// forward 10'
 			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
-			new PathRecord(  Off,  Off,  -90,     0, 0),		// rotate right 90			
+			new PathRecord(  Off,  Off,  -90,     0, 0),		// rotate left to -90			
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2
    	};
 	
+	
+	// need testing
+	PathRecord[] 	ToRightNearSwitchBehind =  {    			
+			new PathRecord(  Off,  Fwd, Off,    .65, 2),  		// forward 18'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// forward 2'
+			
+			new PathRecord(  Off,  Off, 90,      0, 0),			// rotate to 90
+			//
+			new PathRecord(  Off,  Fwd, Off,    .65, 2),  		// forward 18'
+			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// slow to stop
+			
+			new PathRecord(  Off,  Off, 180,      0, 0),		// rotate to 180
+			
+			//bump into switch wall
+			new PathRecord(  Off,  Fwd, Off,    .4, 2),			// forward 2
+   	};
+
+	/*
 	//
 	PathRecord[] 	ToLeftScale =  {    			
 			new PathRecord(  Off,  Fwd, Off,    .45, 2),	 	// forward 5.7'			
@@ -101,6 +119,7 @@ public class AutoLeft extends AutonomousBase {
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
 			
    	};
+	*/
 	
 	PathSequence PathDriver;
 	LiftSetpoint liftdriver;
@@ -124,19 +143,29 @@ public class AutoLeft extends AutonomousBase {
 
     // Called just before this Command runs the first time
     // establish the path we want for the driving code.
+    //
+    // Explanation:
+    //
+    //  Data regarding plate assignment is provided to each robot based on their alliance. In other words, the 
+    // Blue alliance will receive data corresponding to the location of the Blue plates and the Red alliance 
+    // will receive data corresponding to the location of the Red plates. The data is referenced from the perspective 
+    // of the Drive Team looking out from their Player Station. The data consists of three characters, each 'L' or 'R', 
+    // representing the location (Left or Right) of the Alliance's plate on each element, starting with the element closest 
+    // to the Alliance.    
+
     protected void initialize() {
     	
-   	 	PathRecord[] p = ToRightFarSwitch; 
+   	 	PathRecord[] p = ToRightNearSwitchBehind; 
    	 
 		 if(gameData.length() > 0)        	
 	     {
 	     	switch(gameData) {
 	     	case "LLL":
-	     		p = ToLeftFarSwitch;	
+	     		p = ToLeftNearSwitch;	
 	     		
 	     		break;
 	     	case "LLR":
-	     		p = ToLeftFarSwitch;
+	     		p = ToLeftNearSwitch;
 	     		
 	     		break;
 	     	case "LRL":
@@ -147,24 +176,26 @@ public class AutoLeft extends AutonomousBase {
 	     		
 	     		break;
 	     	case "RLL":
-	     		p = ToLeftScale;
-	     		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+	     		p = ToRightNearSwitchBehind;
+	     		// was to scale
+	     		//liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
 	     		break;
 	     	case "RLR":
-	     		p = ToLeftScale;
-	     		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+	     		p = ToRightNearSwitchBehind;
+	     		// was to scale
+	     		//liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
 	     		break;
 	     	case "RRL":
-	     		p = ToLeftFarSwitch;	     		
+	     		p = ToRightNearSwitchBehind;	     		
 	     		break;
 	     	case "RRR":
-	     		p = ToRightFarSwitch;
-	     		liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
+	     		p = ToRightNearSwitchBehind;
+	     		// was to right scale
+	     		//liftdriver.ChangeSetpoint(RobotMap.ScaleHeight);
 	     		break;
 	     	default:
 	     		// can't decode message - just assume far right switch
-	     		p = ToRightFarSwitch;
-	     		
+	     		p = ToRightNearSwitchBehind;	     		
 	     		break;
 	     	}
 	     } else {

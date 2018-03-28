@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class Chassis extends Subsystem {
 	
 	// lower limit for speed setting  
-	private static final double minimum_drive = 0.1;
+	private static final double minimum_drive = 0.25;
 	
 	// Main Movement Drive 
 	SpeedController motorFrontLeft = new Talon(RobotMap.mtrFrontLeft);
