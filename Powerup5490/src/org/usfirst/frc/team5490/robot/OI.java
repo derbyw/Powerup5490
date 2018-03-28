@@ -17,6 +17,7 @@ import org.usfirst.frc.team5490.robot.commands.GripperRelease;
 
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
 import org.usfirst.frc.team5490.robot.commands.LiftSwitch;
+import org.usfirst.frc.team5490.robot.commands.LiftToStore;
 import org.usfirst.frc.team5490.robot.commands.TestSequencer;
 import org.usfirst.frc.team5490.robot.commands.LiftScale;
 import org.usfirst.frc.team5490.robot.commands.LiftSetpoint;
@@ -92,9 +93,9 @@ public class OI {
 		
 		SmartDashboard.putData("Lift Down", new LiftDown());
 		SmartDashboard.putData("Lift Switch", new LiftSwitch());
-		SmartDashboard.putData("Lift Scale", new LiftScale());
-		SmartDashboard.putData("Lift Hook", new LiftHook());
-		SmartDashboard.putData("Lift Robot", new LiftRobot());
+		SmartDashboard.putData("Lift Store", new LiftToStore());
+		SmartDashboard.putData("Lift Store", new LiftHook());
+		
 		
 		// Gripper calibrate buttons
 		/*
@@ -130,8 +131,7 @@ public class OI {
 		thumb.whileHeld(new GripperOpen());
 		
 		// TODO for testing purposes
-		//button3.toggleWhenPressed(new WinchToStore());
-		button3.toggleWhenPressed(new AutoLeft());
+		button3.toggleWhenPressed(new WinchToStore());		
 		button5.toggleWhenPressed(new WinchToOperate());
 		liftManualDown.whileHeld(new LiftManualMove(-1, 0.5));
 		liftManualUp.whileHeld(new LiftManualMove(1, 0.5));
@@ -139,7 +139,7 @@ public class OI {
 		// TODO change mappings depending on the driver's preferences
 		button7.whenPressed(new LiftDown());
 		button9.whenPressed(new LiftSwitch());
-		button10.whenPressed(new LiftScale());
+		button10.whenPressed(new LiftToStore());
 		button11.whenPressed(new LiftHook());
 		button12.whileHeld(new LiftRobot());
 		
