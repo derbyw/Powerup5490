@@ -130,7 +130,8 @@ public class AutoLeft extends AutonomousBase {
     	
     	
     	
-    	//addParallel(new WinchToOperate());
+    	addParallel(new WinchToOperate());	// winch the lift to operate
+    	addParallel(new LiftDown());		// move gripper down to init PID position
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
     	liftdriver = new LiftSetpoint(RobotMap.SwitchHeight);

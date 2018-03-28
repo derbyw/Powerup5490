@@ -25,6 +25,8 @@ public class PathSequence extends Command {
 	private double start_angle;
 	private double target_angle;
 	
+	private static final double rotate_speed = 0.45;		// was .25 on light robot
+	
 	protected PathRecord[] 	path;
 
 
@@ -90,7 +92,7 @@ public class PathSequence extends Command {
 			break;
 		case 2:
 			//double mspeed = 1 - (Math.abs(target_angle - angle) / 360) * .25; 
-			double mspeed =  .25;
+			double mspeed =  rotate_speed;
 			
 			if (target_angle > angle)
 				Robot.m_Chassis.Drive(0,0,-1,mspeed);

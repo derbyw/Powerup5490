@@ -47,6 +47,7 @@ public class AutoCenter extends AutonomousBase {
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2
    	};
 	
+	/*
 	//
 	PathRecord[] 	ToLeftScale =  {    			
 			new PathRecord(  Off,  Fwd, Off,    .45, 2),	 	// forward 5.7'			
@@ -101,6 +102,7 @@ public class AutoCenter extends AutonomousBase {
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
 			
    	};
+   	*/
 	
 	PathSequence PathDriver;
 	LiftSetpoint liftdriver;
@@ -108,7 +110,8 @@ public class AutoCenter extends AutonomousBase {
     public AutoCenter() {
     	state = AutoStart.Center;
     	
-    	//addParallel(new WinchToOperate());    	
+    	addParallel(new WinchToOperate());	// winch the lift to operate
+    	addParallel(new LiftDown());		// move gripper down to init PID position
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
     	//

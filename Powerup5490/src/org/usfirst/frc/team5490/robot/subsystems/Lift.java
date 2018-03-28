@@ -49,9 +49,9 @@ public class Lift extends PIDSubsystem {
 		motorLift.configPeakCurrentDuration(100, 0);
 		motorLift.enableCurrentLimit(false);		// kill current limit
 		motorLift.configOpenloopRamp(0, 0);			// we do the lamp here..
-
 		
 		m_LiftEncoder.setDistancePerPulse(mm_per_turn / pulses_per_revolution);   // 4.88 mm per turn of the shaft / pulses per turn
+		
 		
 		setAbsoluteTolerance(0.05); // MM
 		

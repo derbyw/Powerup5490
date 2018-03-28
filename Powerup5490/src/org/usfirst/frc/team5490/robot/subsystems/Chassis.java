@@ -44,7 +44,7 @@ public class Chassis extends Subsystem {
     
     MecanumDrive m_robotDrive = new MecanumDrive(motorFrontLeft,motorRearLeft,motorFrontRight,motorRearRight);
     
-    public Winch m_Winch = new Winch();
+    
     
 	public DigitalInput m_lsConfigA = new DigitalInput(RobotMap.configStartA);
 	public DigitalInput m_lsConfigB = new DigitalInput(RobotMap.configStartB);
@@ -155,8 +155,7 @@ public class Chassis extends Subsystem {
     public void log() 
     {
     	
-    	// put class variables we want to see on dashboard or capture here
-    	m_Winch.log();
+
     	
     	
     	SmartDashboard.putNumber("FL", -1 * motorFrontLeft.get());

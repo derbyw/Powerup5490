@@ -48,6 +48,7 @@ public class Robot extends IterativeRobot {
 	public static Chassis m_Chassis;
 	public static Lift m_Lift;
 	public static Gripper m_Gripper;
+	public static Winch m_Winch;
 	public static OI m_oi;
 	
 	Command m_autonomousCommand;
@@ -65,6 +66,7 @@ public class Robot extends IterativeRobot {
 		jevoisCam.setVideoMode(PixelFormat.kYUYV,320,254,60);
 		
 		m_Chassis = new Chassis();
+		m_Winch = new Winch();
 		
 		m_Lift = new Lift();
 		m_Gripper = new Gripper();
@@ -177,6 +179,7 @@ public class Robot extends IterativeRobot {
 	 */
 	private void log() {
 		m_Chassis.log();
+		m_Winch.log();
 		m_Lift.log();
 		m_Gripper.log();
 	}

@@ -16,6 +16,7 @@ public abstract class AutonomousBase extends CommandGroup {
 	
     public AutonomousBase() {
     	requires(Robot.m_Chassis);
+    	requires(Robot.m_Winch);
     	requires(Robot.m_Lift);
     	
     	gameData ="RRR";

@@ -139,7 +139,9 @@ public class AutoRight extends AutonomousBase {
     	state = AutoStart.Right;
     	
    	 	
-    	//addParallel(new WinchToOperate());
+    	
+    	addParallel(new WinchToOperate());	// winch the lift to operate
+    	addParallel(new LiftDown());		// move gripper down to init PID position
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
     	//
