@@ -12,7 +12,7 @@ public class GripperRelease extends Command {
 	private  static final double release_duration = 0.4;		// seconds
 	private  static double release_time;		// seconds
 	
-	private static final double open_speed = 0.4;
+	private static final double release_speed = 0.4;	// 40% speed
 
     public GripperRelease() {
     	requires(Robot.m_Gripper);
@@ -33,7 +33,9 @@ public class GripperRelease extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Gripper.manual_open(open_speed);
+    	// this is run as part of the autonomous sequence - where the arms are "up" to hold the cube
+    	// therefore to drop box, we need to go in close direction
+    	Robot.m_Gripper.manual_close(release_speed);
     	release_time += 0.02;
     }
 

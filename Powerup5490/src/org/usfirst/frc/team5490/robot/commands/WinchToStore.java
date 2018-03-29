@@ -9,22 +9,29 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WinchToStore extends Command {
 
+	private  static final double max_store_duration = 2.0;		// seconds
+	private  static double winch_time;		// seconds
+	
     public WinchToStore() {
     	requires(Robot.m_Winch);
+    	
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	winch_time = 0.0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	winch_time += 0.02;
     	Robot.m_Winch.unwind();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.m_Winch.isLiftStored();
+        return (Robot.m_Winch.isLiftStored() || (winch_time > max_store_duration));
     }
 
     // Called once after isFinished returns true
