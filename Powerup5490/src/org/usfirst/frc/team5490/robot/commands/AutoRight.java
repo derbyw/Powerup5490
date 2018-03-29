@@ -53,7 +53,7 @@ public class AutoRight extends AutonomousBase {
 
 	// need testing
 	PathRecord[] 	ToLeftNearSwitchBehind =  {
-			new PathRecord(  Off,  Fwd, Off,    .65, 2),  		// forward 18'
+			new PathRecord(  Off,  Fwd, Off,    .65, 2.35),  		// forward 18'
 			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// forward 2'
 			
 			new PathRecord(  Off,  Off, -90,      0, 0),			// rotate   90
@@ -141,12 +141,12 @@ public class AutoRight extends AutonomousBase {
    	 	
     	
     	addParallel(new WinchToOperate());	// winch the lift to operate
-    	addParallel(new LiftDown());		// move gripper down to init PID position
+    	//addParallel(new LiftDown());		// move gripper down to init PID position
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
     	//
-    	liftdriver = new LiftSetpoint(SwitchHeight);
-    	addSequential(liftdriver);    	
+    	//liftdriver = new LiftSetpoint(SwitchHeight);
+    	//addSequential(liftdriver);    	
     	addSequential(new Forward2());
     	addSequential(new GripperRelease());
     	addSequential(new Reverse2());

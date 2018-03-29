@@ -48,7 +48,7 @@ public class Chassis extends Subsystem {
     
 	public DigitalInput m_lsConfigA = new DigitalInput(RobotMap.configStartA);
 	public DigitalInput m_lsConfigB = new DigitalInput(RobotMap.configStartB);
-	public DigitalInput m_lsConfigC = new DigitalInput(RobotMap.configStartC);
+	
 	
 	
 
@@ -120,11 +120,11 @@ public class Chassis extends Subsystem {
     	
     	switch(select) {
     		case 1:		// 01 - center
-    		    return RobotMap.StartPositions.Center;
-    		case 2:		// 10  - right
     		    return RobotMap.StartPositions.Right;
+    		case 2:		// 10  - right
+    		    return RobotMap.StartPositions.Left;
     		default:	// 00, 11 - left
-    		    return RobotMap.StartPositions.Left;    		
+    		    return RobotMap.StartPositions.Center;    		
     	}
 	}
     
@@ -241,7 +241,7 @@ public class Chassis extends Subsystem {
 		
 		m_robotDrive.driveCartesian(-1 * speed*driveStick.getX(),
 									speed*driveStick.getY(),
-									-0.25*driveStick.getZ(), 0);
+									-0.5*driveStick.getZ(), 0);
 									
 		
 		//

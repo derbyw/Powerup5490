@@ -25,9 +25,9 @@ public class AutoCenter extends AutonomousBase {
 	PathRecord[] 	ToLeftNearSwitch =  {    			
 			new PathRecord(  Off,  Fwd, Off,    .45, 2),	 	// forward 5.7'			
 			new PathRecord(  Off,  Off, -90,      0, 0),		// rotate left  90
-			new PathRecord(  Off,  Fwd, Off,    .57, 2),	 	// forward 13'
+			new PathRecord(  Off,  Fwd, Off,    .5, 2),	 	// forward 13'
 			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate right back to 0
-			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  	// forward 10'
+			new PathRecord(  Off,  Fwd, Off,    .57, 1.65),  	// forward 10'
 			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
 			new PathRecord(  Off,  Off,  90,     0, 0),			// rotate right 90
 			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2			
@@ -41,10 +41,10 @@ public class AutoCenter extends AutonomousBase {
 			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
 			new PathRecord(  Off,  Off, 0,       0, 0),			// rotate left  90
 			
-			new PathRecord(  Off,  Fwd, Off,    .49, 1.65),  	// forward 10'
+			new PathRecord(  Off,  Fwd, Off,    .57, 1.65),  	// forward 10'
 			new PathRecord(  Off,  Fwd, Off,     0, 0.25),  	// stop
 			new PathRecord(  Off,  Off,  -90,     0, 0),		// rotate right 90			
-			new PathRecord(  Off,  Fwd, Off,    .4, 1),			// forward 2
+			new PathRecord(  Off,  Fwd, Off,    .5, 1.5),			// forward 2
    	};
 	
 	/*
@@ -111,12 +111,12 @@ public class AutoCenter extends AutonomousBase {
     	state = AutoStart.Center;
     	
     	addParallel(new WinchToOperate());	// winch the lift to operate
-    	addParallel(new LiftDown());		// move gripper down to init PID position
+    	//addParallel(new LiftDown());		// move gripper down to init PID position
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
     	//
-    	liftdriver = new LiftSetpoint(SwitchHeight);
-    	addSequential(liftdriver);    	
+    	//liftdriver = new LiftSetpoint(SwitchHeight);
+    	//addSequential(liftdriver);    	
     	addSequential(new Forward2());    	
     	addSequential(new GripperRelease());
     	addSequential(new Reverse2());
