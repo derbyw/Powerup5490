@@ -83,7 +83,7 @@ public class OI {
 		SmartDashboard.putData("Gripper Close", new GripperClose());
 		SmartDashboard.putData("Gripper Release", new GripperRelease());
 		SmartDashboard.putData("Gripper Open", new GripperOpen());
-		SmartDashboard.putData("Gripper Ready", new GripperReady());
+		
 		
 		SmartDashboard.putData("Gripper Cal L+", new Cal_LGrip_plus());
 		SmartDashboard.putData("Gripper Cal L-", new Cal_LGrip_minus());
@@ -94,7 +94,7 @@ public class OI {
 		SmartDashboard.putData("Lift Down", new LiftDown());
 		SmartDashboard.putData("Lift Switch", new LiftSwitch());
 		SmartDashboard.putData("Lift Store", new LiftToStore());
-		SmartDashboard.putData("Lift Store", new LiftHook());
+		
 		
 		
 		// Gripper calibrate buttons
@@ -113,8 +113,8 @@ public class OI {
 		// Top buttons (counterclockwise from top left: 5-3-4-6)
 		JoystickButton button5 = new JoystickButton(m_joystick, 5);
 		JoystickButton button3 = new JoystickButton(m_joystick, 3);
-		JoystickButton liftManualDown= new JoystickButton(m_joystick, 4);
-		JoystickButton liftManualUp = new JoystickButton(m_joystick, 6);
+		JoystickButton button4 = new JoystickButton(m_joystick, 4);
+		JoystickButton button6 = new JoystickButton(m_joystick, 6);
 		
 		// Side buttons (from top left)
 		JoystickButton button7 = new JoystickButton(m_joystick, 7);
@@ -131,17 +131,22 @@ public class OI {
 		thumb.whileHeld(new GripperOpen());
 		
 		// TODO for testing purposes
-		button3.toggleWhenPressed(new WinchToStore());		
-		button5.toggleWhenPressed(new WinchToOperate());
-		liftManualDown.whileHeld(new LiftManualMove(-1, 0.5));
-		liftManualUp.whileHeld(new LiftManualMove(1, 0.5));
+		button3.whileHeld(new WinchToStore());		
+		button5.whileHeld(new WinchToOperate());
+		
+		button6.whenPressed(new LiftSwitch());
+		button4.whenPressed(new LiftDown());
 		
 		// TODO change mappings depending on the driver's preferences
-		button7.whenPressed(new LiftDown());
-		button9.whenPressed(new LiftSwitch());
-		button10.whenPressed(new LiftToStore());
-		button11.whenPressed(new LiftHook());
-		button12.whileHeld(new LiftRobot());
+		button7.whenPressed(new Cal_LGrip_minus());
+		button8.whenPressed(new Cal_LGrip_plus());		
+		button9.whenPressed(new Cal_RGrip_minus());
+		button10.whenPressed(new Cal_RGrip_plus());
+		
+		
+		button11.whileHeld(new LiftManualMove(-1, 0.5));
+		button12.whileHeld(new LiftManualMove(1, 0.5));
+
 		
 
 

@@ -81,9 +81,9 @@ public class Lift extends PIDSubsystem {
 //    	SmartDashboard.putData("Lift Encoder", m_LiftEncoder);
     	
     	// limit switches
-    	// TODO fix it back to putData when nav f*cking fixes the connection for l.s.
     	SmartDashboard.putBoolean("LiftAtTop", this.isAtTop());
     	SmartDashboard.putBoolean("LiftAtBottom", this.isAtBottom());
+    	SmartDashboard.putBoolean("Lift Clamped", this.isClamped());
 
     	
     	// Let's name everything on the LiveWindow
