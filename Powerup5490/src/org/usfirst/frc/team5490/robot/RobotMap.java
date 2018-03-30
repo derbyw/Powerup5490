@@ -24,9 +24,9 @@ public class RobotMap {
 
 	// the following are CAN addresses for the Talon SRX's	 
 	public static int mtrWinch = 4;	
-	public static int mtrLGripper = 3;
+	public static int mtrLGripper = 1;
 	public static int mtrRGripper = 2;
-	public static int mtrLift = 1;
+	public static int mtrLift = 3;
 	
 	// IMU Reservations
 	// The IMU is located on the RoboRio MXP port and uses some of the DIO channels

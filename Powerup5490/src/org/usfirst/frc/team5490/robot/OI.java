@@ -16,6 +16,7 @@ import org.usfirst.frc.team5490.robot.commands.GripperClose;
 import org.usfirst.frc.team5490.robot.commands.GripperRelease;
 
 import org.usfirst.frc.team5490.robot.commands.LiftDown;
+import org.usfirst.frc.team5490.robot.commands.LiftFindBottom;
 import org.usfirst.frc.team5490.robot.commands.LiftSwitch;
 import org.usfirst.frc.team5490.robot.commands.LiftToStore;
 import org.usfirst.frc.team5490.robot.commands.TestSequencer;
@@ -130,6 +131,7 @@ public class OI {
 		trigger.whileHeld(new GripperClose());
 		thumb.whileHeld(new GripperOpen());
 		
+		
 		// TODO for testing purposes
 		button3.whileHeld(new WinchToStore());		
 		button5.whileHeld(new WinchToOperate());
@@ -138,14 +140,16 @@ public class OI {
 		button4.whenPressed(new LiftDown());
 		
 		// TODO change mappings depending on the driver's preferences
-		button7.whenPressed(new Cal_LGrip_minus());
-		button8.whenPressed(new Cal_LGrip_plus());		
-		button9.whenPressed(new Cal_RGrip_minus());
-		button10.whenPressed(new Cal_RGrip_plus());
+		button7.whileHeld(new Cal_LGrip_minus());
+		button8.whileHeld(new Cal_LGrip_plus());		
+		button9.whileHeld(new Cal_RGrip_minus());
+		button10.whileHeld(new Cal_RGrip_plus());
 		
 		
-		button11.whileHeld(new LiftManualMove(-1, 0.5));
-		button12.whileHeld(new LiftManualMove(1, 0.5));
+		button11.whileHeld(new LiftManualMove(-1, 0.25));
+		button12.whileHeld(new LiftManualMove(1, 0.25));
+		
+		//button12.whenPressed(new LiftFindBottom());
 
 		
 

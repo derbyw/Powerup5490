@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftManualMove extends Command {
 
 	public int direction;
-	private double rate = 0.2;
+	private double rate = 0.25;
 	
 	/**
 	 * Constructor for only the direction (1 raise, -1 lower). Rate is 0.2 by default.
@@ -39,7 +39,11 @@ public class LiftManualMove extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.m_Lift.raise(direction * rate);
+    	if (direction > 0) { 
+    		Robot.m_Lift.raise(rate);
+    	} else {
+    		Robot.m_Lift.lower(rate);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -141,12 +141,12 @@ public class AutoRight extends AutonomousBase {
    	 	
     	
     	addParallel(new WinchToOperate());	// winch the lift to operate
-    	//addParallel(new LiftDown());		// move gripper down to init PID position
+    	addParallel(new LiftFindBottom());	// move gripper down to init PID position
     	PathDriver= new PathSequence();
     	addSequential(PathDriver);
     	//
-    	//liftdriver = new LiftSetpoint(SwitchHeight);
-    	//addSequential(liftdriver);    	
+    	liftdriver = new LiftSetpoint(SwitchHeight);
+    	addSequential(liftdriver);    	
     	addSequential(new Forward2());
     	addSequential(new GripperRelease());
     	addSequential(new Reverse2());

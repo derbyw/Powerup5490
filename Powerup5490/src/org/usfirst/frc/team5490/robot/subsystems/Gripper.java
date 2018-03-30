@@ -60,14 +60,14 @@ public class Gripper extends PIDSubsystem {
 		setAbsoluteTolerance(0.008); // 1/5 deg in radians	should be close enough
 		
     	// Define current limiting
-		mLGripper.configContinuousCurrentLimit(5, 0);
-		mLGripper.configPeakCurrentLimit(10, 0);
+		mLGripper.configContinuousCurrentLimit(10, 0);
+		mLGripper.configPeakCurrentLimit(20, 0);
 		mLGripper.configPeakCurrentDuration(200, 0);
 		mLGripper.enableCurrentLimit(true);		
 		mLGripper.configOpenloopRamp(0.05, 0);
 		
-		mRGripper.configContinuousCurrentLimit(5, 0);
-		mRGripper.configPeakCurrentLimit(10, 0);
+		mRGripper.configContinuousCurrentLimit(10, 0);
+		mRGripper.configPeakCurrentLimit(20, 0);
 		mRGripper.configPeakCurrentDuration(200, 0);
 		mRGripper.enableCurrentLimit(true);
 	    mRGripper.configOpenloopRamp(0.05, 0);
@@ -119,18 +119,18 @@ public class Gripper extends PIDSubsystem {
 	}
 	
 	public void manual_Lplus() {		
-		mLGripper.set(0.1);		
+		mLGripper.set(0.2);		
 	}
 	
 	public void manual_Lminus() {		
-		mLGripper.set(-0.1);		
+		mLGripper.set(-0.2);		
 	}
 	public void manual_Rplus() {		
-		mRGripper.set(0.1);		
+		mRGripper.set(0.2);		
 	}
 	
 	public void manual_Rminus() {		
-		mRGripper.set(-0.1);		
+		mRGripper.set(-0.2);		
 	}
 
 	/**

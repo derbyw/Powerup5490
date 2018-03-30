@@ -12,6 +12,7 @@ import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -50,6 +51,7 @@ public class Robot extends IterativeRobot {
 	public static Gripper m_Gripper;
 	public static Winch m_Winch;
 	public static OI m_oi;
+	Preferences prefs;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -64,6 +66,13 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {		
 		UsbCamera jevoisCam = CameraServer.getInstance().startAutomaticCapture();
 		jevoisCam.setVideoMode(PixelFormat.kYUYV,320,254,60);
+		
+		prefs = Preferences.getInstance();
+		
+		// could have done left/middle right here
+		//armUpPosition = prefs.getDouble("ArmUpPosition", 1.0);
+		//armDownPosition = prefs.getDouble("ArmDownPosition", 4.);
+		
 		
 		m_Chassis = new Chassis();
 		m_Winch = new Winch();

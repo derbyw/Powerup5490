@@ -59,7 +59,7 @@ public class LiftSetpoint extends Command {
 	@Override
 	protected boolean isFinished() {
 		
-		return (pid_subsystem.onTarget() && (! pid_subsystem.isClamped())); 
+		return (pid_subsystem.onTarget()); 
 	}
 	
 	@Override
@@ -67,6 +67,7 @@ public class LiftSetpoint extends Command {
 		if (Robot.m_Lift.isAtBottom()) {
 			Robot.m_Lift.Reset();
 		}
+		pid_subsystem.disable();
 	}
 	
 	@Override

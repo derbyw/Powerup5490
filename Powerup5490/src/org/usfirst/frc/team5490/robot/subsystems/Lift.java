@@ -19,9 +19,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Lift extends PIDSubsystem {
 
 	// Manually tuned as of 2/17/2018
-	private static final double kP = 0.0175;
+	//private static final double kP = 0.0175;
+	private static final double kP = 0.0185;
 	private static final double kI = 0;
-	private static final double tolerance = 0.05;
+	private static final double tolerance = 0.5;
 	
 	// Encoder configurations
 	private static final double mm_per_turn = 4.88;
@@ -102,14 +103,22 @@ public class Lift extends PIDSubsystem {
 	 * Set the lift motor to move in the down direction. Percent ranges from 0 to 1.
 	 */
 	public void lower(double percent) {
-		motorLift.set(percent * -1 * motor_up_direction);
+		if (isAtBottom()) {
+			Reset();
+			motorLift.set(0);			
+		}   
+		else
+		    motorLift.set(percent * -1 * motor_up_direction);
 	}
 
 	/**
 	 * Set the lift motor to move in the up direction. Percent ranges from 0 to 1.
 	 */
 	public void raise(double percent) {
-		motorLift.set(percent * motor_up_direction);
+		if (isAtTop())
+			motorLift.set(0);
+		else
+			motorLift.set(percent * motor_up_direction);
 	}
 
 	/**
@@ -157,7 +166,7 @@ public class Lift extends PIDSubsystem {
 		double output = power*motor_up_direction;		
 		// detect and clamp output based on direction
 		// TODO for isAtBottom, output < 0 if I'm not mistaken... check later
-		m_clamped = (((output > 0) && isAtTop()) || ((output < 0) && isAtBottom()));
+		m_clamped = (((output < 0) && isAtTop()) || ((output > 0) && isAtBottom()));
 		if (m_clamped) output = 0;			
 		motorLift.set(output);
 	}
